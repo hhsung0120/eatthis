@@ -1,15 +1,16 @@
-package co.kr.heeseong.eatthis.model;
+package co.kr.heeseong.eatthis.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
-public class Notice {
-
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class NoticeDto {
     private long idx;
     private String userIdx;
     private String title;
     private LocalDateTime regDate;
-
 }

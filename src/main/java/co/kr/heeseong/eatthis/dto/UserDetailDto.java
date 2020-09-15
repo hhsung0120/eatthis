@@ -1,14 +1,13 @@
-package co.kr.heeseong.eatthis.model;
+package co.kr.heeseong.eatthis.dto;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class UserDetail {
+public class UserDetailDto {
 
     private long idx;
-    private long userIdx;
     private String nickName;
     private String userEmail;
     private String gender;
