@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.dto;
 
+import co.kr.heeseong.eatthis.domain.notice.NoticeEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,8 +10,30 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class NoticeDto {
-    private long idx;
-    private String userIdx;
+    private Long idx;
+    private Long userIdx;
     private String title;
+    private String contents;
     private LocalDateTime regDate;
+    private LocalDateTime modDate;
+
+    public NoticeEntity toEntity(){
+        return NoticeEntity.builder()
+                .idx(idx)
+                .userIdx(userIdx)
+                .title(title)
+                .contents(contents)
+                .build();
+    }
+
+    @Builder
+    public NoticeDto(Long idx, Long userIdx, String title, String contents, LocalDateTime regDate, LocalDateTime modDate){
+        this.idx = idx;
+        this.userIdx = userIdx;
+        this.title = title;
+        this.contents = contents;
+        this.regDate = regDate;
+        this.modDate = modDate;
+    }
+
 }
