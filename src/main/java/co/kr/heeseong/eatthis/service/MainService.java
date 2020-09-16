@@ -15,8 +15,6 @@ public class MainService {
 
     private NoticeRepository noticeRepository;
 
-
-
     /**
      * 메인 리스트
      * @return Map<String, Object>

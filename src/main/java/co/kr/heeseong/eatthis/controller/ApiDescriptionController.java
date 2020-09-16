@@ -1,22 +1,25 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/api")
 @RequiredArgsConstructor
-public class MainController {
+public class ApiDescriptionController {
 
-    private final MainService mainService;
-
-    @GetMapping("/list")
+    @GetMapping("/description")
     public Map<String, Object> mainList(){
-        return mainService.getMainList();
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        result.put("[GET] /main/list","메인 리스트");
+        result.put("[GET] /user/myPage/{userIdx}","마이페이지");
+
+        return result;
     }
 }
