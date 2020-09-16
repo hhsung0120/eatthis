@@ -24,7 +24,6 @@ public class MainService {
 
         List<NoticeEntity> noticeList = noticeRepository.findAll();
 
-        System.out.println(noticeList.toString());
         result.put("noticeList", noticeList);
 
         return result;
