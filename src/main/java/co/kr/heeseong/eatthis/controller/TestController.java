@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.dto.TestDto;
 import co.kr.heeseong.eatthis.service.TestService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/test")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TestController {
 
-    private TestService testService;
+    private final TestService testService;
 
     @GetMapping("/insert")
     public String insert(){

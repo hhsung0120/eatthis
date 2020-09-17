@@ -2,12 +2,12 @@ package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.service.MainService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Log4j2
 @RestController
 @RequestMapping("/main")
 @RequiredArgsConstructor
@@ -15,8 +15,10 @@ public class MainController {
 
     private final MainService mainService;
 
-    @GetMapping("/list")
-    public Map<String, Object> mainList(){
-        return mainService.getMainList();
+    @GetMapping("/list/{locationX}/{locationY}")
+    public Map<String, Object> mainList(@PathVariable int locationX, @PathVariable int locationY){
+        log.info("sdfsdfsdfsdf {}", locationX);
+        log.info("sdfsdfsdfsdf {}", locationY);
+        return mainService.getMainList(locationX, locationY);
     }
 }

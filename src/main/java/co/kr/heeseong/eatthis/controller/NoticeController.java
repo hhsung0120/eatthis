@@ -1,9 +1,9 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.dto.NoticeDto;
-import co.kr.heeseong.eatthis.dto.TestDto;
 import co.kr.heeseong.eatthis.service.NoticeService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/notice")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NoticeController {
 
-    private NoticeService noticeService;
+    private final NoticeService noticeService;
 
     @GetMapping("/insert")
     public String insert(){

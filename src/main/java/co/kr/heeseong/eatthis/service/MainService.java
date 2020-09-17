@@ -19,10 +19,11 @@ public class MainService {
      * 메인 리스트
      * @return Map<String, Object>
      */
-    public Map<String, Object> getMainList() {
+    public Map<String, Object> getMainList(int locationX, int locationY) {
         Map<String, Object> result = new HashMap<>();
 
         List<NoticeEntity> noticeList = noticeRepository.findAll();
+
 
         result.put("noticeList", noticeList);
 
