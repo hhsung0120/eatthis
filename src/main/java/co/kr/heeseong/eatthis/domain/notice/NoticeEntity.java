@@ -17,7 +17,7 @@ public class NoticeEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private Long noticeIdx;
 
     @Column
     private Long userIdx;
@@ -29,8 +29,8 @@ public class NoticeEntity extends TimeEntity {
     private String contents;
 
     @Builder
-    public NoticeEntity(Long idx, Long userIdx, String title, String contents) {
-        this.idx = idx;
+    public NoticeEntity(Long noticeIdx, Long userIdx, String title, String contents) {
+        this.noticeIdx = noticeIdx;
         this.userIdx = userIdx;
         this.title = title;
         this.contents = contents;

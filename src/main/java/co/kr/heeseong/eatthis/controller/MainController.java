@@ -17,8 +17,6 @@ public class MainController {
 
     @GetMapping("/list/{locationX}/{locationY}")
     public Map<String, Object> mainList(@PathVariable int locationX, @PathVariable int locationY){
-        log.info("sdfsdfsdfsdf {}", locationX);
-        log.info("sdfsdfsdfsdf {}", locationY);
         return mainService.getMainList(locationX, locationY);
     }
 }

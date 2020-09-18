@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Data
 public class UserDetailDto {
 
-    private Long idx;
     private Long userIdx;
     private String nickName;
     private String userEmail;
@@ -22,5 +21,6 @@ public class UserDetailDto {
     private char serviceAlarm;
     private String profileImagePath;
     private LocalDateTime regDate;
+    private LocalDateTime modDate;
 
 }

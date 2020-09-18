@@ -12,6 +12,6 @@ public class NoticeService {
     private NoticeRepository noticeRepository;
 
     public Long insertNotice(NoticeDto noticeDto) {
-        return noticeRepository.save(noticeDto.toEntity()).getIdx();
+        return noticeRepository.save(noticeDto.toEntity()).getNoticeIdx();
     }
 }

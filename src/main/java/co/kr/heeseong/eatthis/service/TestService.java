@@ -36,7 +36,7 @@ public class TestService {
 
     public List<TestDto> getTestList() {
         List<TestDto> testList = new ArrayList<>();
-        Page<TestEntity> testEntity = testRepository.findAll(PageRequest.of(3,10, Sort.by(Sort.Direction.DESC,"createDate")));
+        Page<TestEntity> testEntity = testRepository.findAll(PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"regDate")));
 
         for(TestEntity entity : testEntity){
             TestDto testDto = TestDto.builder()

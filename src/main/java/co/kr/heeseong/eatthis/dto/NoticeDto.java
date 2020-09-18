@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class NoticeDto {
-    private Long idx;
+    private Long noticeIdx;
     private Long userIdx;
     private String title;
     private String contents;
@@ -19,7 +19,7 @@ public class NoticeDto {
 
     public NoticeEntity toEntity(){
         return NoticeEntity.builder()
-                .idx(idx)
+                .noticeIdx(noticeIdx)
                 .userIdx(userIdx)
                 .title(title)
                 .contents(contents)
@@ -27,8 +27,8 @@ public class NoticeDto {
     }
 
     @Builder
-    public NoticeDto(Long idx, Long userIdx, String title, String contents, LocalDateTime regDate, LocalDateTime modDate){
-        this.idx = idx;
+    public NoticeDto(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime regDate, LocalDateTime modDate){
+        this.noticeIdx = noticeIdx;
         this.userIdx = userIdx;
         this.title = title;
         this.contents = contents;
