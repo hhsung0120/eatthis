@@ -14,11 +14,10 @@ public class IndexController {
 
     @GetMapping("")
     public String index(HttpServletRequest request){
-        log.info("request {}", request.getRequestURI());
-        log.info("request {}", request.getRequestURL());
-        log.info("request {}", request.getServerPort());
-        log.info("request {}", request.getServletContext());
-        log.info("request {}", request.getServletPath());
-        return "redirect:"+request.getRequestURL()+"/api/description";
+        String redirectUrl = String.valueOf(request.getRequestURL());
+        if("218.238.18.185".contains(request.getRequestURL())){
+            redirectUrl = redirectUrl + ":8000";
+        }
+        return "redirect:"+request.getRequestURL()+"api/description";
     }
 }
