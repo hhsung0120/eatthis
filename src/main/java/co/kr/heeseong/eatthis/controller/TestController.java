@@ -50,5 +50,4 @@ public class TestController {
     public List<TestDto> list(){
         return testService.getTestList();
     }
-
 }
