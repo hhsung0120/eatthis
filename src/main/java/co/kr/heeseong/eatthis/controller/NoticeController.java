@@ -2,11 +2,12 @@ package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.dto.NoticeDto;
 import co.kr.heeseong.eatthis.service.NoticeService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class NoticeController {
 
     private final NoticeService noticeService;
+
+    @GetMapping("/list")
+    public List<NoticeDto> noticeList(){
+        return noticeService.getNoticeList();
+    }
 
     @GetMapping("/insert")
     public String insert(){
