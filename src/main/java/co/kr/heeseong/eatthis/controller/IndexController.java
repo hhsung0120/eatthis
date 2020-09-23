@@ -16,8 +16,9 @@ public class IndexController {
     public String index(HttpServletRequest request){
         String redirectUrl = String.valueOf(request.getRequestURL());
         if(redirectUrl.contains("218.238.18.185")){
-            redirectUrl = "218.238.18.185:8000/";
+            return "redirect:218.238.18.185:8000/api/description";
         }
+
         return "redirect:"+redirectUrl+"api/description";
     }
 }
