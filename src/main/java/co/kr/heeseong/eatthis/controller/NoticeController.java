@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -18,8 +19,10 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/list")
-    public List<NoticeDto> noticeList(){
-        return noticeService.getNoticeList();
+    public Map<String, Object> noticeList(){
+        Map<String, Object> result = new HashMap<>();
+        result.put("noticeList", noticeService.getNoticeList());
+        return result;
     }
 
     @GetMapping("/insert")
