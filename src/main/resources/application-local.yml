@@ -36,7 +36,7 @@ logging:
     jdbc.resultsettable : off
     jdbc.connection: off
   file:
-    path: D:${file.separator}logs${file.separator}eatthis
+    name: D:${file.separator}logs${file.separator}eatthis${file.separator}eatthis.log
     max-history: 1
     max-size: 100MB
 

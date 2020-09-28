@@ -12,6 +12,7 @@ public class ApiDescriptionController {
 
     @GetMapping("/description")
     public String mainList(){
+        log.info("메인");
         return "index";
     }
 }
