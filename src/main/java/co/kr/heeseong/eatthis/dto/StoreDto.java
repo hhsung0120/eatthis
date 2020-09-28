@@ -17,8 +17,8 @@ public class StoreDto {
     private String storeName;
     private String locationX;
     private String locationY;
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    private LocalDateTime createDate;
+    private LocalDateTime lastModifiedDate;
 
     public StoreEntity toEntity(){
         return StoreEntity.builder()
@@ -32,15 +32,15 @@ public class StoreDto {
     }
 
     @Builder
-    public StoreDto(Long storeIdx, Long storeId, String category, String storeName, String locationX,String locationY,LocalDateTime regDate, LocalDateTime modDate){
+    public StoreDto(Long storeIdx, Long storeId, String category, String storeName, String locationX,String locationY,LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.storeIdx = storeIdx;
         this.storeId = storeId;
         this.category = category;
         this.storeName = storeName;
         this.locationX = locationX;
         this.locationY = locationY;
-        this.regDate = regDate;
-        this.modDate = modDate;
+        this.createDate = createDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 }

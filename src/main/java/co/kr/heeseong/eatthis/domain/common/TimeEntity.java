@@ -18,8 +18,8 @@ public class TimeEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime regDate;
+    private LocalDateTime createDate;
 
     @LastModifiedDate
-    private LocalDateTime modDate;
+    private LocalDateTime lastModifiedDate;
 }

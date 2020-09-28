@@ -3,7 +3,6 @@ package co.kr.heeseong.eatthis.service;
 import co.kr.heeseong.eatthis.domain.notice.NoticeEntity;
 import co.kr.heeseong.eatthis.domain.notice.NoticeRepository;
 import co.kr.heeseong.eatthis.dto.NoticeDto;
-import co.kr.heeseong.eatthis.dto.PageNavigator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class NoticeService {
+public class FaqService {
 
     private NoticeRepository noticeRepository;
     private static int pageSize = 10;

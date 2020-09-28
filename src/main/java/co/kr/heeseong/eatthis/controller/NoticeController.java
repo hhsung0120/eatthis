@@ -3,9 +3,7 @@ package co.kr.heeseong.eatthis.controller;
 import co.kr.heeseong.eatthis.dto.NoticeDto;
 import co.kr.heeseong.eatthis.service.NoticeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +16,10 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/list")
-    public Map<String, Object> noticeList(){
+    @GetMapping("/list/{page}")
+    public Map<String, Object> noticeList(@PathVariable int page){
         Map<String, Object> result = new HashMap<>();
-        result.put("noticeList", noticeService.getNoticeList());
+        result.put("noticeList", noticeService.getNoticeList(page));
         return result;
     }
 

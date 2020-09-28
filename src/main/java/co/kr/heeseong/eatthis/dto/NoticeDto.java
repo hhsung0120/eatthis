@@ -14,8 +14,8 @@ public class NoticeDto {
     private Long userIdx;
     private String title;
     private String contents;
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    private LocalDateTime createDate;
+    private LocalDateTime lastModifiedDate;
 
     public NoticeEntity toEntity(){
         return NoticeEntity.builder()
@@ -27,13 +27,13 @@ public class NoticeDto {
     }
 
     @Builder
-    public NoticeDto(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime regDate, LocalDateTime modDate){
+    public NoticeDto(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.noticeIdx = noticeIdx;
         this.userIdx = userIdx;
         this.title = title;
         this.contents = contents;
-        this.regDate = regDate;
-        this.modDate = modDate;
+        this.createDate = createDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 }
