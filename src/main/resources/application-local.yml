@@ -3,7 +3,7 @@ spring:
   profiles: local
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://192.168.0.9:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false
+    url: jdbc:mysql://218.238.18.185/:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false
     username: root
     password: root1234
     hikari:
