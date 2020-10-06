@@ -13,10 +13,9 @@ import java.util.Date;
 public class FaqDto {
     private Long idx;
     private Long categoryIdx;
+    private String categoryName;
     private String title;
     private String contents;
-    //private Date createDate;
-    //private Date lastModifiedDate;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
 
@@ -30,8 +29,9 @@ public class FaqDto {
     }
 
     @Builder
-    public FaqDto(Long idx, Long categoryIdx, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public FaqDto(Long idx, Long categoryIdx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.idx = idx;
+        this.categoryName = categoryName;
         this.categoryIdx = categoryIdx;
         this.title = title;
         this.contents = contents;

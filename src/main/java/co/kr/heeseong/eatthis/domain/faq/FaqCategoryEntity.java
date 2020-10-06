@@ -1,30 +1,22 @@
 package co.kr.heeseong.eatthis.domain.faq;
 
 
-import co.kr.heeseong.eatthis.domain.common.TimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "faq_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FaqCategoryEntity extends TimeEntity {
+public class FaqCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
-    private Long name;
+    private String categoryName;
 
-    @Builder
-    public FaqCategoryEntity(Long idx, Long name) {
-        this.idx = idx;
-        this.name = name;
-    }
 }

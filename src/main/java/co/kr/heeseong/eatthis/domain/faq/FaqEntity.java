@@ -21,7 +21,7 @@ public class FaqEntity extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column
+    @JoinColumn
     private Long categoryIdx;
 
     @Column
@@ -30,12 +30,6 @@ public class FaqEntity extends TimeEntity {
     @Column
     private String contents;
 
-/*    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;*/
-
     @Builder
     public FaqEntity(Long idx, Long categoryIdx, String title, String contents) {
         this.idx = idx;
@@ -43,4 +37,5 @@ public class FaqEntity extends TimeEntity {
         this.title = title;
         this.contents = contents;
     }
+
 }
