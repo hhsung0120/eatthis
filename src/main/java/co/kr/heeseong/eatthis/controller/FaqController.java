@@ -29,8 +29,10 @@ public class FaqController {
 
     @GetMapping("/list/{page}")
     public Map<String, Object> faqList(@PathVariable int page){
+        Map<String, Object> result = new HashMap<>();
         List<FaqDto> faqList = faqService.getFaqList(page);
-        return new HashMap<>();
+        result.put("faqList", faqList);
+        return result;
     }
 
 }

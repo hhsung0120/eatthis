@@ -26,30 +26,21 @@ public class FaqService {
 
     public List<FaqDto> getFaqList(int page) {
         List<FaqDto> faqDtoList = new ArrayList<>();
-        Page<FaqEntity> faqEntitieList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
+        Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
 
-        for(FaqEntity faqEntity : faqEntitieList){
+        for(FaqEntity faqEntity : faqEntityList){
             FaqDto faqDto = FaqDto.builder()
-                    .
-        }
-    }
-/*
-    public List<NoticeDto> getNoticeList(int page) {
-        List<NoticeDto> noticeDtoList = new ArrayList<>();
-        Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate"));
-
-        for(NoticeEntity noticeEntity : noticeEntityList){
-            NoticeDto noticeDto = NoticeDto.builder()
-                    .noticeIdx(noticeEntity.getNoticeIdx())
-                    .userIdx(noticeEntity.getUserIdx())
-                    .title(noticeEntity.getTitle())
-                    .contents(noticeEntity.getTitle())
-                    .createDate(noticeEntity.getCreateDate())
-                    .lastModifiedDate(noticeEntity.getLastModifiedDate())
+                    .idx(faqEntity.getIdx())
+                    .categoryIdx(faqEntity.getCategoryIdx())
+                    .title(faqEntity.getTitle())
+                    .contents(faqEntity.getContents())
+                    .createDate(faqEntity.getCreateDate())
+                    .lastModifiedDate(faqEntity.getLastModifiedDate())
                     .build();
 
-            noticeDtoList.add(noticeDto);
+            faqDtoList.add(faqDto);
         }
-        return noticeDtoList;
-    }*/
+
+        return faqDtoList;
+    }
 }

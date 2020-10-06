@@ -4,6 +4,7 @@ import co.kr.heeseong.eatthis.domain.faq.FaqEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -14,6 +15,8 @@ public class FaqDto {
     private Long categoryIdx;
     private String title;
     private String contents;
+    //private Date createDate;
+    //private Date lastModifiedDate;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
 
