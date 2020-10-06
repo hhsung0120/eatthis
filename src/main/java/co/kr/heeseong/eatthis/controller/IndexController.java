@@ -15,8 +15,8 @@ public class IndexController {
     @GetMapping("")
     public String index(HttpServletRequest request){
         String redirectUrl = String.valueOf(request.getRequestURL());
-        if(redirectUrl.contains("218.238.18.185")){
-            return "redirect:http://218.238.18.185:9999/api/description";
+        if(redirectUrl.contains("hhsung.ipdisk.co.kr")){
+            return "redirect:http://hhsung.ipdisk.co.kr:9999/api/description";
         }
         return "redirect:/api/description";
     }
