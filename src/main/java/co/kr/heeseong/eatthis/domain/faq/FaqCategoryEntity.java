@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "faq_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FaqCategoryEntity {

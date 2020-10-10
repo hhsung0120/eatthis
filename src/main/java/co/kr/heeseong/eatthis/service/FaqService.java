@@ -31,8 +31,8 @@ public class FaqService {
         for(FaqEntity faqEntity : faqEntityList){
             FaqDto faqDto = FaqDto.builder()
                     .idx(faqEntity.getIdx())
-                    .categoryIdx(faqEntity.getCategoryIdx())
                     .title(faqEntity.getTitle())
+                    .categoryName(faqEntity.getFaqCategoryEntity().getCategoryName())
                     .contents(faqEntity.getContents())
                     .createDate(faqEntity.getCreateDate())
                     .lastModifiedDate(faqEntity.getLastModifiedDate())

@@ -12,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class FaqDto {
     private Long idx;
-    private Long categoryIdx;
     private String categoryName;
     private String title;
     private String contents;
@@ -22,17 +21,15 @@ public class FaqDto {
     public FaqEntity toEntity(){
         return FaqEntity.builder()
                 .idx(idx)
-                .categoryIdx(categoryIdx)
                 .title(title)
                 .contents(contents)
                 .build();
     }
 
     @Builder
-    public FaqDto(Long idx, Long categoryIdx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public FaqDto(Long idx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.idx = idx;
         this.categoryName = categoryName;
-        this.categoryIdx = categoryIdx;
         this.title = title;
         this.contents = contents;
         this.createDate = createDate;

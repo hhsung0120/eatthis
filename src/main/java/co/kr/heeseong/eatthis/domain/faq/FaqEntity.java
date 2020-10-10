@@ -2,18 +2,14 @@ package co.kr.heeseong.eatthis.domain.faq;
 
 
 import co.kr.heeseong.eatthis.domain.common.TimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
 @Table(name = "faq")
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FaqEntity extends TimeEntity {
 
@@ -21,8 +17,9 @@ public class FaqEntity extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @JoinColumn
-    private Long categoryIdx;
+    @ManyToOne
+    @JoinColumn(name="category_idx")
+    private FaqCategoryEntity faqCategoryEntity;
 
     @Column
     private String title;
@@ -33,7 +30,6 @@ public class FaqEntity extends TimeEntity {
     @Builder
     public FaqEntity(Long idx, Long categoryIdx, String title, String contents) {
         this.idx = idx;
-        this.categoryIdx = categoryIdx;
         this.title = title;
         this.contents = contents;
     }
