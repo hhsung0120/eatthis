@@ -3,9 +3,9 @@ spring:
   profiles: local
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://192.168.0.9:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false
     username: root
-    password: root1234
+    password: 1234
     hikari:
       poolName: Hikari
       maximum-pool-size: 10

@@ -36,11 +36,13 @@ public class MainService {
                     .storeName(storeEntity.getStoreName())
                     .locationX(storeEntity.getLocationX())
                     .locationY(storeEntity.getLocationY())
+                    .createDate(storeEntity.getCreateDate())
+                    .lastModifiedDate(storeEntity.getLastModifiedDate())
                     .build();
 
             storeDtoList.add(storeDto);
         }
-        result.put("storeDtoList", storeDtoList);
+        result.put("storeList", storeDtoList);
 
         return result;
     }
