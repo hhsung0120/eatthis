@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.service;
+package co.kr.heeseong.eatthis.domain.notice;
 
 import co.kr.heeseong.eatthis.domain.notice.NoticeEntity;
 import co.kr.heeseong.eatthis.domain.notice.NoticeRepository;

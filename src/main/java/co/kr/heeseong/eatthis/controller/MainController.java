@@ -1,12 +1,15 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.service.MainService;
+import co.kr.heeseong.eatthis.domain.store.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * 메인
+ */
 @Log4j2
 @RestController
 @RequestMapping("/main")

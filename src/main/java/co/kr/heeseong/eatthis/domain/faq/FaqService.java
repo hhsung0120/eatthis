@@ -1,7 +1,5 @@
-package co.kr.heeseong.eatthis.service;
+package co.kr.heeseong.eatthis.domain.faq;
 
-import co.kr.heeseong.eatthis.domain.faq.FaqEntity;
-import co.kr.heeseong.eatthis.domain.faq.FaqRepository;
 import co.kr.heeseong.eatthis.dto.FaqDto;
 import co.kr.heeseong.eatthis.dto.NoticeDto;
 import lombok.AllArgsConstructor;
@@ -19,10 +17,6 @@ public class FaqService {
 
     private FaqRepository faqRepository;
     private static int pageSize = 10;
-
-    public Long insertFaq(NoticeDto noticeDto) {
-        return 3L;
-    }
 
     public List<FaqDto> getFaqList(int page) {
         List<FaqDto> faqDtoList = new ArrayList<>();

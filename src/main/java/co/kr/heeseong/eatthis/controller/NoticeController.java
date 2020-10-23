@@ -1,14 +1,16 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.dto.NoticeDto;
-import co.kr.heeseong.eatthis.service.NoticeService;
+import co.kr.heeseong.eatthis.domain.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * 공지사항
+ */
 @RestController
 @RequestMapping("/notice")
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.domain.faq;
 
 
+import co.kr.heeseong.eatthis.domain.questions.QuestionsEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,5 +25,4 @@ public class FaqCategoryEntity {
 
     @OneToMany(mappedBy = "faqCategoryEntity")
     private List<FaqEntity> faqEntityList = new ArrayList<>();
-
 }

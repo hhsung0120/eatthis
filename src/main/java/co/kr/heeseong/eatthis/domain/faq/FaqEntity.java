@@ -30,7 +30,7 @@ public class FaqEntity extends TimeEntity {
     private String contents;
 
     @Builder
-    public FaqEntity(Long idx, Long categoryIdx, String title, String contents) {
+    public FaqEntity(Long idx, String title, String contents) {
         this.idx = idx;
         this.title = title;
         this.contents = contents;

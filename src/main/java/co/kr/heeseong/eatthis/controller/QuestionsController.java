@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.dto.FaqDto;
-import co.kr.heeseong.eatthis.domain.faq.FaqService;
+import co.kr.heeseong.eatthis.domain.questions.QuestionsService;
+import co.kr.heeseong.eatthis.dto.QuestionsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,28 +12,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * 자주하는 질문
+ * 묻고 답하기
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/faq")
-public class FaqController {
+@RequestMapping("/questions")
+public class QuestionsController {
 
-    private final FaqService faqService;
-
-    @GetMapping("/insert")
-    public int faqSave(){
-        return 3;
-    }
-
+    private final QuestionsService questionsService;
 
     @GetMapping("/list/{page}")
-    public Map<String, Object> faqList(@PathVariable int page){
+    public Map<String, Object> questionsList(@PathVariable int page){
         Map<String, Object> result = new HashMap<>();
-        List<FaqDto> faqList = faqService.getFaqList(page);
-        result.put("faqList", faqList);
+        List<QuestionsDto> questionsList = questionsService.getQuestionsList(page);
+        result.put("questionsList", questionsList);
         return result;
     }
 

@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.service;
+package co.kr.heeseong.eatthis.domain.store;
 
 import co.kr.heeseong.eatthis.domain.store.StoreEntity;
 import co.kr.heeseong.eatthis.domain.store.StoreRepository;

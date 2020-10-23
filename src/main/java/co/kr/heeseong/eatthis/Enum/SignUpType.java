@@ -2,9 +2,10 @@ package co.kr.heeseong.eatthis.Enum;
 
 public enum SignUpType {
 
-    DEFAULTE("일반")
+      DEFAULTE("일반")
     , FACEBOOK("페이스북")
-    , KAKAO("카카오");
+    , KAKAO("카카오")
+    ;
 
     String value = "";
     SignUpType(String value){
