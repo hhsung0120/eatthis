@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class QuestionsDto {
     private Long idx;
-    private Long userIdx;
     private String categoryName;
     private String questions;
     private String answer;
@@ -19,9 +18,8 @@ public class QuestionsDto {
     private LocalDateTime lastModifiedDate;
 
     @Builder
-    public QuestionsDto(Long idx, Long userIdx, String categoryName, String questions, String answer, String status, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public QuestionsDto(Long idx, String categoryName, String questions, String answer, String status, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.idx = idx;
-        this.userIdx = userIdx;
         this.categoryName = categoryName;
         this.questions = questions;
         this.answer = answer;

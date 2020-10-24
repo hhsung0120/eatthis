@@ -22,8 +22,8 @@ public class QuestionsController {
 
     private final QuestionsService questionsService;
 
-    @GetMapping("/list/{page}")
-    public Map<String, Object> questionsList(@PathVariable int page){
+    @GetMapping("/{userIdx}/list/{page}")
+    public Map<String, Object> questionsList(@PathVariable Long userIdx, @PathVariable int page){
         Map<String, Object> result = new HashMap<>();
         List<QuestionsDto> questionsList = questionsService.getQuestionsList(page);
         result.put("questionsList", questionsList);

@@ -22,10 +22,8 @@ public class QuestionsService {
         Page<QuestionsEntity> questionsEntityList = questionsRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
 
         for(QuestionsEntity questionsEntity : questionsEntityList){
-            System.out.println(questionsEntity.getLastModifiedDate());
             QuestionsDto questionsDto = QuestionsDto.builder()
                     .idx(questionsEntity.getIdx())
-                    .userIdx(questionsEntity.getUserIdx())
                     .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
                     .questions(questionsEntity.getQuestions())
                     .answer(questionsEntity.getAnswer())
