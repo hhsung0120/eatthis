@@ -29,8 +29,8 @@ public class FaqService {
      */
     public List<FaqDto> getFaqList(int page) throws Exception{
         List<FaqDto> faqDtoList = new ArrayList<>();
-        Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
 
+        Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
         for(FaqEntity faqEntity : faqEntityList){
             FaqDto faqDto = FaqDto.builder()
                     .idx(faqEntity.getIdx())
