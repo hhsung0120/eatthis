@@ -53,7 +53,6 @@ public class FaqService {
             data.put("faqList", this.getFaqList(page));
         }catch (Exception e){
             log.info("getFaqListResult exception {}", e.getMessage());
-            data.clear();
         }
         return data;
     }
