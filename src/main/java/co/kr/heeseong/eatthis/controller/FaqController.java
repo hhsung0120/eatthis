@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 /**
- * 자주하는 질문
+ * 자주묻는 질문
  */
 @RestController
 @RequiredArgsConstructor
@@ -28,13 +28,11 @@ public class FaqController {
         return 3;
     }
 
-
+    // /faq/list/0- 이런걸로 호출하면 배드 리퀘스트 뜸 400 에러
+    // 이런거 어떻게 화면 처리 할건지 고민해야함
     @GetMapping("/list/{page}")
     public Map<String, Object> faqList(@PathVariable int page){
-        Map<String, Object> result = new HashMap<>();
-        List<FaqDto> faqList = faqService.getFaqList(page);
-        result.put("faqList", faqList);
-        return result;
+        return faqService.getFaqListResult(page);
     }
 
 }
