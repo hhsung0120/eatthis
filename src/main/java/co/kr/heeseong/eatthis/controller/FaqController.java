@@ -28,8 +28,6 @@ public class FaqController {
         return 3;
     }
 
-    // /faq/list/0- 이런걸로 호출하면 배드 리퀘스트 뜸 400 에러
-    // 이런거 어떻게 화면 처리 할건지 고민해야함
     @GetMapping("/list/{page}")
     public Map<String, Object> faqList(@PathVariable int page){
         return faqService.getFaqListResult(page);
