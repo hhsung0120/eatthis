@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.dto.NoticeDto;
+import co.kr.heeseong.eatthis.dto.Notice;
 import co.kr.heeseong.eatthis.domain.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class NoticeController {
 
     @GetMapping("/insert")
     public String insert(){
-        NoticeDto notice = new NoticeDto();
+        Notice notice = new Notice();
         notice.setUserIdx(1L);
         notice.setTitle("제목이 엄청나게 길어욤ㅇㅇㅇㅇㅇㅇㅇ");
         notice.setContents("내용입니다다다ㅏ다다ㅏ다다다다다다");

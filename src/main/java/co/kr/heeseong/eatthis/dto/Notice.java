@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class NoticeDto {
+public class Notice {
     private Long noticeIdx;
     private Long userIdx;
     private String title;
@@ -27,7 +27,7 @@ public class NoticeDto {
     }
 
     @Builder
-    public NoticeDto(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Notice(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.noticeIdx = noticeIdx;
         this.userIdx = userIdx;
         this.title = title;

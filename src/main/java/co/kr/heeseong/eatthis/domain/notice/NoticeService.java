@@ -1,9 +1,6 @@
 package co.kr.heeseong.eatthis.domain.notice;
 
-import co.kr.heeseong.eatthis.domain.notice.NoticeEntity;
-import co.kr.heeseong.eatthis.domain.notice.NoticeRepository;
-import co.kr.heeseong.eatthis.dto.NoticeDto;
-import co.kr.heeseong.eatthis.dto.PageNavigator;
+import co.kr.heeseong.eatthis.dto.Notice;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,16 +17,16 @@ public class NoticeService {
     private NoticeRepository noticeRepository;
     private static int pageSize = 10;
 
-    public Long insertNotice(NoticeDto noticeDto) {
+    public Long insertNotice(Notice noticeDto) {
         return noticeRepository.save(noticeDto.toEntity()).getNoticeIdx();
     }
 
-    public List<NoticeDto> getNoticeList(int page) {
-        List<NoticeDto> noticeDtoList = new ArrayList<>();
+    public List<Notice> getNoticeList(int page) {
+        List<Notice> noticeDtoList = new ArrayList<>();
         Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate"));
 
         for(NoticeEntity noticeEntity : noticeEntityList){
-            NoticeDto noticeDto = NoticeDto.builder()
+            Notice notice = Notice.builder()
                     .noticeIdx(noticeEntity.getNoticeIdx())
                     .userIdx(noticeEntity.getUserIdx())
                     .title(noticeEntity.getTitle())
@@ -38,7 +35,7 @@ public class NoticeService {
                     .lastModifiedDate(noticeEntity.getLastModifiedDate())
                     .build();
 
-            noticeDtoList.add(noticeDto);
+            noticeDtoList.add(notice);
         }
         return noticeDtoList;
     }

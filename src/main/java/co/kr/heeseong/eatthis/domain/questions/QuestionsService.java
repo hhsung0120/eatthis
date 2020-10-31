@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.domain.questions;
 
-import co.kr.heeseong.eatthis.dto.QuestionsDto;
+import co.kr.heeseong.eatthis.dto.Questions;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,12 +17,12 @@ public class QuestionsService {
     private QuestionsRepository questionsRepository;
     private static int pageSize = 10;
 
-    public List<QuestionsDto> getQuestionsList(int page) {
-        List<QuestionsDto> questionsDtoList = new ArrayList<>();
+    public List<Questions> getQuestionsList(int page) {
+        List<Questions> questionsDtoList = new ArrayList<>();
         Page<QuestionsEntity> questionsEntityList = questionsRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
 
         for(QuestionsEntity questionsEntity : questionsEntityList){
-            QuestionsDto questionsDto = QuestionsDto.builder()
+            Questions questionsDto = Questions.builder()
                     .idx(questionsEntity.getIdx())
                     .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
                     .questions(questionsEntity.getQuestions())

@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.dto.TestDto;
+import co.kr.heeseong.eatthis.dto.Test;
 import co.kr.heeseong.eatthis.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class TestController {
 
     @GetMapping("/insert")
     public String insert(){
-        TestDto test = new TestDto();
+        Test test = new Test();
         test.setUserId("아이디");
         test.setUserName("이름");
 
@@ -29,7 +29,7 @@ public class TestController {
 
     @GetMapping("/update")
     public String update(){
-        TestDto test = new TestDto();
+        Test test = new Test();
         test.setIdx(3L);
         test.setUserId("수정zz");
         test.setUserName("수정이름zzz");
@@ -40,14 +40,14 @@ public class TestController {
 
     @GetMapping("/delete")
     public String delete(){
-        TestDto test = new TestDto();
+        Test test = new Test();
         test.setIdx(2L);
         testService.deleteTestUser(test);
         return String.valueOf(test.getIdx());
     }
 
     @GetMapping("/list")
-    public List<TestDto> list(){
+    public List<Test> list(){
         return testService.getTestList();
     }
 }

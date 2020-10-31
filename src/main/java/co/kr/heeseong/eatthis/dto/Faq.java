@@ -4,13 +4,12 @@ import co.kr.heeseong.eatthis.domain.faq.FaqEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class FaqDto {
+public class Faq {
     private Long idx;
     private String categoryName;
     private String title;
@@ -27,7 +26,7 @@ public class FaqDto {
     }
 
     @Builder
-    public FaqDto(Long idx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Faq(Long idx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.idx = idx;
         this.categoryName = categoryName;
         this.title = title;

@@ -1,8 +1,6 @@
 package co.kr.heeseong.eatthis.domain.store;
 
-import co.kr.heeseong.eatthis.domain.store.StoreEntity;
-import co.kr.heeseong.eatthis.domain.store.StoreRepository;
-import co.kr.heeseong.eatthis.dto.StoreDto;
+import co.kr.heeseong.eatthis.dto.Store;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +25,9 @@ public class MainService {
         Map<String, Object> result = new HashMap<>();
 
         Page<StoreEntity> storeEntityList = storeRepository.findAll(PageRequest.of(1,10, Sort.Direction.DESC,"createDate"));
-        List<StoreDto> storeDtoList = new ArrayList<>();
+        List<Store> storeDtoList = new ArrayList<>();
         for(StoreEntity storeEntity : storeEntityList){
-            StoreDto storeDto = StoreDto.builder()
+            Store storeDto = Store.builder()
                     .storeIdx(storeEntity.getStoreIdx())
                     .category(storeEntity.getCategory())
                     .storeId(storeEntity.getStoreId())

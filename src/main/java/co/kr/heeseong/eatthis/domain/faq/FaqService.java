@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.domain.faq;
 
-import co.kr.heeseong.eatthis.dto.FaqDto;
+import co.kr.heeseong.eatthis.dto.Faq;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,12 +27,12 @@ public class FaqService {
      * @return List<FaqDto>
      * @throws Exception
      */
-    public List<FaqDto> getFaqList(int page) throws Exception{
-        List<FaqDto> faqDtoList = new ArrayList<>();
+    public List<Faq> getFaqList(int page) throws Exception{
+        List<Faq> faqDtoList = new ArrayList<>();
 
         Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
         for(FaqEntity faqEntity : faqEntityList){
-            FaqDto faqDto = FaqDto.builder()
+            Faq faqDto = Faq.builder()
                     .idx(faqEntity.getIdx())
                     .title(faqEntity.getTitle())
                     .categoryName(faqEntity.getFaqCategoryEntity().getCategoryName())

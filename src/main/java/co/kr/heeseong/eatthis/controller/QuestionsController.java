@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.domain.questions.QuestionsService;
-import co.kr.heeseong.eatthis.dto.QuestionsDto;
+import co.kr.heeseong.eatthis.dto.Questions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +25,7 @@ public class QuestionsController {
     @GetMapping("/{userIdx}/list/{page}")
     public Map<String, Object> questionsList(@PathVariable Long userIdx, @PathVariable int page){
         Map<String, Object> result = new HashMap<>();
-        List<QuestionsDto> questionsList = questionsService.getQuestionsList(page);
+        List<Questions> questionsList = questionsService.getQuestionsList(page);
         result.put("questionsList", questionsList);
         return result;
     }

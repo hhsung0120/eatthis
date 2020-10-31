@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class TestDto {
+public class Test {
     private Long idx;
     private String userId;
     private String userName;
@@ -21,7 +21,7 @@ public class TestDto {
     }
 
     @Builder
-    public TestDto(Long idx, String userId, String userName){
+    public Test(Long idx, String userId, String userName){
         this.idx = idx;
         this.userId = userId;
         this.userName = userName;

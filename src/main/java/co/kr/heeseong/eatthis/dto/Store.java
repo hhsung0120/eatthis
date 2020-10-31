@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class StoreDto {
+public class Store {
     private Long storeIdx;
     private Long storeId;
     private String category;
@@ -32,7 +32,7 @@ public class StoreDto {
     }
 
     @Builder
-    public StoreDto(Long storeIdx, Long storeId, String category, String storeName, String locationX,String locationY,LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Store(Long storeIdx, Long storeId, String category, String storeName, String locationX, String locationY, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.storeIdx = storeIdx;
         this.storeId = storeId;
         this.category = category;

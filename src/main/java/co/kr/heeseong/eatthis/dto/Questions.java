@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class QuestionsDto {
+public class Questions {
     private Long idx;
     private String categoryName;
     private String questions;
@@ -18,7 +18,7 @@ public class QuestionsDto {
     private LocalDateTime lastModifiedDate;
 
     @Builder
-    public QuestionsDto(Long idx, String categoryName, String questions, String answer, String status, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Questions(Long idx, String categoryName, String questions, String answer, String status, LocalDateTime createDate, LocalDateTime lastModifiedDate){
         this.idx = idx;
         this.categoryName = categoryName;
         this.questions = questions;
