@@ -7,24 +7,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
 @Service
 public class UserService {
 
-    public User getUser(User user) throws Exception{
+    final private UserRepository userRepository;
 
-        return new User();
+    public User getUser(Long idx) throws Exception{
+
+        Optional<UserEntity> optional = userRepository.findById(idx);
+        if(!optional.isPresent()){
+            return User.builder()
+                    .id(optional.get().getId())
+                    .nickName(optional.get().getNickName())
+                    .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
+                    .build();
+        }
+        return null;
     }
 
-    public Map<String, Object> getUserResult(User user){
+    public Map<String, Object> getUserResult(Long idx){
         Map<String, Object> data = new LinkedHashMap<>();
 
         try{
-            data.put("user", this.getUser(user));
+            data.put("user", this.getUser(idx));
         }catch (Exception e){
-            log.info("getFaqListResult exception {}", e.getMessage());
+            log.info("getUserResult exception {}", e.getMessage());
         }
         return data;
     }

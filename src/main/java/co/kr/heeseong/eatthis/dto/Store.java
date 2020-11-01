@@ -1,6 +1,5 @@
 package co.kr.heeseong.eatthis.dto;
 
-import co.kr.heeseong.eatthis.domain.notice.NoticeEntity;
 import co.kr.heeseong.eatthis.domain.store.StoreEntity;
 import lombok.*;
 

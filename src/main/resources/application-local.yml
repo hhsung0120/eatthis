@@ -22,8 +22,9 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      format_sql : true
+      format_sql: true
       ddl-auto: none
+
 
 logging:
   level:

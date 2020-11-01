@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,31 +16,13 @@ public class UserDetailEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userIdx;
-
-    @Column
-    private String nickName;
-
-    @Column
-    private String userEmail;
+    private Long idx;
 
     @Column
     private String gender;
 
     @Column
     private String birthday;
-
-    @Column
-    private String ci;
-
-    @Column
-    private char agree1;
-
-    @Column
-    private char agree2;
-
-    @Column
-    private char agree3;
 
     @Column
     private char foodAlarm;
@@ -51,6 +32,15 @@ public class UserDetailEntity extends TimeEntity {
 
     @Column
     private char serviceAlarm;
+
+    @Column
+    private char agree1;
+
+    @Column
+    private char agree2;
+
+    @Column
+    private char agree3;
 
     @Column
     private String profileImagePath;
