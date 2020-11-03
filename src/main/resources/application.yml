@@ -15,6 +15,15 @@ spring:
     encoding: UTF-8
     suffix: .html
 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+        ddl-auto: none
+
 #DB configuration
 mybatis:
   configuration:
@@ -22,3 +31,4 @@ mybatis:
   mapper-locations:
     - mapper/*.xml
   type-aliases-package: com.heeseong.util.model
+

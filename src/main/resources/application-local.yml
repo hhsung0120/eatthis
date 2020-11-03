@@ -17,25 +17,11 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
 
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      format_sql: true
-      ddl-auto: none
-
-
 logging:
   level:
     org.springframework.web: info
     co.kr.heeseong: info
-    jdbc.sqlonly : off
-    jdbc.sqltiming : off
-    jdbc.audit: off
-    jdbc.resultset: off
-    jdbc.resultsettable : off
-    jdbc.connection: off
+    org.hibernate.type.descriptor.sql: trace
   file:
     name: D:${file.separator}logs${file.separator}eatthis${file.separator}eatthis.log
     max-history: 1
