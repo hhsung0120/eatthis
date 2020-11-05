@@ -17,33 +17,32 @@ public class UserService {
     final private UserRepository userRepository;
 
     public User getUser(Long idx) {
-
-        Optional<UserEntity> optional = userRepository.findById(idx);
-        if(optional.isPresent()){
-            return User.builder()
-                    .idx(optional.get().getIdx())
-                    .id(optional.get().getId())
-                    .nickName(optional.get().getNickName())
-                    .password("")
-                    .gender(optional.get().getUserDetailEntity().getGender().getValue())
-                    .birthday(optional.get().getUserDetailEntity().getBirthday())
-                    .foodAlarm(optional.get().getUserDetailEntity().getFoodAlarm())
-                    .eventAlarm(optional.get().getUserDetailEntity().getEventAlarm())
-                    .serviceAlarm(optional.get().getUserDetailEntity().getServiceAlarm())
-                    .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
-                    .build();
+        try{
+            Optional<UserEntity> optional = userRepository.findById(idx);
+            if(optional.isPresent()){
+                return User.builder()
+                        .idx(optional.get().getIdx())
+                        .id(optional.get().getId())
+                        .nickName(optional.get().getNickName())
+                        .password("")
+                        .gender(optional.get().getUserDetailEntity().getGender().getValue())
+                        .birthday(optional.get().getUserDetailEntity().getBirthday())
+                        .foodAlarm(optional.get().getUserDetailEntity().getFoodAlarm())
+                        .eventAlarm(optional.get().getUserDetailEntity().getEventAlarm())
+                        .serviceAlarm(optional.get().getUserDetailEntity().getServiceAlarm())
+                        .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
+                        .build();
+            }
+            return new User();
+        }catch (Exception e){
+            log.info("getUserResult exception {}", e.getMessage());
+            return new User();
         }
-        return new User();
     }
 
     public Map<String, Object> getUserResult(Long idx){
         Map<String, Object> data = new LinkedHashMap<>();
-
-        try{
-            data.put("user", this.getUser(idx));
-        }catch (Exception e){
-            log.info("getUserResult exception {}", e.getMessage());
-        }
+        data.put("user", this.getUser(idx));
         return data;
     }
 }
