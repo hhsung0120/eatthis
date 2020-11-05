@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.domain.user;
 
 
+import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.domain.common.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,8 +19,8 @@ public class UserDetailEntity extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private GenderType gender;
 
     @Column
     private String birthday;
@@ -28,7 +29,7 @@ public class UserDetailEntity extends TimeEntity {
     private char foodAlarm;
 
     @Column
-    private char eventAlram;
+    private char eventAlarm;
 
     @Column
     private char serviceAlarm;

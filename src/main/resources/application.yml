@@ -20,7 +20,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        show-sql: true
+        show-sql: false
         format_sql: true
         ddl-auto: none
 
