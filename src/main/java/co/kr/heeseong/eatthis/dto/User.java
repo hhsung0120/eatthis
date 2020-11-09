@@ -1,16 +1,21 @@
 package co.kr.heeseong.eatthis.dto;
 
+import co.kr.heeseong.eatthis.Enum.SignUpType;
+import co.kr.heeseong.eatthis.domain.test.TestEntity;
+import co.kr.heeseong.eatthis.domain.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Builder
 @Setter
+@Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
-    private Long idx;
+    private Long idx = 0L;
     private String id;
     private String password;
     private String nickName;
@@ -19,5 +24,21 @@ public class User {
     private char foodAlarm;
     private char eventAlarm;
     private char serviceAlarm;
+    private char termsAgree;
+    private char privacyAgree;
+    private char locationAgree;
+    private SignUpType signUpType;
     private String profileImagePath;
+
+    public UserEntity toEntity(){
+        return UserEntity.builder()
+                .idx(idx)
+                .id(id)
+                .password(password)
+                .termsAgree(termsAgree)
+                .privacyAgree(privacyAgree)
+                .locationAgree(locationAgree)
+                .signUpType(signUpType)
+                .build();
+    }
 }

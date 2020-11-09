@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.domain.test;
 
 
+import co.kr.heeseong.eatthis.domain.common.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "test")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TestEntity {
+public class TestEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

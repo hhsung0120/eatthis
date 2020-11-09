@@ -2,18 +2,17 @@ package co.kr.heeseong.eatthis.domain.user;
 
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+
 @Entity
 @Getter
-@Table(name = "user")
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(name = "user")
 public class UserEntity{
 
     @Id
@@ -27,7 +26,13 @@ public class UserEntity{
     private String password;
 
     @Column
-    private String nickName;
+    private char termsAgree;
+
+    @Column
+    private char privacyAgree;
+
+    @Column
+    private char locationAgree;
 
     @Enumerated(EnumType.STRING)
     private SignUpType signUpType;

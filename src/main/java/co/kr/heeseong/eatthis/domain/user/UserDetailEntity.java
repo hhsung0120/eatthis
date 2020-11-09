@@ -19,6 +19,9 @@ public class UserDetailEntity extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @Column
+    private String nickName;
+
     @Enumerated(EnumType.STRING)
     private GenderType gender;
 
@@ -33,15 +36,6 @@ public class UserDetailEntity extends TimeEntity {
 
     @Column
     private char serviceAlarm;
-
-    @Column
-    private char agree1;
-
-    @Column
-    private char agree2;
-
-    @Column
-    private char agree3;
 
     @Column
     private String profileImagePath;
