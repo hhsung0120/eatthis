@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class UserDetailEntity extends TimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idx;
 
     @Column
