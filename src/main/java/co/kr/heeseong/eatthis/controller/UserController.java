@@ -2,13 +2,13 @@ package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.domain.user.UserService;
 import co.kr.heeseong.eatthis.dto.User;
-import com.sun.xml.bind.v2.TODO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import javax.xml.bind.DatatypeConverterInterface;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,12 +30,15 @@ public class UserController {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("userIdx", 0);
 
+        //TODO : 에러 디테일하게 잡기, 아이디중복인지 진짜 오류인지
         try {
             result.put("userIdx", userService.saveUser(user));
+        } catch (DataIntegrityViolationException e){
+            result.put("reason", e.getMessage());
+        } catch (IllegalArgumentException e){
+            result.put("reason", e.getMessage());
         } catch (Exception e){
-            //TODO : 에러 디테일하게 잡기, 아이디중복인지 진짜 오류인지
-            log.info("saveUser exception {}", e.getMessage());
-            result.put("reason", "아이디 중복 또는 기타 오류 입니다.");
+            result.put("reason", "기타 오류 입니다. 관리자에게 문의하세요");
         }
 
         return result;

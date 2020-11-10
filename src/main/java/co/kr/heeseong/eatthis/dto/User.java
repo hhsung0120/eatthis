@@ -1,11 +1,11 @@
 package co.kr.heeseong.eatthis.dto;
 
+import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.SignUpType;
-import co.kr.heeseong.eatthis.domain.test.TestEntity;
+import co.kr.heeseong.eatthis.domain.user.UserDetailEntity;
 import co.kr.heeseong.eatthis.domain.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Builder
 @Setter
@@ -39,6 +39,12 @@ public class User {
                 .privacyAgree(privacyAgree)
                 .locationAgree(locationAgree)
                 .signUpType(signUpType)
+                .build();
+    }
+
+    public UserDetailEntity toDetailEntity(long idx){
+        return UserDetailEntity.builder()
+                .idx(idx)
                 .build();
     }
 }

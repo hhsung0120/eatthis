@@ -4,6 +4,7 @@ package co.kr.heeseong.eatthis.domain.user;
 import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.domain.common.TimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,10 @@ public class UserDetailEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private long idx;
+
+    @Column
+    private String profileImagePath;
 
     @Column
     private String nickName;
@@ -25,7 +29,6 @@ public class UserDetailEntity extends TimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType gender;
 
-    @Column
     private String birthday;
 
     @Column
@@ -37,6 +40,15 @@ public class UserDetailEntity extends TimeEntity {
     @Column
     private char serviceAlarm;
 
-    @Column
-    private String profileImagePath;
+    public void update(String profileImagePath, String nickName, String birthday, GenderType gender){
+        this.profileImagePath = profileImagePath;
+        this.nickName = nickName;
+        this.gender = gender;
+        this.birthday = birthday;
+    }
+
+    @Builder
+    public UserDetailEntity(long idx){
+        this.idx = idx;
+    }
 }

@@ -8,9 +8,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "faq")
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "faq")
 public class FaqEntity extends TimeEntity {
 
     @Id

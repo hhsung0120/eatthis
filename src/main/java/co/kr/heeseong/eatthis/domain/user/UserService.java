@@ -1,15 +1,15 @@
 package co.kr.heeseong.eatthis.domain.user;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
+import co.kr.heeseong.eatthis.Enum.GenderType;
+import co.kr.heeseong.eatthis.domain.test.TestEntity;
 import co.kr.heeseong.eatthis.dto.User;
-import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 @Slf4j
@@ -18,6 +18,7 @@ import java.util.Optional;
 public class UserService {
 
     final private UserRepository userRepository;
+    final private UserDetailRepository userDetailRepository;
 
     /**
      * 유저 정보
@@ -52,7 +53,7 @@ public class UserService {
      * 회원가입
      * @param user
      */
-
+    @Transactional
     public long saveUser(User user){
         if(user.getIdx() == 0){
             return this.insertUser(user);
@@ -62,12 +63,22 @@ public class UserService {
     }
 
     public long insertUser(User user){
-        return userRepository.save(user.toEntity()).getIdx();
+        long idx = 0;
+        try{
+            idx = userRepository.save(user.toEntity()).getIdx();
+            if(idx > 0){
+                userDetailRepository.save(user.toDetailEntity(idx));
+            }
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("중복 된 아이디 입니다. -> " + user.getId());
+        }
+
+        return idx;
     }
 
-    @Transactional
-    public long updateUser(User user) {
-        return 0;
+    public long updateUser(User user) throws IllegalArgumentException{
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + user.getIdx()));
+        userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
+        return userDetailEntity.getIdx();
     }
-
 }
