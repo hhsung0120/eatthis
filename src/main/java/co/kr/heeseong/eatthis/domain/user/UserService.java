@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.domain.user;
 
 import co.kr.heeseong.eatthis.Enum.GenderType;
+import co.kr.heeseong.eatthis.Enum.LoginResultType;
 import co.kr.heeseong.eatthis.domain.test.TestEntity;
 import co.kr.heeseong.eatthis.dto.User;
 import lombok.AllArgsConstructor;
@@ -21,9 +22,9 @@ public class UserService {
     final private UserDetailRepository userDetailRepository;
 
     /**
-     * 유저 정보
+     * 사용자 정보 호출
      * @param idx
-     * @return
+     * @return User
      */
     public User getUser(Long idx) {
         try{
@@ -80,5 +81,23 @@ public class UserService {
         UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + user.getIdx()));
         userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
         return userDetailEntity.getIdx();
+    }
+
+    /**
+     * 로그인 처리
+     * @param user
+     * @return LoginResultType
+     */
+    public LoginResultType loginProsess(User user) {
+
+        if(userRepository.findByEmailId(user.getId()) == null){
+            return LoginResultType.USERNOTFOUND;
+        }
+
+        if(userRepository.findByIdAndPassword(user.getId(), user.getPassword()) == 0){
+            return LoginResultType.INVALIDPASSWORD;
+        }
+
+        return LoginResultType.SUCCESS;
     }
 }

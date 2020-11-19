@@ -50,4 +50,13 @@ public class UserController {
         result.put("user", userService.getUser(idx));
         return result;
     }
+
+    @PostMapping("/login")
+    public Map<String, Object> login(@ModelAttribute User user){
+        Map<String, Object> result = new HashMap<>();
+        result.put("loginResult", userService.loginProsess(user));
+        return result;
+    }
+
+
 }
