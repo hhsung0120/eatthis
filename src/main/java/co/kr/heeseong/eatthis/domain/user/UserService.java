@@ -88,8 +88,7 @@ public class UserService {
      * @param user
      * @return LoginResultType
      */
-    public LoginResultType loginProsess(User user) {
-
+    public LoginResultType loginProsess(User user) throws Exception {
         if(userRepository.findByEmailId(user.getId()) == null){
             return LoginResultType.USERNOTFOUND;
         }

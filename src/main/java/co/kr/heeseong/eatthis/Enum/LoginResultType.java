@@ -5,6 +5,7 @@ public enum LoginResultType {
      SUCCESS
     ,USERNOTFOUND
     ,INVALIDPASSWORD
+    ,FAIL
     ;
 
 

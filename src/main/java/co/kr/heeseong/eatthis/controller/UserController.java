@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.LoginResultType;
 import co.kr.heeseong.eatthis.domain.user.UserService;
 import co.kr.heeseong.eatthis.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,11 @@ public class UserController {
     @PostMapping("/login")
     public Map<String, Object> login(@ModelAttribute User user){
         Map<String, Object> result = new HashMap<>();
-        result.put("loginResult", userService.loginProsess(user));
+        try{
+            result.put("loginResult", userService.loginProsess(user));
+        }catch (Exception e){
+            result.put("loginResult", LoginResultType.FAIL);
+        }
         return result;
     }
 
