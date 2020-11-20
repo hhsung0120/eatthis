@@ -3,9 +3,9 @@ package co.kr.heeseong.eatthis.Enum;
 public enum LoginResultType {
 
      SUCCESS
-    ,USERNOTFOUND
-    ,INVALIDPASSWORD
-    ,FAIL
+    , USER_NOT_FOUND
+    , INVALID_PASSWORD
+    , FAIL
     ;
 
 
