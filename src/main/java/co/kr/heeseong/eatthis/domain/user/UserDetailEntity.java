@@ -46,6 +46,16 @@ public class UserDetailEntity extends TimeEntity {
         this.birthday = birthday;
     }
 
+    public void updateFoodAlarm(char foodAlarm){
+        this.foodAlarm = foodAlarm;
+    }
+    public void updateEventAlarm(char eventAlarm){
+        this.eventAlarm = eventAlarm;
+    }
+    public void updateServiceAlarm(char serviceAlarm){
+        this.serviceAlarm = serviceAlarm;
+    }
+
     @Builder
     public UserDetailEntity(long idx){
         this.idx = idx;

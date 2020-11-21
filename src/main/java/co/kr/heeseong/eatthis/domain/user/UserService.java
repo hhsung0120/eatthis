@@ -2,8 +2,10 @@ package co.kr.heeseong.eatthis.domain.user;
 
 import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.LoginResultType;
+import co.kr.heeseong.eatthis.Enum.UpdateResultType;
 import co.kr.heeseong.eatthis.domain.test.TestEntity;
 import co.kr.heeseong.eatthis.dto.User;
+import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -11,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Optional;
 
 @Slf4j
@@ -90,13 +93,66 @@ public class UserService {
      */
     public LoginResultType loginProsess(User user) throws Exception {
         if(userRepository.findByEmailId(user.getId()) == null){
-            return LoginResultType.USERNOTFOUND;
+            return LoginResultType.USER_NOT_FOUND;
         }
 
         if(userRepository.findByIdAndPassword(user.getId(), user.getPassword()) == 0){
-            return LoginResultType.INVALIDPASSWORD;
+            return LoginResultType.INVALID_PASSWORD;
         }
 
         return LoginResultType.SUCCESS;
     }
+
+    /**
+     * 점심 알람 업데이트
+     * @param idx
+     * @param foodAlarm
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public UpdateResultType updateFoodAlarm(Long idx, char foodAlarm) throws Exception {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(foodAlarm)) || (!"Y".equals(String.valueOf(foodAlarm)) && !"N".equals(String.valueOf(foodAlarm)))){
+            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+        }
+        userDetailEntity.updateFoodAlarm(foodAlarm);
+        return UpdateResultType.SUCCESS;
+    }
+
+    /**
+     * 이벤트 알람 업데이트
+     * @param idx
+     * @param eventAlarm
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public UpdateResultType updateEventAlarm(Long idx, char eventAlarm) throws Exception {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(eventAlarm)) || (!"Y".equals(String.valueOf(eventAlarm)) && !"N".equals(String.valueOf(eventAlarm)))){
+            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+        }
+        userDetailEntity.updateEventAlarm(eventAlarm);
+        return UpdateResultType.SUCCESS;
+    }
+
+    /**
+     * 서비스 알람 업데이트
+     * @param idx
+     * @param serviceAlarm
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public UpdateResultType updateServiceAlarm(Long idx, char serviceAlarm) throws Exception {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(serviceAlarm)) || (!"Y".equals(String.valueOf(serviceAlarm)) && !"N".equals(String.valueOf(serviceAlarm)))){
+            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+        }
+        userDetailEntity.updateServiceAlarm(serviceAlarm);
+        return UpdateResultType.SUCCESS;
+    }
+
+
 }

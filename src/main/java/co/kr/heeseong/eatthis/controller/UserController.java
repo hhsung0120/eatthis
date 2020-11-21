@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.Enum.LoginResultType;
+import co.kr.heeseong.eatthis.domain.user.UserDetailEntity;
 import co.kr.heeseong.eatthis.domain.user.UserService;
 import co.kr.heeseong.eatthis.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,39 @@ public class UserController {
             result.put("loginResult", userService.loginProsess(user));
         }catch (Exception e){
             result.put("loginResult", LoginResultType.FAIL);
+        }
+        return result;
+    }
+
+    @PutMapping("/{idx}/setFoodAlarm")
+    public Map<String, Object> setFoodAlarm(@ModelAttribute User user){
+        Map<String, Object> result = new HashMap<>();
+        try{
+            result.put("updateResult", userService.updateFoodAlarm(user.getIdx(), user.getFoodAlarm()));
+        }catch (Exception e){
+            result.put("updateResult", e.getMessage());
+        }
+        return result;
+    }
+
+    @PutMapping("/{idx}/setEventAlarm")
+    public Map<String, Object> setEventAlarm(@ModelAttribute User user){
+        Map<String, Object> result = new HashMap<>();
+        try{
+            result.put("updateResult", userService.updateEventAlarm(user.getIdx(), user.getEventAlarm()));
+        }catch (Exception e){
+            result.put("updateResult", e.getMessage());
+        }
+        return result;
+    }
+
+    @PutMapping("/{idx}/setServiceAlarm")
+    public Map<String, Object> setServiceAlarm(@ModelAttribute User user){
+        Map<String, Object> result = new HashMap<>();
+        try{
+            result.put("updateResult", userService.updateServiceAlarm(user.getIdx(), user.getServiceAlarm()));
+        }catch (Exception e){
+            result.put("updateResult", e.getMessage());
         }
         return result;
     }
