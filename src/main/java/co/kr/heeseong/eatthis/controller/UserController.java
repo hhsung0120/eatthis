@@ -53,6 +53,19 @@ public class UserController {
         return result;
     }
 
+    @GetMapping("/login")
+    public Map<String, Object> login(){
+        Map<String, Object> result = new LinkedHashMap<>();
+
+        result.put("[request - post]", "");
+        result.put("id", "hhsung0120@naver.com");
+        result.put("password", "1234");
+        result.put("[response]", "");
+        result.put("[성공시]", "loginResult : SUCCESS");
+        result.put("[실패시]", "loginResult : USER_NOT_FOUND, INVALID_PASSWORD, FAIL");
+        return result;
+    }
+
     @PostMapping("/login")
     public Map<String, Object> login(@ModelAttribute User user){
         Map<String, Object> result = new HashMap<>();
