@@ -5,6 +5,8 @@ plugins {
     id 'war'
 }
 
+apply plugin: 'org.springframework.boot'
+
 bootWar{
     archiveBaseName = 'ROOT'
     archiveFileName = 'ROOT.war'

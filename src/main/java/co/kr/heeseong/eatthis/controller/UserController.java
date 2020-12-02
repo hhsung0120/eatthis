@@ -61,8 +61,8 @@ public class UserController {
         result.put("id", "hhsung0120@naver.com");
         result.put("password", "1234");
         result.put("[response]", "");
-        result.put("[성공시]", "loginResult : SUCCESS");
-        result.put("[실패시]", "loginResult : USER_NOT_FOUND, INVALID_PASSWORD, FAIL");
+        result.put("[성공]", "loginResult : SUCCESS");
+        result.put("[실패]", "loginResult : USER_NOT_FOUND, INVALID_PASSWORD, FAIL");
         return result;
     }
 
@@ -109,6 +109,4 @@ public class UserController {
         }
         return result;
     }
-
-
 }
