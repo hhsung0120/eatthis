@@ -1,19 +1,19 @@
 package co.kr.heeseong.eatthis.domain.user;
 
+import co.kr.heeseong.eatthis.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.LoginResultType;
 import co.kr.heeseong.eatthis.Enum.UpdateResultType;
-import co.kr.heeseong.eatthis.domain.test.TestEntity;
 import co.kr.heeseong.eatthis.dto.User;
 import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
+import java.time.LocalTime;
+import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -29,27 +29,24 @@ public class UserService {
      * @param idx
      * @return User
      */
-    public User getUser(Long idx) {
-        try{
-            Optional<UserEntity> optional = userRepository.findById(idx);
-            if(optional.isPresent()){
-                return User.builder()
-                        .idx(optional.get().getIdx())
-                        .id(optional.get().getId())
-                        .nickName(optional.get().getUserDetailEntity().getNickName())
-                        .password("")
-                        .gender(optional.get().getUserDetailEntity().getGender().getValue())
-                        .birthday(optional.get().getUserDetailEntity().getBirthday())
-                        .foodAlarm(optional.get().getUserDetailEntity().getFoodAlarm())
-                        .eventAlarm(optional.get().getUserDetailEntity().getEventAlarm())
-                        .serviceAlarm(optional.get().getUserDetailEntity().getServiceAlarm())
-                        .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
-                        .build();
-            }
-            return new User();
-        }catch (Exception e){
-            log.info("getUserResult exception {}", e.getMessage());
-            return new User();
+    public User getUser(Long idx){
+        Optional<UserEntity> optional = userRepository.findById(idx);
+        if(optional.isPresent()) {
+            return User.builder()
+                    .idx(optional.get().getIdx())
+                    .id(optional.get().getId())
+                    .nickName(optional.get().getUserDetailEntity().getNickName())
+                    .password("")
+                    .gender(optional.get().getUserDetailEntity().getGender().getValue())
+                    .birthday(optional.get().getUserDetailEntity().getBirthday())
+                    .lunchAlarm(optional.get().getUserDetailEntity().getLunchAlarm())
+                    .dinnerAlarm(optional.get().getUserDetailEntity().getDinnerAlarm())
+                    .eventAlarm(optional.get().getUserDetailEntity().getEventAlarm())
+                    .serviceAlarm(optional.get().getUserDetailEntity().getServiceAlarm())
+                    .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
+                    .build();
+        }else{
+            throw new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx);
         }
     }
 
@@ -74,14 +71,14 @@ public class UserService {
                 userDetailRepository.save(user.toDetailEntity(idx));
             }
         }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("중복 된 아이디 입니다. -> " + user.getId());
+            throw new DataIntegrityViolationException(ErrorCode.USER_DUPLICATE.getValue() + " -> " + user.getId());
         }
 
         return idx;
     }
 
     public long updateUser(User user) throws IllegalArgumentException{
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + user.getIdx()));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + user.getIdx()));
         userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
         return userDetailEntity.getIdx();
     }
@@ -91,7 +88,7 @@ public class UserService {
      * @param user
      * @return LoginResultType
      */
-    public LoginResultType loginProsess(User user) throws Exception {
+    public LoginResultType loginProsess(User user){
         if(userRepository.findByEmailId(user.getId()) == null){
             return LoginResultType.USER_NOT_FOUND;
         }
@@ -106,53 +103,79 @@ public class UserService {
     /**
      * 점심 알람 업데이트
      * @param idx
-     * @param foodAlarm
+     * @param alarmYn
+     * @param alarmTimeHour
+     * @param alarmTimeMinute
      * @return
-     * @throws Exception
+     * @throws IllegalArgumentException
      */
     @Transactional
-    public UpdateResultType updateFoodAlarm(Long idx, char foodAlarm) throws Exception {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
-        if(StringUtil.isEmpty(String.valueOf(foodAlarm)) || (!"Y".equals(String.valueOf(foodAlarm)) && !"N".equals(String.valueOf(foodAlarm)))){
-            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+    public UpdateResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) throws IllegalArgumentException{
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
+
+        if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
+            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateFoodAlarm(foodAlarm);
+
+        LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
+
+        userDetailEntity.updateLunchAlarm(alarmYn, alarmTime);
+        return UpdateResultType.SUCCESS;
+    }
+
+    /**
+     * 저녁 알람 업데이트
+     * @param idx
+     * @param alarmYn
+     * @param alarmTimeHour
+     * @param alarmTimeMinute
+     * @return
+     * @throws IllegalArgumentException
+     */
+    @Transactional
+    public UpdateResultType updateDinnerAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
+            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
+        }
+        userDetailEntity.updateDinnerAlarm(alarmYn);
         return UpdateResultType.SUCCESS;
     }
 
     /**
      * 이벤트 알람 업데이트
      * @param idx
-     * @param eventAlarm
+     * @param alarmYn
      * @return
-     * @throws Exception
+     * @throws IllegalArgumentException
      */
     @Transactional
-    public UpdateResultType updateEventAlarm(Long idx, char eventAlarm) throws Exception {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
-        if(StringUtil.isEmpty(String.valueOf(eventAlarm)) || (!"Y".equals(String.valueOf(eventAlarm)) && !"N".equals(String.valueOf(eventAlarm)))){
-            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+    public UpdateResultType updateEventAlarm(Long idx, char alarmYn) {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
+            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateEventAlarm(eventAlarm);
+        userDetailEntity.updateEventAlarm(alarmYn);
         return UpdateResultType.SUCCESS;
     }
 
     /**
      * 서비스 알람 업데이트
      * @param idx
-     * @param serviceAlarm
+     * @param alarmYn
      * @return
-     * @throws Exception
+     * @throws IllegalArgumentException
      */
     @Transactional
-    public UpdateResultType updateServiceAlarm(Long idx, char serviceAlarm) throws Exception {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. -> " + idx));
-        if(StringUtil.isEmpty(String.valueOf(serviceAlarm)) || (!"Y".equals(String.valueOf(serviceAlarm)) && !"N".equals(String.valueOf(serviceAlarm)))){
-            throw new IllegalArgumentException("올바른 인자가 아닙니다.");
+    public UpdateResultType updateServiceAlarm(Long idx, char alarmYn) {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
+        if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
+            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateServiceAlarm(serviceAlarm);
+        userDetailEntity.updateServiceAlarm(alarmYn);
         return UpdateResultType.SUCCESS;
     }
+
 
 
 }

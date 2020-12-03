@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -31,13 +32,22 @@ public class UserDetailEntity extends TimeEntity {
     private String birthday;
 
     @Column
-    private char foodAlarm;
+    private char lunchAlarm;
+
+    @Column
+    private char dinnerAlarm;
 
     @Column
     private char eventAlarm;
 
     @Column
     private char serviceAlarm;
+
+    @Column
+    private LocalTime lunchAlarmTime;
+
+    @Column
+    private LocalTime dinnerAlarmTime;
 
     public void update(String profileImagePath, String nickName, String birthday, GenderType gender){
         this.profileImagePath = profileImagePath;
@@ -46,8 +56,14 @@ public class UserDetailEntity extends TimeEntity {
         this.birthday = birthday;
     }
 
-    public void updateFoodAlarm(char foodAlarm){
-        this.foodAlarm = foodAlarm;
+    public void updateLunchAlarm(char lunchAlarm, LocalTime alarmTime){
+        this.lunchAlarm = lunchAlarm;
+        if("Y".equals(String.valueOf(lunchAlarm))){
+            this.lunchAlarmTime = alarmTime;
+        }
+    }
+    public void updateDinnerAlarm(char dinnerAlarm){
+        this.dinnerAlarm = dinnerAlarm;
     }
     public void updateEventAlarm(char eventAlarm){
         this.eventAlarm = eventAlarm;

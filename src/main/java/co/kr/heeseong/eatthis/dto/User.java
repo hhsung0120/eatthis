@@ -1,11 +1,12 @@
 package co.kr.heeseong.eatthis.dto;
 
-import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.SignUpType;
 import co.kr.heeseong.eatthis.domain.user.UserDetailEntity;
 import co.kr.heeseong.eatthis.domain.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
+
+import java.time.LocalTime;
 
 @Builder
 @Setter
@@ -21,7 +22,10 @@ public class User {
     private String nickName;
     private String gender;
     private String birthday;
-    private char foodAlarm;
+    private char lunchAlarm;
+    private char dinnerAlarm;
+    private int alarmTimeHour;
+    private int alarmTimeMinute;
     private char eventAlarm;
     private char serviceAlarm;
     private char termsAgree;
