@@ -80,7 +80,7 @@ public class UserController {
 
     @GetMapping("/{idx}")
     public Map<String, Object> user(@PathVariable Long idx){
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("user", userService.getUser(idx));
         }catch (Exception e) {
@@ -104,7 +104,7 @@ public class UserController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@ModelAttribute User user){
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("loginResult", userService.loginProsess(user));
         }catch (Exception e){
@@ -114,8 +114,8 @@ public class UserController {
     }
 
     @PutMapping("/{idx}/setLunchAlarm")
-    public Map<String, Object> setFoodLunchAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new HashMap<>();
+    public Map<String, Object> setLunchAlarm(@PathVariable long idx, @ModelAttribute User user){
+        Map<String, Object> result = new LinkedHashMap<>();
 
         try{
             result.put("updateResult", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
@@ -128,8 +128,8 @@ public class UserController {
     }
 
     @PutMapping("/{idx}/setDinnerAlarm")
-    public Map<String, Object> setFoodDinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new HashMap<>();
+    public Map<String, Object> setDinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
+        Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("updateResult", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
         }catch (Exception e){
@@ -140,7 +140,7 @@ public class UserController {
 
     @PutMapping("/{idx}/setEventAlarm")
     public Map<String, Object> setEventAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("updateResult", userService.updateEventAlarm(idx, user.getEventAlarm()));
         }catch (Exception e){
@@ -151,12 +151,68 @@ public class UserController {
 
     @PutMapping("/{idx}/setServiceAlarm")
     public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("updateResult", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
         }catch (Exception e){
             result.put("updateResult", e.getMessage());
         }
+        return result;
+    }
+
+    @GetMapping("/{idx}/setLunchAlarm")
+    public Map<String, Object> setLunchAlarm(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - put]", "점심 알림");
+        result.put("lunchAlarm", "Y, N");
+        result.put("alarmTimeHour", "0~23");
+        result.put("alarmTimeMinute", "0~59");
+        result.put("[성공]", "updateResult : SUCCESS");
+        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("    ", "");
+        result.put("     ", "");
+        result.put("      ", "");
+        result.put("comment", "lunchAlarm 하고 시간은 무조건 같이 보내주세요 Y면 시간도 업데이트 되고 N 이면 안될거라서요");
+
+        return result;
+    }
+
+    @GetMapping("/{idx}/setDinnerAlarm")
+    public Map<String, Object> setDinnerAlarm(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - put]", "저녁 알림");
+        result.put("dinnerAlarm", "Y, N");
+        result.put("alarmTimeHour", "0~23");
+        result.put("alarmTimeMinute", "0~59");
+        result.put("[성공]", "updateResult : SUCCESS");
+        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("    ", "");
+        result.put("     ", "");
+        result.put("      ", "");
+        result.put("comment", "dinnerAlarm 하고 시간은 무조건 같이 보내주세요 Y면 시간도 업데이트 되고 N 이면 안될거라서요");
+
+        return result;
+    }
+
+    @GetMapping("/{idx}/setEventAlarm")
+    public Map<String, Object> setEventAlarm(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - put]", "이벤트 알림");
+        result.put("eventAlarm", "Y, N");
+        result.put("[성공]", "updateResult : SUCCESS");
+        result.put("[실패]", "updateResult : e.getMessage()");
+
+        return result;
+    }
+
+    @GetMapping("/{idx}/setServiceAlarm")
+    public Map<String, Object> setServiceAlarm(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - put]", "서비스 알림");
+        result.put("serviceAlarm", "Y, N");
+        result.put("[성공]", "updateResult : SUCCESS");
+        result.put("[실패]", "updateResult : e.getMessage()");
+
         return result;
     }
 }

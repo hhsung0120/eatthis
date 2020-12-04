@@ -62,8 +62,11 @@ public class UserDetailEntity extends TimeEntity {
             this.lunchAlarmTime = alarmTime;
         }
     }
-    public void updateDinnerAlarm(char dinnerAlarm){
+    public void updateDinnerAlarm(char dinnerAlarm, LocalTime alarmTime){
         this.dinnerAlarm = dinnerAlarm;
+        if("Y".equals(String.valueOf(lunchAlarm))){
+            this.dinnerAlarmTime = alarmTime;
+        }
     }
     public void updateEventAlarm(char eventAlarm){
         this.eventAlarm = eventAlarm;

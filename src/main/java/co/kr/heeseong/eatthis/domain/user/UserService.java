@@ -138,7 +138,10 @@ public class UserService {
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateDinnerAlarm(alarmYn);
+
+        LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
+
+        userDetailEntity.updateDinnerAlarm(alarmYn, alarmTime);
         return UpdateResultType.SUCCESS;
     }
 
