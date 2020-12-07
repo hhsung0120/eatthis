@@ -6,8 +6,6 @@ import co.kr.heeseong.eatthis.domain.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
-import java.time.LocalTime;
-
 @Builder
 @Setter
 @Getter

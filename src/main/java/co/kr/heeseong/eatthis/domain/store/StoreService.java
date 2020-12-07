@@ -14,7 +14,7 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Service
-public class MainService {
+public class StoreService {
 
     private StoreRepository storeRepository;
     /**

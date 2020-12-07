@@ -113,7 +113,7 @@ public class UserController {
         return result;
     }
 
-    @PutMapping("/{idx}/setLunchAlarm")
+    @PostMapping("/{idx}/setLunchAlarm")
     public Map<String, Object> setLunchAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
 
@@ -127,7 +127,7 @@ public class UserController {
         return result;
     }
 
-    @PutMapping("/{idx}/setDinnerAlarm")
+    @PostMapping("/{idx}/setDinnerAlarm")
     public Map<String, Object> setDinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
@@ -138,7 +138,7 @@ public class UserController {
         return result;
     }
 
-    @PutMapping("/{idx}/setEventAlarm")
+    @PostMapping("/{idx}/setEventAlarm")
     public Map<String, Object> setEventAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
@@ -149,7 +149,7 @@ public class UserController {
         return result;
     }
 
-    @PutMapping("/{idx}/setServiceAlarm")
+    @PostMapping("/{idx}/setServiceAlarm")
     public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
