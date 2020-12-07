@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
-import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -29,7 +28,7 @@ public class UserService {
      * @param idx
      * @return User
      */
-    public User getUser(Long idx){
+    public User getUser(long idx){
         Optional<UserEntity> optional = userRepository.findById(idx);
         if(optional.isPresent()) {
             return User.builder()
@@ -64,7 +63,7 @@ public class UserService {
     }
 
     public long insertUser(User user){
-        long idx = 0;
+        long idx;
         try{
             idx = userRepository.save(user.toEntity()).getIdx();
             if(idx > 0){
