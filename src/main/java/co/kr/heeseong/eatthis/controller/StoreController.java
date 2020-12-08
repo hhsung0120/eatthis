@@ -25,10 +25,22 @@ public class StoreController {
         return storeService.getMainList(locationX, locationY);
     }
 
-    @PostMapping("/{storeIdx}/saveReview")
-    public Map<String, Object> saveReview(@PathVariable long storeIdx, Review review){
+    @PostMapping("/{storeIdx}/{userIdx}/{menuIdx}/saveReview")
+    public Map<String, Object> saveReview(@PathVariable long storeIdx
+                                        , @PathVariable long userIdx
+                                        , @PathVariable long menuIdx
+                                        , @ModelAttribute Review review){
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("storeIdx",storeIdx);
+
+        try {
+            review.setStoreIdx(storeIdx);
+            review.setUserIdx(userIdx);
+            review.setMenuIdx(menuIdx);
+            storeService.saveReview(review);
+        }catch (Exception e){
+
+        }
+
         return result;
     }
 
