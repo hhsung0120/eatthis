@@ -61,7 +61,11 @@ public class StoreService {
             idx = reviewRepository.save(review.toEntity()).getIdx();
             if(idx > 0){
                 CommonFile commonFile;
-                System.out.println(review.getFile().isEmpty());
+                for(MultipartFile m : review.getFile()){
+                    if(!m.isEmpty()){
+
+                    }
+                }
             }
         }
     }

@@ -38,7 +38,7 @@ public class StoreController {
             review.setMenuIdx(menuIdx);
             storeService.saveReview(review);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
         return result;
