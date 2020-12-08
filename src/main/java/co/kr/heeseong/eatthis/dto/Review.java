@@ -31,8 +31,8 @@ public class Review {
         return ReviewEntity.builder()
                 .idx(idx)
                 .storeIdx(storeIdx)
-                .menuIdx(menuIdx)
                 .userIdx(userIdx)
+                .menuIdx(menuIdx)
                 .contents(contents)
                 .totalPrice(totalPrice)
                 .build();

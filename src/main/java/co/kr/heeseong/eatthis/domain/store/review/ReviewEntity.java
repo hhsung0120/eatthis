@@ -2,7 +2,6 @@ package co.kr.heeseong.eatthis.domain.store.review;
 
 import co.kr.heeseong.eatthis.domain.common.TimeEntity;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 

@@ -25,20 +25,24 @@ public class StoreController {
         return storeService.getMainList(locationX, locationY);
     }
 
-    @PostMapping("/{storeIdx}/{userIdx}/{menuIdx}/saveReview")
-    public Map<String, Object> saveReview(@PathVariable long storeIdx
-                                        , @PathVariable long userIdx
+    @PostMapping("/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}/saveReview")
+    public Map<String, Object> saveReview(@PathVariable long userIdx
+                                        , @PathVariable long storeIdx
                                         , @PathVariable long menuIdx
+                                        , @PathVariable long reviewIdx
                                         , @ModelAttribute Review review){
         Map<String, Object> result = new LinkedHashMap<>();
 
         try {
-            review.setStoreIdx(storeIdx);
             review.setUserIdx(userIdx);
+            review.setStoreIdx(storeIdx);
             review.setMenuIdx(menuIdx);
+            review.setIdx(reviewIdx);
             storeService.saveReview(review);
+        }catch (IllegalArgumentException e){
+            result.put("reason", e.getMessage());
         }catch (Exception e){
-            e.printStackTrace();
+            result.put("reason", e.getMessage());
         }
 
         return result;

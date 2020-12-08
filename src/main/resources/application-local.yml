@@ -27,4 +27,4 @@ logging:
     max-history: 1
     max-size: 100MB
 
-default-upload-path: D:${file.separator}upload${file.separator}
+default-upload-path: D:${file.separator}upload${file.separator}eatthis${file.separator}
