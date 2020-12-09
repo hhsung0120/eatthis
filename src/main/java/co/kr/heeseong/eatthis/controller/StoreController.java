@@ -39,7 +39,11 @@ public class StoreController {
         result.put("", "");
         result.put(" ", "");
         result.put("  ", "");
+        result.put("comment", "if userIdx > 0 성공으로 보면되고 else reason 출력하시면 됩니다. ");
+        result.put("comment", "리뷰 IDX 는 최초 등록 시 0 으로 보내면 됩니다.");
         result.put("TODO", "메뉴 구조가 현재 없어서 없는 메뉴에대한 예외를 처리해야함");
+        result.put("TODO", "리뷰 수정 기능이 있었나 ? 기획에..? 현재는 없음 구현 해야함");
+
         return result;
     }
 
