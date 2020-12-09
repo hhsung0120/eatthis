@@ -24,6 +24,7 @@ public class Review {
     private String contents;
     private int totalPrice;
     private List<MultipartFile> file;
+    private float star;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
 
@@ -35,6 +36,7 @@ public class Review {
                 .menuIdx(menuIdx)
                 .contents(contents)
                 .totalPrice(totalPrice)
+                .star(star)
                 .build();
     }
 }

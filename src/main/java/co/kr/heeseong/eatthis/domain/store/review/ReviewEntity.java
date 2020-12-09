@@ -31,14 +31,18 @@ public class ReviewEntity extends TimeEntity {
     @Column
     private int totalPrice;
 
+    @Column
+    private float star;
+
     @Builder
-    public ReviewEntity(long idx, long storeIdx, long menuIdx, long userIdx, String contents, int totalPrice){
+    public ReviewEntity(long idx, long storeIdx, long menuIdx, long userIdx, String contents, int totalPrice, float star){
         this.idx = idx;
         this.storeIdx = storeIdx;
         this.menuIdx = menuIdx;
         this.userIdx = userIdx;
         this.contents = contents;
         this.totalPrice = totalPrice;
+        this.star = star;
     }
 
 

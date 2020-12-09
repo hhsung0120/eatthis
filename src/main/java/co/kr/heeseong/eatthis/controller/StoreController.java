@@ -25,6 +25,24 @@ public class StoreController {
         return storeService.getMainList(locationX, locationY);
     }
 
+    @GetMapping("/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}/saveReview")
+    public Map<String, Object> saveReview(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - post]", "");
+        result.put("contents", "리뷰내용입니다.");
+        result.put("file", "멀티플로 보내고 받을 수 있습니다.");
+        result.put("totalPrice", "총 금액");
+        result.put("star", "별점");
+        result.put("[response]", "");
+        result.put("[성공]", "reviewIdx : 0 보다 큼");
+        result.put("[실패]", "reviewIdx : 0, reason : e.getMessage()");
+        result.put("", "");
+        result.put(" ", "");
+        result.put("  ", "");
+        result.put("TODO", "메뉴 구조가 현재 없어서 없는 메뉴에대한 예외를 처리해야함");
+        return result;
+    }
+
     @PostMapping("/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}/saveReview")
     public Map<String, Object> saveReview(@PathVariable long userIdx
                                         , @PathVariable long storeIdx
@@ -32,17 +50,18 @@ public class StoreController {
                                         , @PathVariable long reviewIdx
                                         , @ModelAttribute Review review){
         Map<String, Object> result = new LinkedHashMap<>();
+        result.put("reviewIdx", 0);
 
         try {
             review.setUserIdx(userIdx);
             review.setStoreIdx(storeIdx);
             review.setMenuIdx(menuIdx);
             review.setIdx(reviewIdx);
-            storeService.saveReview(review);
+            result.put("reviewIdx", storeService.saveReview(review));
         }catch (IllegalArgumentException e){
             result.put("reason", e.getMessage());
         }catch (Exception e){
-            result.put("reason", e.getMessage());
+            result.put("reason", "리뷰 저장 실패 또는 파일 업로드, 저장 실패 입니다.");
         }
 
         return result;

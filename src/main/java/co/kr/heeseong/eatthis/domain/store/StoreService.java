@@ -69,15 +69,15 @@ public class StoreService {
      * @param review
      */
     @Transactional
-    public void saveReview(Review review){
+    public long saveReview(Review review) {
         if(review.getIdx() < 1){
-            this.insertReview(review);
+            return this.insertReview(review);
         }else{
-            this.updateReview(review);
+            return this.updateReview(review);
         }
     }
 
-    private void insertReview(Review review) {
+    private long insertReview(Review review){
         userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + review.getIdx()));
         storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.STORE_NOT_FOUNT.getValue() + " -> " + review.getStoreIdx()));
         //없는 메뉴도 검사할것
@@ -94,9 +94,10 @@ public class StoreService {
                 }
             }
         }
+        return idx;
     }
 
-    private void updateReview(Review review) {
-
+    private long updateReview(Review review) {
+        return 0;
     }
 }
