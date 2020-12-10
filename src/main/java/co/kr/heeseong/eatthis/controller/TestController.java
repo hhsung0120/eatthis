@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.dto.Test;
+import co.kr.heeseong.eatthis.model.Test;
 import co.kr.heeseong.eatthis.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

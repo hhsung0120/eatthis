@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.util;
 
-import co.kr.heeseong.eatthis.dto.CommonFile;
+import co.kr.heeseong.eatthis.model.CommonFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.StringUtils;

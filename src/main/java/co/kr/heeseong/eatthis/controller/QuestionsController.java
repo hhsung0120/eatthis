@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.domain.questions.QuestionsService;
-import co.kr.heeseong.eatthis.dto.Questions;
+import co.kr.heeseong.eatthis.service.QuestionsService;
+import co.kr.heeseong.eatthis.model.Questions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

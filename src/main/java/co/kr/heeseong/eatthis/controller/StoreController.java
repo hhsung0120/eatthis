@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.domain.store.StoreService;
-import co.kr.heeseong.eatthis.dto.Review;
+import co.kr.heeseong.eatthis.service.StoreService;
+import co.kr.heeseong.eatthis.model.Review;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
