@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.model;
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;
+import co.kr.heeseong.eatthis.Enum.UserStatus;
 import co.kr.heeseong.eatthis.service.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.service.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -31,6 +32,7 @@ public class User {
     private char locationAgree;
     private SignUpType signUpType;
     private String profileImagePath;
+    private UserStatus userStatus;
 
     public UserEntity toEntity(){
         return UserEntity.builder()

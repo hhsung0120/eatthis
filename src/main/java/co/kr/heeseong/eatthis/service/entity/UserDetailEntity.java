@@ -2,6 +2,7 @@ package co.kr.heeseong.eatthis.service.entity;
 
 
 import co.kr.heeseong.eatthis.Enum.GenderType;
+import co.kr.heeseong.eatthis.Enum.UserStatus;
 import co.kr.heeseong.eatthis.service.entity.common.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,6 +50,9 @@ public class UserDetailEntity extends TimeEntity {
     @Column
     private LocalTime dinnerAlarmTime;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
     public void update(String profileImagePath, String nickName, String birthday, GenderType gender){
         this.profileImagePath = profileImagePath;
         this.nickName = nickName;
@@ -62,17 +66,24 @@ public class UserDetailEntity extends TimeEntity {
             this.lunchAlarmTime = alarmTime;
         }
     }
+
     public void updateDinnerAlarm(char dinnerAlarm, LocalTime alarmTime){
         this.dinnerAlarm = dinnerAlarm;
         if("Y".equals(String.valueOf(lunchAlarm))){
             this.dinnerAlarmTime = alarmTime;
         }
     }
+
     public void updateEventAlarm(char eventAlarm){
         this.eventAlarm = eventAlarm;
     }
+
     public void updateServiceAlarm(char serviceAlarm){
         this.serviceAlarm = serviceAlarm;
+    }
+
+    public void updateStatus(UserStatus userStatus){
+        this.userStatus = userStatus;
     }
 
     @Builder

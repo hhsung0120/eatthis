@@ -24,4 +24,10 @@ public class SecessionEntity extends TimeEntity {
 
     @Column
     private String reason;
+
+    @Column
+    private String status;
+
+    @Column
+    private int order;
 }

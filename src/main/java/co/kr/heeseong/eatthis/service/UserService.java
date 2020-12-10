@@ -1,17 +1,15 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.Enum.ErrorCode;
-import co.kr.heeseong.eatthis.Enum.GenderType;
-import co.kr.heeseong.eatthis.Enum.LoginResultType;
-import co.kr.heeseong.eatthis.Enum.UpdateResultType;
-import co.kr.heeseong.eatthis.service.entity.UserDetailEntity;
-import co.kr.heeseong.eatthis.service.repository.UserDetailRepository;
-import co.kr.heeseong.eatthis.service.entity.UserEntity;
-import co.kr.heeseong.eatthis.service.repository.UserRepository;
-import co.kr.heeseong.eatthis.service.entity.SecessionEntity;
-import co.kr.heeseong.eatthis.service.repository.SecessionRepository;
+import co.kr.heeseong.eatthis.Enum.*;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.service.entity.SecessionEntity;
+import co.kr.heeseong.eatthis.service.entity.UserDetailEntity;
+import co.kr.heeseong.eatthis.service.entity.UserEntity;
+import co.kr.heeseong.eatthis.service.repository.SecessionRepository;
+import co.kr.heeseong.eatthis.service.repository.UserDetailRepository;
+import co.kr.heeseong.eatthis.service.repository.UserRepository;
+import co.kr.heeseong.eatthis.service.repository.UserSecessionRepository;
 import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +30,9 @@ public class UserService {
     final private UserRepository userRepository;
     final private UserDetailRepository userDetailRepository;
     final private SecessionRepository secessionRepository;
+    final private UserSecessionRepository userScessionRepository;
+
+
 
     /**
      * 사용자 정보 호출
@@ -189,9 +191,28 @@ public class UserService {
 
 
     public List<Secession> getSecessionReasonList() {
-    //    List<Secession> list = new ArrayList<>();
-        List<SecessionEntity> list = secessionRepository.findAll();
-        System.out.println(list.toString());
-        return null;
+        List<Secession> dataList = new ArrayList<>();
+        List<SecessionEntity> secessionEntityList = secessionRepository.findAllForOrderNumberAsc();
+        for(SecessionEntity secessionEntity : secessionEntityList){
+            Secession secession = Secession.builder()
+                                    .idx(secessionEntity.getIdx())
+                                    .reason(secessionEntity.getReason())
+                                    .build();
+
+            dataList.add(secession);
+        }
+
+        return dataList;
+    }
+
+    @Transactional
+    public UpdateResultType updateUserStatus(long idx, Secession secession) {
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
+        secession.setUserIdx(userDetailEntity.getIdx());
+        userScessionRepository.save(secession.toEntity());
+
+        userDetailEntity.updateStatus(UserStatus.SECESSION);
+
+        return UpdateResultType.SUCCESS;
     }
 }

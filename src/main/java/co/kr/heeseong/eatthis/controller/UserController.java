@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.Enum.LoginResultType;
+import co.kr.heeseong.eatthis.Enum.UpdateResultType;
 import co.kr.heeseong.eatthis.service.UserService;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
@@ -119,19 +120,25 @@ public class UserController {
     public Map<String, Object> secession(){
         Map<String, Object> result = new LinkedHashMap<>();
 
-        List<Secession> list = userService.getSecessionReasonList();
+        try{
+            result.put("list", userService.getSecessionReasonList());
+        }catch (Exception e){
+            result.put("exception", e.getMessage());
+        }
 
         return result;
     }
 
     @PostMapping("/{idx}/secession")
-    public Map<String, Object> secession(@PathVariable long idx, @ModelAttribute User user){
+    public Map<String, Object> secession(@PathVariable long idx, @ModelAttribute Secession secession){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("updateResult", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
+            result.put("updateResult", userService.updateUserStatus(idx, secession));
         }catch (Exception e){
             result.put("updateResult", e.getMessage());
         }
+        //TODO 탈퇴 성공 이후에 로그아웃 시켜버려야함
+        //내가 처리 해야하나? 화면에서 받은 이후 처리하면 되나 ?
 
         return result;
     }

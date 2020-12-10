@@ -1,10 +1,10 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.model.Secession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 @Controller
 @RestController
 @RequiredArgsConstructor
-public class manualController {
+public class ManualController {
 
     @GetMapping("/user/signUp")
     public Map<String, Object> signUp(){
@@ -118,6 +118,24 @@ public class manualController {
         result.put("[response]", "");
         result.put("[성공]", "loginResult : SUCCESS");
         result.put("[실패]", "loginResult : USER_NOT_FOUND, INVALID_PASSWORD, FAIL");
+        return result;
+    }
+
+    @GetMapping("/user/{idx}/secession")
+    public Map<String, Object> secession(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - post]", "");
+        result.put("idx", "탈퇴 사유 IDX 입니다.");
+        result.put("memo", "사유가 기타면 보내주시면 됩니다.");
+        result.put("[response]", "");
+        result.put("[성공]", "updateResult : SUCCESS");
+        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("    ", "");
+        result.put("     ", "");
+        result.put("      ", "");
+        result.put("comment", "if updateResult != SUCCESS 다 실패라서 실패 처리하시면 되고 성공 이후에 로그아웃 시켜주세요");
+        result.put("TODO", "회원 탈퇴한 회원 로그인 못하게 해야함");
+
 
         return result;
     }
