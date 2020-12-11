@@ -1,16 +1,15 @@
 package co.kr.heeseong.eatthis.service;
 
+import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
 import co.kr.heeseong.eatthis.service.repository.QuestionsRepository;
-import co.kr.heeseong.eatthis.model.Questions;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
@@ -19,24 +18,30 @@ public class QuestionsService {
     private QuestionsRepository questionsRepository;
     private static int pageSize = 10;
 
-    public List<Questions> getQuestionsList(int page) {
+    public Map<String, Object> getQuestionsList(long userIdx) {
+        Map<String, Object> result = new LinkedHashMap<>();
         List<Questions> questionsDtoList = new ArrayList<>();
-        Page<QuestionsEntity> questionsEntityList = questionsRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
 
-        for(QuestionsEntity questionsEntity : questionsEntityList){
-            Questions questionsDto = Questions.builder()
-                    .idx(questionsEntity.getIdx())
-                    .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
-                    .questions(questionsEntity.getQuestions())
-                    .answer(questionsEntity.getAnswer())
-                    .status(questionsEntity.getStatus().getValue())
-                    .createDate(questionsEntity.getCreateDate())
-                    .lastModifiedDate(questionsEntity.getLastModifiedDate())
-                    .build();
+        int count = questionsRepository.findAllCount(userIdx);
+        if(count > 0){
+            List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
+            for(QuestionsEntity questionsEntity : questionsEntityList){
+                Questions questionsDto = Questions.builder()
+                        .idx(questionsEntity.getIdx())
+                        .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
+                        .questions(questionsEntity.getQuestions())
+                        .answer(questionsEntity.getAnswer())
+                        .status(questionsEntity.getStatus().getValue())
+                        .createDate(questionsEntity.getCreateDate())
+                        .lastModifiedDate(questionsEntity.getLastModifiedDate())
+                        .build();
 
-            questionsDtoList.add(questionsDto);
+                questionsDtoList.add(questionsDto);
+            }
         }
+        result.put("count", count);
+        result.put("list", questionsDtoList);
 
-        return questionsDtoList;
+        return result;
     }
 }
