@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.service.FaqService;
 import co.kr.heeseong.eatthis.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,19 @@ import java.util.Map;
 public class QuestionsController {
 
     private final QuestionsService questionsService;
+    private final FaqService faqService;
+
+    @GetMapping("/view")
+    public Map<String, Object> getView(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        try{
+            result.put("categoryList", faqService.getFaqCategoryList());
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("reason", e.getMessage());
+        }
+        return result;
+    }
 
     @GetMapping("/{userIdx}/list")
     public Map<String, Object> questionsList(@PathVariable long userIdx){

@@ -1,8 +1,10 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.service.entity.FaqEntity;
-import co.kr.heeseong.eatthis.service.repository.FaqRepository;
 import co.kr.heeseong.eatthis.model.Faq;
+import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
+import co.kr.heeseong.eatthis.service.entity.FaqEntity;
+import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
+import co.kr.heeseong.eatthis.service.repository.FaqRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,15 +23,15 @@ import java.util.Map;
 public class FaqService {
 
     private FaqRepository faqRepository;
+    private FaqCategoryRepository faqCategoryRepository;
     private static int pageSize = 10;
 
     /**
      * 자주묻는 질문 리스트
      * @param page
      * @return List<FaqDto>
-     * @throws Exception
      */
-    public List<Faq> getFaqList(int page) throws Exception{
+    public List<Faq> getFaqList(int page) {
         List<Faq> faqDtoList = new ArrayList<>();
 
         Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
@@ -57,5 +59,13 @@ public class FaqService {
             log.info("getFaqListResult exception {}", e.getMessage());
         }
         return data;
+    }
+
+    public List<FaqCategoryEntity> getFaqCategoryList() {
+        List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
+        for(FaqCategoryEntity f : faqCategoryList){
+            System.out.println(f.toString());
+        }
+        return null;
     }
 }

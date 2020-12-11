@@ -22,6 +22,9 @@ public class FaqCategoryEntity {
     @Column
     private String categoryName;
 
-    @OneToMany(mappedBy = "faqCategoryEntity")
+    @Column
+    private int order;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "faqCategoryEntity")
     private List<FaqEntity> faqEntityList = new ArrayList<>();
 }
