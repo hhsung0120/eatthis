@@ -21,7 +21,9 @@ logging:
   level:
     org.springframework.web: info
     co.kr.heeseong: info
-    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.type: trace
+    org.hibernate.SQL: trace
+
   file:
     name: D:${file.separator}logs${file.separator}eatthis${file.separator}eatthis.log
     max-history: 1

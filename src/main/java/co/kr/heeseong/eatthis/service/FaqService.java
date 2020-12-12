@@ -1,6 +1,8 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.model.Faq;
+import co.kr.heeseong.eatthis.model.FaqCategory;
+import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.service.entity.FaqEntity;
 import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
@@ -61,11 +63,17 @@ public class FaqService {
         return data;
     }
 
-    public List<FaqCategoryEntity> getFaqCategoryList() {
+    public List<FaqCategory> getFaqCategoryList() {
         List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
-        for(FaqCategoryEntity f : faqCategoryList){
-            System.out.println(f.toString());
+        List<FaqCategory> categoryList = new ArrayList<>();
+        for(FaqCategoryEntity faqCategoryEntity : faqCategoryList){
+            FaqCategory faqCategory = FaqCategory.builder()
+                                        .idx(faqCategoryEntity.getIdx())
+                                        .categoryName(faqCategoryEntity.getCategoryName())
+                                        .build();
+            categoryList.add(faqCategory);
         }
-        return null;
+
+        return categoryList;
     }
 }

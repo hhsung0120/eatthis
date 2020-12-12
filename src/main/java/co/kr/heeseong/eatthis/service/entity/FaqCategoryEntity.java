@@ -5,12 +5,13 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "faq_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FaqCategoryEntity {
@@ -26,5 +27,5 @@ public class FaqCategoryEntity {
     private int order;
 
     @OneToMany(mappedBy = "faqCategoryEntity")
-    private List<FaqEntity> faqEntityList = new ArrayList<>();
+    private Set<FaqEntity> faqEntityList = new HashSet<>();
 }

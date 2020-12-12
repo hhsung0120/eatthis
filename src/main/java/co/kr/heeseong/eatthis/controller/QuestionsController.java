@@ -22,15 +22,16 @@ public class QuestionsController {
     private final QuestionsService questionsService;
     private final FaqService faqService;
 
-    @GetMapping("/view")
-    public Map<String, Object> getView(){
+    @GetMapping("{userIdx}/form")
+    public Map<String, Object> form(@PathVariable long userIdx){
         Map<String, Object> result = new LinkedHashMap<>();
+        result.put("userIdx", userIdx);
         try{
             result.put("categoryList", faqService.getFaqCategoryList());
         }catch (Exception e){
-            e.printStackTrace();
             result.put("reason", e.getMessage());
         }
+
         return result;
     }
 
@@ -42,6 +43,7 @@ public class QuestionsController {
         }catch (Exception e){
             result.put("reason", e.getMessage());
         }
+
         return result;
     }
 

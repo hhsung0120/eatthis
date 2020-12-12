@@ -19,5 +19,7 @@ public class Questions {
     private String status;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
+
+
 }
 
