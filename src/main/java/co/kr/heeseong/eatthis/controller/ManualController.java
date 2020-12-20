@@ -58,8 +58,8 @@ public class ManualController {
         result.put("lunchAlarm", "Y, N");
         result.put("alarmTimeHour", "0~23");
         result.put("alarmTimeMinute", "0~59");
-        result.put("[성공]", "updateResult : SUCCESS");
-        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : e.getMessage()");
         result.put("    ", "");
         result.put("     ", "");
         result.put("      ", "");
@@ -75,8 +75,8 @@ public class ManualController {
         result.put("dinnerAlarm", "Y, N");
         result.put("alarmTimeHour", "0~23");
         result.put("alarmTimeMinute", "0~59");
-        result.put("[성공]", "updateResult : SUCCESS");
-        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : e.getMessage()");
         result.put("    ", "");
         result.put("     ", "");
         result.put("      ", "");
@@ -90,8 +90,8 @@ public class ManualController {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "이벤트 알림");
         result.put("eventAlarm", "Y, N");
-        result.put("[성공]", "updateResult : SUCCESS");
-        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : e.getMessage()");
 
         return result;
     }
@@ -101,8 +101,8 @@ public class ManualController {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "서비스 알림");
         result.put("serviceAlarm", "Y, N");
-        result.put("[성공]", "updateResult : SUCCESS");
-        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : e.getMessage()");
 
         return result;
     }
@@ -128,14 +128,36 @@ public class ManualController {
         result.put("idx", "탈퇴 사유 IDX 입니다.");
         result.put("memo", "사유가 기타면 보내주시면 됩니다.");
         result.put("[response]", "");
-        result.put("[성공]", "updateResult : SUCCESS");
-        result.put("[실패]", "updateResult : e.getMessage()");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : e.getMessage()");
         result.put("    ", "");
         result.put("     ", "");
         result.put("      ", "");
-        result.put("comment", "if updateResult != SUCCESS 다 실패라서 실패 처리하시면 되고 성공 이후에 로그아웃 시켜주세요");
+        result.put("comment", "if eventResult != SUCCESS 다 실패라서 실패 처리하시면 되고 성공 이후에 로그아웃 시켜주세요");
         result.put("TODO", "회원 탈퇴한 회원 로그인 못하게 해야함");
 
+
+        return result;
+    }
+
+    @GetMapping("/store/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}/saveReview")
+    public Map<String, Object> saveReview(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - post]", "");
+        result.put("contents", "리뷰내용입니다.");
+        result.put("file", "멀티플로 보내고 받을 수 있습니다.");
+        result.put("totalPrice", "총 금액");
+        result.put("star", "별점");
+        result.put("[response]", "");
+        result.put("[성공]", "reviewIdx : 0 보다 큼");
+        result.put("[실패]", "reviewIdx : 0, reason : e.getMessage()");
+        result.put("", "");
+        result.put(" ", "");
+        result.put("  ", "");
+        result.put("comment", "if userIdx > 0 성공으로 보면되고 else reason 출력하시면 됩니다. ");
+        result.put("comment", "리뷰 IDX 는 최초 등록 시 0 으로 보내면 됩니다.");
+        result.put("TODO", "메뉴 구조가 현재 없어서 없는 메뉴에대한 예외를 처리해야함");
+        result.put("TODO", "리뷰 수정 기능이 있었나 ? 기획에..? 현재는 없음 구현 해야함");
 
         return result;
     }

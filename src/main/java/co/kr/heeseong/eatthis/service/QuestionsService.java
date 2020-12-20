@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.service;
 
+import co.kr.heeseong.eatthis.Enum.EventResultType;
 import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
 import co.kr.heeseong.eatthis.service.repository.QuestionsRepository;
@@ -43,5 +44,10 @@ public class QuestionsService {
         result.put("list", questionsDtoList);
 
         return result;
+    }
+
+    public EventResultType saveQuestions(Questions questions) {
+        questionsRepository.save(questions.toEntity());
+        return EventResultType.SUCCESS;
     }
 }

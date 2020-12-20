@@ -1,12 +1,11 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.EventResultType;
+import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.FaqService;
 import co.kr.heeseong.eatthis.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,6 +28,21 @@ public class QuestionsController {
         try{
             result.put("categoryList", faqService.getFaqCategoryList());
         }catch (Exception e){
+            result.put("reason", e.getMessage());
+        }
+
+        return result;
+    }
+
+    @PostMapping("{userIdx}/form")
+    public Map<String, Object> form(@PathVariable long userIdx, @ModelAttribute Questions questions){
+        Map<String, Object> result = new LinkedHashMap<>();
+        try{
+            questions.setUserIdx(userIdx);
+            result.put("eventResult", questionsService.saveQuestions(questions));
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("eventResult", EventResultType.FAIL);
             result.put("reason", e.getMessage());
         }
 

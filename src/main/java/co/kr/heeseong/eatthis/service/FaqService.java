@@ -2,7 +2,6 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.model.Faq;
 import co.kr.heeseong.eatthis.model.FaqCategory;
-import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.service.entity.FaqEntity;
 import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
