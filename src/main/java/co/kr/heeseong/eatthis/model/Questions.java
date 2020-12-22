@@ -1,6 +1,5 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
 import lombok.*;
 
@@ -29,6 +28,9 @@ public class Questions {
         return  QuestionsEntity.builder()
                     .userIdx(userIdx)
                     .questions(questions)
+                    .phone(phone)
+                    .email(email)
+                    .categoryIdx(categoryIdx)
                     .build();
     }
 

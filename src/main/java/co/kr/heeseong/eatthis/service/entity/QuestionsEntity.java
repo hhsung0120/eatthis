@@ -4,6 +4,7 @@ package co.kr.heeseong.eatthis.service.entity;
 import co.kr.heeseong.eatthis.Enum.QuestionsStatus;
 import co.kr.heeseong.eatthis.service.entity.common.TimeEntity;
 import lombok.*;
+import org.hibernate.annotations.LazyToOne;
 
 import javax.persistence.*;
 
@@ -22,7 +23,10 @@ public class QuestionsEntity extends TimeEntity {
     private long userIdx;
 
     @ManyToOne
-    @JoinColumn(name="category_idx")
+    @JoinTable(name="faq_category"
+            , joinColumns = @JoinColumn(name="categoryIdx")
+            , inverseJoinColumns =  @JoinColumn(name="idx")
+    )
     private FaqCategoryEntity faqCategoryEntity;
 
     @Column
@@ -49,6 +53,6 @@ public class QuestionsEntity extends TimeEntity {
         this.status = QuestionsStatus.WAITING;
         this.phone = phone;
         this.email = email;
-        this.faqCategoryEntity.setIdx(categoryIdx);
+        //this.categoryIdx= categoryIdx;
     }
 }

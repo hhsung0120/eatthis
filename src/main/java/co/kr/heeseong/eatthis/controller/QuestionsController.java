@@ -55,6 +55,7 @@ public class QuestionsController {
         try{
             result.put("data", questionsService.getQuestionsList(userIdx));
         }catch (Exception e){
+            e.printStackTrace();
             result.put("reason", e.getMessage());
         }
 

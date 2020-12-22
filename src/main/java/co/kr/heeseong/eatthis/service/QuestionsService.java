@@ -27,9 +27,9 @@ public class QuestionsService {
         if(count > 0){
             List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
             for(QuestionsEntity questionsEntity : questionsEntityList){
+                System.out.println(questionsEntity.toString());
                 Questions questionsDto = Questions.builder()
                         .idx(questionsEntity.getIdx())
-                        .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
                         .questions(questionsEntity.getQuestions())
                         .answer(questionsEntity.getAnswer())
                         .status(questionsEntity.getStatus().getValue())
