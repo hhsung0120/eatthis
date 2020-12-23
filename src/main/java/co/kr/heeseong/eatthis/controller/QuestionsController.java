@@ -5,6 +5,7 @@ import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.service.FaqService;
 import co.kr.heeseong.eatthis.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -37,13 +38,16 @@ public class QuestionsController {
     @PostMapping("{userIdx}/form")
     public Map<String, Object> form(@PathVariable long userIdx, @ModelAttribute Questions questions){
         Map<String, Object> result = new LinkedHashMap<>();
+        result.put("eventResult", EventResultType.FAIL);
+
         try{
             questions.setUserIdx(userIdx);
             result.put("eventResult", questionsService.saveQuestions(questions));
-        }catch (Exception e){
+        }catch (DataIntegrityViolationException e){
             e.printStackTrace();
-            result.put("eventResult", EventResultType.FAIL);
-            result.put("reason", e.getMessage());
+            result.put("reason", "필수 값 누락 또는 데이터 형태가 맞지 않습니다.");
+        }catch (Exception e){
+            result.put("reason", "기타 오류 발생");
         }
 
         return result;
@@ -55,11 +59,15 @@ public class QuestionsController {
         try{
             result.put("data", questionsService.getQuestionsList(userIdx));
         }catch (Exception e){
-            e.printStackTrace();
             result.put("reason", e.getMessage());
         }
 
         return result;
     }
+
+
+
+
+
 
 }

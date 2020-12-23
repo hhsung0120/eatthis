@@ -2,9 +2,12 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.EventResultType;
 import co.kr.heeseong.eatthis.model.Questions;
+import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
+import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
 import co.kr.heeseong.eatthis.service.repository.QuestionsRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Map;
 public class QuestionsService {
 
     private QuestionsRepository questionsRepository;
+    private FaqCategoryRepository faqCategoryRepository;
     private static int pageSize = 10;
 
     public Map<String, Object> getQuestionsList(long userIdx) {
@@ -27,13 +31,15 @@ public class QuestionsService {
         if(count > 0){
             List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
             for(QuestionsEntity questionsEntity : questionsEntityList){
-                System.out.println(questionsEntity.toString());
+                FaqCategoryEntity faqCategoryEntity = faqCategoryRepository.findByCategoryIdx(questionsEntity.getCategoryIdx());
                 Questions questionsDto = Questions.builder()
                         .idx(questionsEntity.getIdx())
                         .questions(questionsEntity.getQuestions())
                         .answer(questionsEntity.getAnswer())
                         .status(questionsEntity.getStatus().getValue())
                         .createDate(questionsEntity.getCreateDate())
+                        .categoryName(faqCategoryEntity.getCategoryName())
+                        .categoryIdx(faqCategoryEntity.getIdx())
                         .lastModifiedDate(questionsEntity.getLastModifiedDate())
                         .build();
 

@@ -22,12 +22,8 @@ public class QuestionsEntity extends TimeEntity {
     @Column
     private long userIdx;
 
-    @ManyToOne
-    @JoinTable(name="faq_category"
-            , joinColumns = @JoinColumn(name="categoryIdx")
-            , inverseJoinColumns =  @JoinColumn(name="idx")
-    )
-    private FaqCategoryEntity faqCategoryEntity;
+    @Column
+    private long categoryIdx;
 
     @Column
     private String questions;
@@ -53,6 +49,6 @@ public class QuestionsEntity extends TimeEntity {
         this.status = QuestionsStatus.WAITING;
         this.phone = phone;
         this.email = email;
-        //this.categoryIdx= categoryIdx;
+        this.categoryIdx= categoryIdx;
     }
 }

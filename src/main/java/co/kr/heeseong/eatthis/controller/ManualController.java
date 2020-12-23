@@ -1,10 +1,10 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.model.Secession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -161,4 +161,24 @@ public class ManualController {
 
         return result;
     }
+
+    @GetMapping("/questions/save/manual")
+    public Map<String, Object> saveQuestions(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - post]", "");
+        result.put("categoryIdx", "카테고리idx.");
+        result.put("questions", "질문 내용");
+        result.put("phone", "핸드폰 번호");
+        result.put("email", "이메일");
+        result.put("[response]", "");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : FAIL, reason : 사유");
+        result.put("", "");
+        result.put(" ", "");
+        result.put("  ", "");
+        result.put("comment", "SUCCESS 가 아니면 무조건 reason 보여주면 될듯 합니다.");
+
+        return result;
+    }
+
 }
