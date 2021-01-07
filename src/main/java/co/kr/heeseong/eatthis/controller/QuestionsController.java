@@ -22,7 +22,7 @@ public class QuestionsController {
     private final QuestionsService questionsService;
     private final FaqService faqService;
 
-    @GetMapping("{userIdx}/form")
+    @GetMapping("/form/{userIdx}")
     public Map<String, Object> form(@PathVariable long userIdx){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("userIdx", userIdx);
@@ -35,7 +35,7 @@ public class QuestionsController {
         return result;
     }
 
-    @PostMapping("{userIdx}/form")
+    @PostMapping("/form/{userIdx}")
     public Map<String, Object> form(@PathVariable long userIdx, @ModelAttribute Questions questions){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("eventResult", EventResultType.FAIL);
@@ -53,7 +53,7 @@ public class QuestionsController {
         return result;
     }
 
-    @GetMapping("/{userIdx}/list")
+    @GetMapping("/{userIdx}")
     public Map<String, Object> questionsList(@PathVariable long userIdx){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
@@ -64,10 +64,4 @@ public class QuestionsController {
 
         return result;
     }
-
-
-
-
-
-
 }

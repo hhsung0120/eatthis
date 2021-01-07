@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/faq")
+@RequestMapping("/faqs")
 public class FaqController {
 
     private final FaqService faqService;
@@ -25,7 +25,7 @@ public class FaqController {
         return 3;
     }
 
-    @GetMapping("/list/{page}")
+    @GetMapping("/{page}")
     public Map<String, Object> faqList(@PathVariable int page){
         return faqService.getFaqListResult(page);
     }
