@@ -161,4 +161,24 @@ public class ManualController {
 
         return result;
     }
+
+    @GetMapping("/questions/save/manual")
+    public Map<String, Object> saveQuestions(){
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("[request - post]", "");
+        result.put("categoryIdx", "카테고리idx.");
+        result.put("questions", "질문 내용");
+        result.put("phone", "핸드폰 번호");
+        result.put("email", "이메일");
+        result.put("[response]", "");
+        result.put("[성공]", "eventResult : SUCCESS");
+        result.put("[실패]", "eventResult : FAIL, reason : 사유");
+        result.put("", "");
+        result.put(" ", "");
+        result.put("  ", "");
+        result.put("comment", "SUCCESS 가 아니면 무조건 reason 보여주면 될듯 합니다.");
+
+        return result;
+    }
+
 }
