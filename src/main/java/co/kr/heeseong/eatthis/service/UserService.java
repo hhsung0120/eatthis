@@ -208,7 +208,6 @@ public class UserService {
     @Transactional
     public EventResultType updateUserStatus(long idx, Secession secession) {
         UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + idx));
-        secession.setUserIdx(userDetailEntity.getIdx());
         userScessionRepository.save(secession.toEntity());
 
         userDetailEntity.updateStatus(UserStatus.SECESSION);

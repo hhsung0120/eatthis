@@ -14,12 +14,11 @@ import java.util.Map;
 
 /**
  * 유저관련 컨트롤러
- * 로그인, 내정보
  */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -64,8 +63,8 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/{idx}/setLunchAlarm")
-    public Map<String, Object> setLunchAlarm(@PathVariable long idx, @ModelAttribute User user){
+    @PostMapping("lunchAlarm/{idx}")
+    public Map<String, Object> lunchAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("eventResult", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
@@ -78,8 +77,8 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/{idx}/setDinnerAlarm")
-    public Map<String, Object> setDinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
+    @PostMapping("/dinnerAlarm/{idx}")
+    public Map<String, Object> dinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("eventResult", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
@@ -90,8 +89,8 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/{idx}/setEventAlarm")
-    public Map<String, Object> setEventAlarm(@PathVariable long idx, @ModelAttribute User user){
+    @PostMapping("/eventAlarm/{idx}")
+    public Map<String, Object> eventAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
             result.put("eventResult", userService.updateEventAlarm(idx, user.getEventAlarm()));
@@ -102,7 +101,7 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/{idx}/setServiceAlarm")
+    @PostMapping("/serviceAlarm/{idx}")
     public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
@@ -114,12 +113,13 @@ public class UserController {
         return result;
     }
 
-    @GetMapping("/secession")
-    public Map<String, Object> secession(){
+    @GetMapping("/secession/{idx}")
+    public Map<String, Object> secession(@PathVariable long idx){
         Map<String, Object> result = new LinkedHashMap<>();
 
         try{
             result.put("list", userService.getSecessionReasonList());
+            result.put("userIdx", idx);
         }catch (Exception e){
             result.put("exception", e.getMessage());
         }
@@ -127,7 +127,7 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/{idx}/secession")
+    @PostMapping("/secession/{idx}")
     public Map<String, Object> secession(@PathVariable long idx, @ModelAttribute Secession secession){
         Map<String, Object> result = new LinkedHashMap<>();
         try{

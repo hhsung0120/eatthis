@@ -1,10 +1,10 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.model.Secession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ManualController {
 
-    @GetMapping("/user/signUp")
+    @GetMapping("/users/signUp")
     public Map<String, Object> signUp(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request1 - post]", "회원가입 1");
@@ -51,7 +51,7 @@ public class ManualController {
         return result;
     }
 
-    @GetMapping("/user/{idx}/setLunchAlarm")
+    @GetMapping("/users/lunchAlarm/{idx}")
     public Map<String, Object> setLunchAlarm(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "점심 알림");
@@ -68,7 +68,7 @@ public class ManualController {
         return result;
     }
 
-    @GetMapping("/user/{idx}/setDinnerAlarm")
+    @GetMapping("/users/dinnerAlarm/{idx}")
     public Map<String, Object> setDinnerAlarm(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "저녁 알림");
@@ -85,7 +85,7 @@ public class ManualController {
         return result;
     }
 
-    @GetMapping("/user/{idx}/setEventAlarm")
+    @GetMapping("/users/eventAlarm/{idx}")
     public Map<String, Object> setEventAlarm(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "이벤트 알림");
@@ -96,7 +96,7 @@ public class ManualController {
         return result;
     }
 
-    @GetMapping("/user/{idx}/setServiceAlarm")
+    @GetMapping("/users/serviceAlarm/{idx}")
     public Map<String, Object> setServiceAlarm(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "서비스 알림");
@@ -109,7 +109,7 @@ public class ManualController {
 
 
 
-    @GetMapping("/user/login")
+    @GetMapping("/users/login")
     public Map<String, Object> login(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "");
@@ -121,7 +121,7 @@ public class ManualController {
         return result;
     }
 
-    @GetMapping("/user/{idx}/secession")
+    @GetMapping("/users/secession/manual")
     public Map<String, Object> secession(){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "");

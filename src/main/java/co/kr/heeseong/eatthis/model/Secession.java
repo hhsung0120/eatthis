@@ -11,15 +11,11 @@ import lombok.*;
 @Builder
 public class Secession {
     private long idx;
-    private long userIdx;
     private String reason;
-    private String memo;
 
     public UserSecessionEntity toEntity(){
         return UserSecessionEntity.builder()
-                .userIdx(userIdx)
                 .secessionReasonIdx(idx)
-                .memo(memo)
                 .build();
     }
 }

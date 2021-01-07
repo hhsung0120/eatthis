@@ -13,18 +13,18 @@
 <div style="padding: 20px 10px 10px 30px;">
     <h2>[로그인]</h2>
     <ul class="api_list">
-        <li>[POST] <a href="/user/login" target="_blank">/user/login</a> : 로그인 (P7) </li>
+        <li>[POST] <a href="/users/login" target="_blank">/users/login</a> : 로그인 (P7) </li>
     </ul>
 
     <h2>[회원가입]</h2>
     <ul class="api_list">
-        <li>[POST] <a href="/user/signUp" target="_blank">/user/signUp</a> : 회원가입 (P10 ~ P11) </li>
+        <li>[POST] <a href="/users/signUp" target="_blank">/users/signUp</a> : 회원가입 (P10 ~ P11) </li>
     </ul>
 
     <h2>[MAIN]</h2>
     <ul class="api_list">
         <li>[GET] <a href="/store/list/123/123" target="_blank">/store/list/{현재 위치 X 좌표}/{현재 위치 Y 좌표}</a> : 메인 리스트 (P13) </li>
-        <li>[GET] <a href="/user/1" target="_blank">/user/{유저idx}</a> : 프로필 이미지 호출 (P14) </li>
+        <li>[GET] <a href="/users/1" target="_blank">/users/{유저idx}</a> : 프로필 이미지 호출 (P14) </li>
     </ul>
 
     <h2>[리뷰 등록]</h2>
@@ -34,17 +34,17 @@
 
     <h2>[알림]</h2>
     <ul class="api_list">
-        <li>[POST] <a href="/user/1/setLunchAlarm" target="_blank">/user/{유저idx}/setLunchAlarm</a> : 점심 알림 (P34) </li>
-        <li>[POST] <a href="/user/1/setDinnerAlarm" target="_blank">/user/{유저idx}/setDinnerAlarm</a> : 저녁 알림 (P34) </li>
-        <li>[POST] <a href="/user/1/setEventAlarm" target="_blank">/user/{유저idx}/setEventAlarm</a> : 이벤트 알림 (P34) </li>
-        <li>[POST] <a href="/user/1/setServiceAlarm" target="_blank">/user/{유저idx}/setServiceAlarm</a> : 서비스 알림 (P34) </li>
+        <li>[POST] <a href="/users/lunchAlarm/1" target="_blank">/users/lunchAlarm/{유저idx}</a> : 점심 알림 (P34) </li>
+        <li>[POST] <a href="/users/dinnerAlarm/1" target="_blank">/users/dinnerAlarm/{유저idx}</a> : 저녁 알림 (P34) </li>
+        <li>[POST] <a href="/users/eventAlarm/1" target="_blank">/users/eventAlarm/{유저idx}</a> : 이벤트 알림 (P34) </li>
+        <li>[POST] <a href="/users/serviceAlarm/1" target="_blank">/users/serviceAlarm/{유저idx}</a> : 서비스 알림 (P34) </li>
     </ul>
 
     <h2>[내 정보]</h2>
     <ul class="api_list">
-        <li>[GET] <a href="/user/1" target="_blank">/user/{유저idx}</a> : 내 정보 (P38) </li>
-        <li>[GET] <a href="/user/secession" target="_blank">/user/secession</a> : 회원 탈퇴 (P39) </li>
-        <li>[POST] <a href="/user/1/secession" target="_blank">/user/{유저idx}/secession</a> : 회원 탈퇴 (P39) </li>
+        <li>[GET] <a href="/users/1" target="_blank">/users/{유저idx}</a> : 내 정보 (P38) </li>
+        <li>[GET] <a href="/users/secession/manual" target="_blank">/users/secession/{유저idx}</a> : 회원 탈퇴 (P39) </li>
+        <li>[POST] <a href="/users/secession/1" target="_blank">/users/secession/{유저idx}</a> : 회원 탈퇴 (P39) </li>
     </ul>
 
     <h2>[공지사항]</h2>
