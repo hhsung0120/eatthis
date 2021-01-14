@@ -28,7 +28,7 @@ public class Questions {
     public QuestionsEntity toEntity(){
         return  QuestionsEntity.builder()
                     .userIdx(userIdx)
-                .questions(questions)
+                    .questions(questions)
                     .phone(phone)
                     .email(email)
                     .categoryIdx(categoryIdx)
