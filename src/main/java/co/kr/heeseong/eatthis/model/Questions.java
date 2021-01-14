@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class Questions {
     private long idx;
     private long userIdx;
+    private String userName;
     private long categoryIdx;
     private String categoryName;
     private String questions;
@@ -27,7 +28,7 @@ public class Questions {
     public QuestionsEntity toEntity(){
         return  QuestionsEntity.builder()
                     .userIdx(userIdx)
-                    .questions(questions)
+                .questions(questions)
                     .phone(phone)
                     .email(email)
                     .categoryIdx(categoryIdx)

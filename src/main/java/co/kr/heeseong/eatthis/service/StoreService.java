@@ -79,8 +79,8 @@ public class StoreService {
     }
 
     private long insertReview(Review review){
-        userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUNT.getValue() + " -> " + review.getIdx()));
-        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.STORE_NOT_FOUNT.getValue() + " -> " + review.getStoreIdx()));
+        userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
+        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
         //없는 메뉴도 검사할것
 
         long idx = reviewRepository.save(review.toEntity()).getIdx();

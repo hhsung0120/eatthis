@@ -64,4 +64,19 @@ public class QuestionsController {
 
         return result;
     }
+
+    @GetMapping("/{userIdx}/{questionsIdx}")
+    public Map<String, Object> detail(@PathVariable long userIdx
+                                    , @PathVariable long questionsIdx){
+        Map<String, Object> result = new LinkedHashMap<>();
+        try{
+            Questions questions = new Questions();
+            questions.setUserIdx(userIdx);
+            questions.setIdx(questionsIdx);
+            result.put("data", questionsService.getQuestions(questions));
+        }catch (Exception e){
+            result.put("reason", e.getMessage());
+        }
+        return result;
+    }
 }
