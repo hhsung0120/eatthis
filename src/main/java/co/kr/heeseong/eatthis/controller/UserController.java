@@ -27,6 +27,7 @@ public class UserController {
     public Map<String, Object> signUp(@ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("userIdx", 0);
+
         try {
             result.put("userIdx", userService.saveUser(user));
         } catch (DataIntegrityViolationException e){
@@ -43,6 +44,7 @@ public class UserController {
     @PostMapping("/login")
     public Map<String, Object> login(@ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.loginProsess(user));
         }catch (Exception e){
@@ -55,17 +57,20 @@ public class UserController {
     @GetMapping("/{idx}")
     public Map<String, Object> user(@PathVariable Long idx){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("user", userService.getUser(idx));
         }catch (Exception e) {
             result.put("reason", e.getMessage());
         }
+
         return result;
     }
 
     @PostMapping("lunchAlarm/{idx}")
     public Map<String, Object> lunchAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
         }catch (IllegalArgumentException e){
@@ -80,6 +85,7 @@ public class UserController {
     @PostMapping("/dinnerAlarm/{idx}")
     public Map<String, Object> dinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
         }catch (Exception e){
@@ -92,6 +98,7 @@ public class UserController {
     @PostMapping("/eventAlarm/{idx}")
     public Map<String, Object> eventAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.updateEventAlarm(idx, user.getEventAlarm()));
         }catch (Exception e){
@@ -104,6 +111,7 @@ public class UserController {
     @PostMapping("/serviceAlarm/{idx}")
     public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
         }catch (Exception e){
@@ -130,14 +138,15 @@ public class UserController {
     @PostMapping("/secession/{idx}")
     public Map<String, Object> secession(@PathVariable long idx, @ModelAttribute Secession secession){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("result", userService.updateUserStatus(idx, secession));
         }catch (Exception e){
             result.put("result", e.getMessage());
         }
+
         //TODO 탈퇴 성공 이후에 로그아웃 시켜버려야함
         //내가 처리 해야하나? 화면에서 받은 이후 처리하면 되나 ?
-
         return result;
     }
 
