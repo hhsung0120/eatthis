@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -23,8 +24,14 @@ public class NoticeController {
 
     @GetMapping("/{page}")
     public Map<String, Object> noticeList(@PathVariable int page){
-        Map<String, Object> result = new HashMap<>();
-        result.put("noticeList", noticeService.getNoticeList(page));
+        Map<String, Object> result = new LinkedHashMap<>();
+
+        try{
+            result.put("dataList", noticeService.getNoticeList(page));
+        }catch (Exception e){
+            result.put("reason", e.getMessage());
+        }
+
         return result;
     }
 

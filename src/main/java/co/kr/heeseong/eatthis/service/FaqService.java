@@ -52,16 +52,6 @@ public class FaqService {
         return faqDtoList;
     }
 
-    public Map<String, Object> getFaqListResult(int page){
-        Map<String, Object> data = new LinkedHashMap<>();
-        try{
-            data.put("faqList", this.getFaqList(page));
-        }catch (Exception e){
-            log.info("getFaqListResult exception {}", e.getMessage());
-        }
-        return data;
-    }
-
     public List<FaqCategory> getFaqCategoryList() {
         List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
         List<FaqCategory> categoryList = new ArrayList<>();

@@ -25,9 +25,10 @@ public class QuestionsController {
     @GetMapping("/form/{userIdx}")
     public Map<String, Object> form(@PathVariable long userIdx){
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("userIdx", userIdx);
+
         try{
-            result.put("categoryList", faqService.getFaqCategoryList());
+            result.put("userIdx", userIdx);
+            result.put("dataList", faqService.getFaqCategoryList());
         }catch (Exception e){
             result.put("reason", e.getMessage());
         }
@@ -38,11 +39,11 @@ public class QuestionsController {
     @PostMapping("/form/{userIdx}")
     public Map<String, Object> form(@PathVariable long userIdx, @ModelAttribute Questions questions){
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("eventResult", EventResultType.FAIL);
+        result.put("result", EventResultType.FAIL);
 
         try{
             questions.setUserIdx(userIdx);
-            result.put("eventResult", questionsService.saveQuestions(questions));
+            result.put("result", questionsService.saveQuestions(questions));
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
             result.put("reason", "필수 값 누락 또는 데이터 형태가 맞지 않습니다.");

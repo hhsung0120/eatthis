@@ -44,9 +44,9 @@ public class UserController {
     public Map<String, Object> login(@ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("loginResult", userService.loginProsess(user));
+            result.put("result", userService.loginProsess(user));
         }catch (Exception e){
-            result.put("loginResult", LoginResultType.FAIL);
+            result.put("result", LoginResultType.FAIL);
         }
 
         return result;
@@ -67,11 +67,11 @@ public class UserController {
     public Map<String, Object> lunchAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("eventResult", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
+            result.put("result", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
         }catch (IllegalArgumentException e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }catch (Exception e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }
 
         return result;
@@ -81,9 +81,9 @@ public class UserController {
     public Map<String, Object> dinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("eventResult", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
+            result.put("result", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
         }catch (Exception e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }
 
         return result;
@@ -93,9 +93,9 @@ public class UserController {
     public Map<String, Object> eventAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("eventResult", userService.updateEventAlarm(idx, user.getEventAlarm()));
+            result.put("result", userService.updateEventAlarm(idx, user.getEventAlarm()));
         }catch (Exception e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }
 
         return result;
@@ -105,9 +105,9 @@ public class UserController {
     public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("eventResult", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
+            result.put("result", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
         }catch (Exception e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }
 
         return result;
@@ -131,9 +131,9 @@ public class UserController {
     public Map<String, Object> secession(@PathVariable long idx, @ModelAttribute Secession secession){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("eventResult", userService.updateUserStatus(idx, secession));
+            result.put("result", userService.updateUserStatus(idx, secession));
         }catch (Exception e){
-            result.put("eventResult", e.getMessage());
+            result.put("result", e.getMessage());
         }
         //TODO 탈퇴 성공 이후에 로그아웃 시켜버려야함
         //내가 처리 해야하나? 화면에서 받은 이후 처리하면 되나 ?
