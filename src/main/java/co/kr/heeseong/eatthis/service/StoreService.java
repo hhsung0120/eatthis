@@ -2,6 +2,7 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.Enum.TableCode;
+import co.kr.heeseong.eatthis.service.entity.ReviewEntity;
 import co.kr.heeseong.eatthis.service.repository.FileRepository;
 import co.kr.heeseong.eatthis.service.entity.StoreEntity;
 import co.kr.heeseong.eatthis.service.repository.StoreRepository;
@@ -71,7 +72,7 @@ public class StoreService {
      */
     @Transactional
     public long saveReview(Review review) {
-        if(review.getIdx() < 1){
+        if(review.getIdx() == 0){
             return this.insertReview(review);
         }else{
             return this.updateReview(review);
@@ -82,6 +83,9 @@ public class StoreService {
         userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
         storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
         //없는 메뉴도 검사할것
+        if(review.getTotalPrice() > 100000){
+            throw new IllegalArgumentException("유효한 금액을 입력 하세요.");
+        }
 
         long idx = reviewRepository.save(review.toEntity()).getIdx();
         if(idx > 0){
@@ -100,5 +104,16 @@ public class StoreService {
 
     private long updateReview(Review review) {
         return 0;
+    }
+
+    /**
+     * 리뷰 리스트
+     * @param userIdx
+     * @return
+     */
+    public List<Review> getReviewList(long userIdx) {
+        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + userIdx));
+        //ReviewEntity reviewEntity = reviewRepository.get
+        return null;
     }
 }

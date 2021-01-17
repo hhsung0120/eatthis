@@ -60,6 +60,7 @@ public class UserController {
 
         try{
             result.put("user", userService.getUser(idx));
+            result.put("userIdx", idx);
         }catch (Exception e) {
             result.put("reason", e.getMessage());
         }
@@ -126,7 +127,7 @@ public class UserController {
         Map<String, Object> result = new LinkedHashMap<>();
 
         try{
-            result.put("list", userService.getSecessionReasonList());
+            result.put("reasonList", userService.getSecessionReasonList());
             result.put("userIdx", idx);
         }catch (Exception e){
             result.put("exception", e.getMessage());
