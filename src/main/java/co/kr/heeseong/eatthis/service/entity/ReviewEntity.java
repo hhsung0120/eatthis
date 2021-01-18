@@ -2,6 +2,7 @@ package co.kr.heeseong.eatthis.service.entity;
 
 import co.kr.heeseong.eatthis.service.entity.common.TimeEntity;
 import lombok.*;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 
@@ -18,6 +19,9 @@ public class ReviewEntity extends TimeEntity {
 
     @Column
     private long storeIdx;
+
+    @Column
+    private String storeName;
 
     @Column
     private long menuIdx;
@@ -37,7 +41,6 @@ public class ReviewEntity extends TimeEntity {
     @Builder
     public ReviewEntity(long idx, long storeIdx, long menuIdx, long userIdx, String contents, int totalPrice, float star){
         this.idx = idx;
-        this.storeIdx = storeIdx;
         this.menuIdx = menuIdx;
         this.userIdx = userIdx;
         this.contents = contents;

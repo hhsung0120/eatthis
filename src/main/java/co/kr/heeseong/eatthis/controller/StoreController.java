@@ -56,11 +56,13 @@ public class StoreController {
     @GetMapping("/reviews/{userIdx}")
     public Map<String, Object> reviews(@PathVariable long userIdx){
         Map<String, Object> result = new LinkedHashMap<>();
+
         try{
             result.put("dataList", storeService.getReviewList(userIdx));
         }catch (Exception e){
-
+            result.put("reason", "관리자에게 문의 하세요.");
         }
+
         return result;
     }
 

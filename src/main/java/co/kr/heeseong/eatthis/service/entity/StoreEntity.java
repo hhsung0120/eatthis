@@ -4,6 +4,8 @@ import co.kr.heeseong.eatthis.service.entity.common.TimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @ToString
 @Entity
@@ -30,6 +32,10 @@ public class StoreEntity extends TimeEntity {
 
     @Column(name="location_y")
     private String locationY;
+
+    @OneToOne
+    @JoinColumn(name="store_idx")
+    private ReviewEntity reviewEntity;
 
     @Builder
     public StoreEntity(Long storeIdx, String category, Long storeId, String storeName, String locationX, String locationY){

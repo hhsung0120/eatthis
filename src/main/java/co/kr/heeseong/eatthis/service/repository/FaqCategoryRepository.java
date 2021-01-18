@@ -1,7 +1,6 @@
 package co.kr.heeseong.eatthis.service.repository;
 
 import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

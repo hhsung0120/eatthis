@@ -1,10 +1,7 @@
 package co.kr.heeseong.eatthis.model;
 
 import co.kr.heeseong.eatthis.service.entity.ReviewEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -14,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Review {
 
@@ -27,6 +26,10 @@ public class Review {
     private float star;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
+    private String userName;
+    private String sex;
+    private String storeName;
+    private String menuName;
 
     public ReviewEntity toEntity(){
         return ReviewEntity.builder()

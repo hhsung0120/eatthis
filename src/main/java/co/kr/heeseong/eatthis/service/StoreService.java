@@ -2,15 +2,15 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.Enum.TableCode;
-import co.kr.heeseong.eatthis.service.entity.ReviewEntity;
-import co.kr.heeseong.eatthis.service.repository.FileRepository;
-import co.kr.heeseong.eatthis.service.entity.StoreEntity;
-import co.kr.heeseong.eatthis.service.repository.StoreRepository;
-import co.kr.heeseong.eatthis.service.repository.ReviewRepository;
-import co.kr.heeseong.eatthis.service.repository.UserDetailRepository;
+import co.kr.heeseong.eatthis.mapper.ReviewMapper;
 import co.kr.heeseong.eatthis.model.CommonFile;
 import co.kr.heeseong.eatthis.model.Review;
 import co.kr.heeseong.eatthis.model.Store;
+import co.kr.heeseong.eatthis.service.entity.StoreEntity;
+import co.kr.heeseong.eatthis.service.repository.FileRepository;
+import co.kr.heeseong.eatthis.service.repository.ReviewRepository;
+import co.kr.heeseong.eatthis.service.repository.StoreRepository;
+import co.kr.heeseong.eatthis.service.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +34,7 @@ public class StoreService {
     private final ReviewRepository reviewRepository;
     private final FileRepository fileRepository;
     private final UserDetailRepository userDetailRepository;
+    private final ReviewMapper reviewMapper;
 
     @Value("${default-upload-path}")
     private String uploadPath;
@@ -113,7 +114,6 @@ public class StoreService {
      */
     public List<Review> getReviewList(long userIdx) {
         userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + userIdx));
-        //ReviewEntity reviewEntity = reviewRepository.get
-        return null;
+        return reviewMapper.selectReviewList(userIdx);
     }
 }

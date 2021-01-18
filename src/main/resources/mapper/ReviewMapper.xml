@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.heeseong.eatthis.mapper.ReviewMapper">
+
+    <select id="selectReviewList" parameterType="Long" resultType="Review">
+        SELECT *
+          FROM review r
+         INNER JOIN store s ON r.store_idx = s.store_idx
+         WHERE user_idx = #{userIdx}
+         ORDER BY r.create_date DESC
+    </select>
+
+</mapper>
