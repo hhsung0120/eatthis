@@ -13,6 +13,12 @@ bootWar{
     archiveVersion = "0.0.0"
 }
 
+jar {
+    archiveBaseName = 'ROOT'
+    archiveFileName = 'ROOT.jar'
+    archiveVersion = "0.0.0"
+}
+
 group = 'co.kr.heeseong'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
