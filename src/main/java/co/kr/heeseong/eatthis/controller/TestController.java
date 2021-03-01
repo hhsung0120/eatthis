@@ -46,6 +46,11 @@ public class TestController {
         return String.valueOf(test.getIdx());
     }
 
+    @GetMapping("/jenkinsTest")
+    public String jenkinsTest(){
+        return "젠킨스";
+    }
+
     @GetMapping("/list")
     public List<Test> list(){
         return testService.getTestList();
