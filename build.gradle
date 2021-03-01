@@ -14,9 +14,14 @@ bootWar{
 }
 
 jar {
-    archiveBaseName = 'ROOT'
-    archiveFileName = 'ROOT.jar'
-    archiveVersion = "0.0.0"
+    manifest {
+        attributes 'Main-Class': 'co.kr.heeseong.eatthis.EatthisApplication'
+    }
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
 
 group = 'co.kr.heeseong'
