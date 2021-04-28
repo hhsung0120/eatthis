@@ -120,7 +120,7 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public EventResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) throws IllegalArgumentException{
+    public EventResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
         UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
 
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
