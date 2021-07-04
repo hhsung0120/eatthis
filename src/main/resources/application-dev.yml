@@ -29,7 +29,7 @@ logging:
     jdbc.connection: off
   file:
     name: ${file.separator}/u00${file.separator}www_contents${file.separator}logs${file.separator}eatthis${file.separator}eatthis.log
-    max-history: 1
-    max-size: 100MB
+    max-history: 90
+    max-size: 10MB
 
 default-upload-path: ${file.separator}u00${file.separator}www_contents${file.separator}upload

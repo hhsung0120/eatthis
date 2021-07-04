@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
+import co.kr.heeseong.eatthis.entity.QuestionsEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;

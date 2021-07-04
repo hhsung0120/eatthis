@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.service.entity;
+package co.kr.heeseong.eatthis.entity;
 
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;

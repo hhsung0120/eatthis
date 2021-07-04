@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.service.entity.TestEntity;
-import co.kr.heeseong.eatthis.service.repository.TestRepository;
+import co.kr.heeseong.eatthis.entity.TestEntity;
+import co.kr.heeseong.eatthis.repository.TestRepository;
 import co.kr.heeseong.eatthis.model.Test;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

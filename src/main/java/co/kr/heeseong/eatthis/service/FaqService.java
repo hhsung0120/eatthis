@@ -2,10 +2,10 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.model.Faq;
 import co.kr.heeseong.eatthis.model.FaqCategory;
-import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
-import co.kr.heeseong.eatthis.service.entity.FaqEntity;
-import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
-import co.kr.heeseong.eatthis.service.repository.FaqRepository;
+import co.kr.heeseong.eatthis.entity.FaqCategoryEntity;
+import co.kr.heeseong.eatthis.entity.FaqEntity;
+import co.kr.heeseong.eatthis.repository.FaqCategoryRepository;
+import co.kr.heeseong.eatthis.repository.FaqRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.service.entity.NoticeEntity;
-import co.kr.heeseong.eatthis.service.repository.NoticeRepository;
+import co.kr.heeseong.eatthis.entity.NoticeEntity;
+import co.kr.heeseong.eatthis.repository.NoticeRepository;
 import co.kr.heeseong.eatthis.model.Notice;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

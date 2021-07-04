@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.service.entity;
+package co.kr.heeseong.eatthis.entity;
 
 
 import lombok.AccessLevel;

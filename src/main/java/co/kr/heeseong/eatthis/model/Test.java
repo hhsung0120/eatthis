@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.service.entity.TestEntity;
+import co.kr.heeseong.eatthis.entity.TestEntity;
 import lombok.*;
 
 @Getter

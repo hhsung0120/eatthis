@@ -3,10 +3,10 @@ package co.kr.heeseong.eatthis.service;
 import co.kr.heeseong.eatthis.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.Enum.EventResultType;
 import co.kr.heeseong.eatthis.model.Questions;
-import co.kr.heeseong.eatthis.service.entity.FaqCategoryEntity;
-import co.kr.heeseong.eatthis.service.entity.QuestionsEntity;
-import co.kr.heeseong.eatthis.service.repository.FaqCategoryRepository;
-import co.kr.heeseong.eatthis.service.repository.QuestionsRepository;
+import co.kr.heeseong.eatthis.entity.FaqCategoryEntity;
+import co.kr.heeseong.eatthis.entity.QuestionsEntity;
+import co.kr.heeseong.eatthis.repository.FaqCategoryRepository;
+import co.kr.heeseong.eatthis.repository.QuestionsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

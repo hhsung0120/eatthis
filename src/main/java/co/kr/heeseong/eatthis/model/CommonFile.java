@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.model;
 
 import co.kr.heeseong.eatthis.Enum.TableCode;
-import co.kr.heeseong.eatthis.service.entity.common.FileEntity;
+import co.kr.heeseong.eatthis.entity.common.FileEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,6 +1,6 @@
-package co.kr.heeseong.eatthis.service.repository;
+package co.kr.heeseong.eatthis.repository;
 
-import co.kr.heeseong.eatthis.service.entity.UserEntity;
+import co.kr.heeseong.eatthis.entity.UserEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

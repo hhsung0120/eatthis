@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.service.entity.ReviewEntity;
+import co.kr.heeseong.eatthis.entity.ReviewEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

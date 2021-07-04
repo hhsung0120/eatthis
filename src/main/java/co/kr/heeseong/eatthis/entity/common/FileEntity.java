@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.service.entity.common;
+package co.kr.heeseong.eatthis.entity.common;
 
 
 import co.kr.heeseong.eatthis.Enum.TableCode;

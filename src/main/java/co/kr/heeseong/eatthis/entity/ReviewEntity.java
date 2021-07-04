@@ -1,8 +1,7 @@
-package co.kr.heeseong.eatthis.service.entity;
+package co.kr.heeseong.eatthis.entity;
 
-import co.kr.heeseong.eatthis.service.entity.common.TimeEntity;
+import co.kr.heeseong.eatthis.entity.common.TimeEntity;
 import lombok.*;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 
