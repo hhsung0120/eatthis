@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis;
 
+import co.kr.heeseong.eatthis.model.Faq;
 import co.kr.heeseong.eatthis.service.FaqService;
 import javassist.bytecode.ExceptionTable;
 import org.junit.jupiter.api.Test;
@@ -8,9 +9,13 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
@@ -36,6 +41,15 @@ public class FaqController {
                 RestDocumentationRequestBuilders.get("/faqs/{page}",1L)
         );
 
+        FieldDescriptor[] faqs = new FieldDescriptor[]{
+                fieldWithPath("dataList[].idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                , fieldWithPath("dataList[].categoryName").type(JsonFieldType.STRING).description("카테고리")
+                , fieldWithPath("dataList[].title").type(JsonFieldType.STRING).description("제목")
+                , fieldWithPath("dataList[].contents").type(JsonFieldType.STRING).description("내용")
+                , fieldWithPath("dataList[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
+                , fieldWithPath("dataList[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
+        };
+
         result.andExpect(status().isOk())
                 .andDo(
                         document("faqs"
@@ -44,13 +58,7 @@ public class FaqController {
                                 , pathParameters(
                                         parameterWithName("page").description("페이지 번호")
                                 )
-                                , responseFields(
-                                        fieldWithPath("dataList").description("고유 번호")
-                                        , fieldWithPath("categoryName").type(JsonFieldType.STRING).description("카테고리")
-                                        , fieldWithPath("contents").type(JsonFieldType.STRING).description("내용")
-                                        , fieldWithPath("createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                                        , fieldWithPath("lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
-                                )
+                                , responseFields(faqs)
                         )
                 )
                 .andDo(print());
