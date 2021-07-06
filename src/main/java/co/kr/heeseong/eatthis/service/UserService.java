@@ -56,7 +56,7 @@ public class UserService {
                     .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
                     .build();
         }else{
-            throw new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx);
+            throw new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx);
         }
     }
 
@@ -81,14 +81,14 @@ public class UserService {
                 userDetailRepository.save(user.toDetailEntity(idx));
             }
         }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException(ErrorCode.USER_DUPLICATE.getValue() + " -> " + user.getId());
+            throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + user.getId());
         }
 
         return idx;
     }
 
     public long updateUser(User user) throws IllegalArgumentException{
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + user.getIdx()));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + user.getIdx()));
         userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
         return userDetailEntity.getIdx();
     }
@@ -121,10 +121,10 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
 
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
-            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
+            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
 
         LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
@@ -144,9 +144,9 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateDinnerAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
-            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
+            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
 
         LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
@@ -164,9 +164,9 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateEventAlarm(Long idx, char alarmYn) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
-            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
+            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
         userDetailEntity.updateEventAlarm(alarmYn);
         return EventResultType.SUCCESS;
@@ -181,9 +181,9 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateServiceAlarm(Long idx, char alarmYn) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
-            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
+            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
         userDetailEntity.updateServiceAlarm(alarmYn);
         return EventResultType.SUCCESS;
@@ -207,10 +207,10 @@ public class UserService {
 
     @Transactional
     public EventResultType updateUserStatus(long idx, Secession secession) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
         userScessionRepository.save(secession.toEntity());
 
-        userDetailEntity.updateStatus(UserStatus.SECESSION);
+        userDetailEntity.updateStatus(UserStatusType.SECESSION);
 
         return EventResultType.SUCCESS;
     }

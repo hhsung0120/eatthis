@@ -34,6 +34,7 @@ public class UserEntity{
     @Column
     private char locationAgree;
 
+    @Column(name = "sign_up_type")
     @Enumerated(EnumType.STRING)
     private SignUpType signUpType;
 

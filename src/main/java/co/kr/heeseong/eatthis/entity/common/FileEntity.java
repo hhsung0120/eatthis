@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.entity.common;
 
 
-import co.kr.heeseong.eatthis.Enum.TableCode;
+import co.kr.heeseong.eatthis.Enum.TableCodeType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ public class FileEntity extends TimeEntity{
     private long idx;
 
     @Enumerated(EnumType.STRING)
-    private TableCode tableType;
+    private TableCodeType tableType;
 
     @Column
     private long tableIdx;

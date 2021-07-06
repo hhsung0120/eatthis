@@ -1,13 +1,13 @@
 package co.kr.heeseong.eatthis.Enum;
 
-public enum TableCode {
+public enum TableCodeType {
 
       USER("회원테이블")
     , REVIEW("리뷰테이블")
     ;
 
     String value = "";
-    TableCode(String value){
+    TableCodeType(String value){
         this.value = value;
     }
 

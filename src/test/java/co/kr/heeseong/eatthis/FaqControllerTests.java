@@ -1,8 +1,5 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.Faq;
-import co.kr.heeseong.eatthis.service.FaqService;
-import javassist.bytecode.ExceptionTable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -13,9 +10,6 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
@@ -30,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "eatthis.heeseong.site")
-public class FaqController {
+public class FaqControllerTests {
 
     @Autowired
     private MockMvc mockMvc;

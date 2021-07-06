@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.entity;
 
 
-import co.kr.heeseong.eatthis.Enum.QuestionsStatus;
+import co.kr.heeseong.eatthis.Enum.QuestionsStatusType;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
 import lombok.*;
 
@@ -31,7 +31,7 @@ public class QuestionsEntity extends TimeEntity {
     private String answer;
 
     @Enumerated(EnumType.STRING)
-    private QuestionsStatus status;
+    private QuestionsStatusType status;
 
     @Column
     private String phone;
@@ -45,7 +45,7 @@ public class QuestionsEntity extends TimeEntity {
         this.userIdx = userIdx;
         this.questions = questions;
         this.answer = "";
-        this.status = QuestionsStatus.WAITING;
+        this.status = QuestionsStatusType.WAITING;
         this.phone = phone;
         this.email = email;
         this.categoryIdx= categoryIdx;

@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.Enum.ErrorCode;
+import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.Enum.EventResultType;
 import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.entity.FaqCategoryEntity;
@@ -68,7 +68,7 @@ public class QuestionsService {
         //questions.getUserIdx() != session.userIdx
 
         QuestionsEntity questionsEntity = questionsRepository.findByQuestionsIdx(questions.getIdx())
-                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getValue()));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 
         FaqCategoryEntity faqCategoryEntity = faqCategoryRepository.findByCategoryIdx(questionsEntity.getCategoryIdx());
 

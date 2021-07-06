@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.Enum.ErrorCode;
-import co.kr.heeseong.eatthis.Enum.TableCode;
+import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.Enum.TableCodeType;
 import co.kr.heeseong.eatthis.mapper.ReviewMapper;
 import co.kr.heeseong.eatthis.model.CommonFile;
 import co.kr.heeseong.eatthis.model.Review;
@@ -81,8 +81,8 @@ public class StoreService {
     }
 
     private long insertReview(Review review){
-        userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
-        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCode.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
+        userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
+        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
         //없는 메뉴도 검사할것
         if(review.getTotalPrice() > 100000){
             throw new IllegalArgumentException("유효한 금액을 입력 하세요.");
@@ -95,7 +95,7 @@ public class StoreService {
                 if(!file.isEmpty()){
                     commonFile = FileUtil.executeFileUpload(file, uploadPath);
                     commonFile.setTableIdx(idx);
-                    commonFile.setTableType(TableCode.REVIEW);
+                    commonFile.setTableType(TableCodeType.REVIEW);
                     fileRepository.save(commonFile.toEntity());
                 }
             }
@@ -113,7 +113,7 @@ public class StoreService {
      * @return
      */
     public List<Review> getReviewList(long userIdx) {
-        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getValue() + " -> " + userIdx));
+        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
         return reviewMapper.selectReviewList(userIdx);
     }
 }

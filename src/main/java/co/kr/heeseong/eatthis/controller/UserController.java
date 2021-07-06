@@ -1,12 +1,16 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.StatusCode;
 import co.kr.heeseong.eatthis.Enum.LoginResultType;
-import co.kr.heeseong.eatthis.service.UserService;
+import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.service.UserService;
+import co.kr.heeseong.eatthis.util.HttpHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -22,6 +26,19 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/login")
+    public Map<String, Object> login(@ModelAttribute User user){
+        Map<String, Object> result = new LinkedHashMap<>();
+
+        try{
+            result.put("result", userService.loginProsess(user));
+        }catch (Exception e){
+            result.put("result", LoginResultType.FAIL);
+        }
+
+        return result;
+    }
 
     @PostMapping("/signUp")
     public Map<String, Object> signUp(@ModelAttribute User user){
@@ -41,31 +58,22 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/login")
-    public Map<String, Object> login(@ModelAttribute User user){
-        Map<String, Object> result = new LinkedHashMap<>();
-
-        try{
-            result.put("result", userService.loginProsess(user));
-        }catch (Exception e){
-            result.put("result", LoginResultType.FAIL);
-        }
-
-        return result;
-    }
-
     @GetMapping("/{idx}")
-    public Map<String, Object> user(@PathVariable Long idx){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    public ResponseEntity<ResponseData> user(@PathVariable Long idx){
+        ResponseData responseData;
         try{
-            result.put("user", userService.getUser(idx));
-            result.put("userIdx", idx);
+            responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , userService.getUser(idx));
         }catch (Exception e) {
-            result.put("reason", e.getMessage());
+            responseData = new ResponseData(
+                    StatusCode.SERVER_ERROR.getValue()
+                    , e.getMessage()
+                    , new User());
         }
 
-        return result;
+        return new ResponseEntity<>(responseData, HttpHeaderUtil.setJsonHeader(), org.springframework.http.HttpStatus.OK);
     }
 
     @PostMapping("lunchAlarm/{idx}")

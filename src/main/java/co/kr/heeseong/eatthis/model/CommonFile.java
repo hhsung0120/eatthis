@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.Enum.TableCode;
+import co.kr.heeseong.eatthis.Enum.TableCodeType;
 import co.kr.heeseong.eatthis.entity.common.FileEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class CommonFile {
     private long idx;
-    private TableCode tableType;
+    private TableCodeType tableType;
     private long tableIdx;
     private String uuid;
     private String originalFileName;

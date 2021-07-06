@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.Enum;
 
-public enum ErrorCode {
+public enum ErrorCodeType {
 
       USER_NOT_FOUND("존재하지 않는 회원 입니다.")
     , STORE_NOT_FOUND("존재하지 않는 매장 입니다.")
@@ -11,7 +11,7 @@ public enum ErrorCode {
     ;
 
     String value = "";
-    ErrorCode(String value){
+    ErrorCodeType(String value){
         this.value = value;
     }
 

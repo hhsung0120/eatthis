@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.model;
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;
-import co.kr.heeseong.eatthis.Enum.UserStatus;
+import co.kr.heeseong.eatthis.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -32,7 +32,7 @@ public class User {
     private char locationAgree;
     private SignUpType signUpType;
     private String profileImagePath;
-    private UserStatus userStatus;
+    private UserStatusType userStatusType;
 
     @Builder
     public User(long idx, String id, String password, String nickName, String gender, String birthday, char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath) {

@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.Enum;
 
-public enum UserStatus {
+public enum UserStatusType {
 
       NORMAL("정상")
     , STOP("중지")
@@ -9,7 +9,7 @@ public enum UserStatus {
     ;
 
     String value = "";
-    UserStatus(String value){
+    UserStatusType(String value){
         this.value = value;
     }
 
