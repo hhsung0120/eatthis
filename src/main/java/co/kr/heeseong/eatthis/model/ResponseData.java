@@ -1,6 +1,5 @@
 package co.kr.heeseong.eatthis.model;
 
-import co.kr.heeseong.eatthis.Enum.StatusCode;
 import lombok.Getter;
 
 @Getter

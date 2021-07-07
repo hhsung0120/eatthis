@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
@@ -39,17 +41,19 @@ public class UserService {
      */
     public ResponseData getUser(long idx){
         ResponseData responseData;
+        Map<String, Object> dataList = new LinkedHashMap<>();
 
         try{
+            dataList.put("dataList", this.getUsers(idx));
             responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , this.getUsers(idx));
+                    , dataList);
         }catch (Exception e) {
             responseData = new ResponseData(
                     StatusCode.SERVER_ERROR.getValue()
                     , e.getMessage()
-                    , new User());
+                    , dataList);
         }
 
         return responseData;
