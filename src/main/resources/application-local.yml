@@ -1,6 +1,8 @@
 --- #local
 spring:
-  profiles: local
+  profiles:
+    active: local
+
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://127.0.0.1:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false

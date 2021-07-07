@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.*;
+import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.entity.SecessionEntity;
@@ -32,32 +33,49 @@ public class UserService {
     final private SecessionRepository secessionRepository;
     final private UserSecessionRepository userScessionRepository;
 
+    /**
+     * 컨트롤러 응답용
+     * @param idx
+     * @return
+     */
+    public ResponseData getUser(long idx){
+        ResponseData responseData;
 
+        try{
+            responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , this.getUsers(idx));
+        }catch (Exception e) {
+            responseData = new ResponseData(
+                    StatusCode.SERVER_ERROR.getValue()
+                    , e.getMessage()
+                    , new User());
+        }
+
+        return responseData;
+    }
 
     /**
      * 사용자 정보 호출
      * @param idx
      * @return User
      */
-    public User getUser(long idx){
-        Optional<UserEntity> optional = userRepository.findById(idx);
-        if(optional.isPresent()) {
-            return User.builder()
-                    .idx(optional.get().getIdx())
-                    .id(optional.get().getId())
-                    .nickName(optional.get().getUserDetailEntity().getNickName())
-                    .password("")
-                    .gender(optional.get().getUserDetailEntity().getGender().getValue())
-                    .birthday(optional.get().getUserDetailEntity().getBirthday())
-                    .lunchAlarm(optional.get().getUserDetailEntity().getLunchAlarm())
-                    .dinnerAlarm(optional.get().getUserDetailEntity().getDinnerAlarm())
-                    .eventAlarm(optional.get().getUserDetailEntity().getEventAlarm())
-                    .serviceAlarm(optional.get().getUserDetailEntity().getServiceAlarm())
-                    .profileImagePath(optional.get().getUserDetailEntity().getProfileImagePath())
-                    .build();
-        }else{
-            throw new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx);
-        }
+    private User getUsers(long idx){
+        UserEntity optional = userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        return User.builder()
+                .idx(optional.getIdx())
+                .id(optional.getId())
+                .nickName(optional.getUserDetailEntity().getNickName())
+                .password("")
+                .gender(optional.getUserDetailEntity().getGender().getValue())
+                .birthday(optional.getUserDetailEntity().getBirthday())
+                .lunchAlarm(optional.getUserDetailEntity().getLunchAlarm())
+                .dinnerAlarm(optional.getUserDetailEntity().getDinnerAlarm())
+                .eventAlarm(optional.getUserDetailEntity().getEventAlarm())
+                .serviceAlarm(optional.getUserDetailEntity().getServiceAlarm())
+                .profileImagePath(optional.getUserDetailEntity().getProfileImagePath())
+                .build();
     }
 
     /**

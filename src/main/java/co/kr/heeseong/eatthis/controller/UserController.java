@@ -10,6 +10,7 @@ import co.kr.heeseong.eatthis.util.HttpHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,20 +61,7 @@ public class UserController {
 
     @GetMapping("/{idx}")
     public ResponseEntity<ResponseData> user(@PathVariable Long idx){
-        ResponseData responseData;
-        try{
-            responseData = new ResponseData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , userService.getUser(idx));
-        }catch (Exception e) {
-            responseData = new ResponseData(
-                    StatusCode.SERVER_ERROR.getValue()
-                    , e.getMessage()
-                    , new User());
-        }
-
-        return new ResponseEntity<>(responseData, HttpHeaderUtil.setJsonHeader(), org.springframework.http.HttpStatus.OK);
+        return ResponseEntity.ok(userService.getUser(idx));
     }
 
     @PostMapping("lunchAlarm/{idx}")
