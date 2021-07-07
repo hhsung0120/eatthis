@@ -21,17 +21,16 @@ import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
 @Service
 public class UserService {
 
-    final private UserRepository userRepository;
-    final private UserDetailRepository userDetailRepository;
-    final private SecessionRepository secessionRepository;
-    final private UserSecessionRepository userScessionRepository;
+    private final UserRepository userRepository;
+    private final UserDetailRepository userDetailRepository;
+    private final SecessionRepository secessionRepository;
+    private final UserSecessionRepository userScessionRepository;
 
     /**
      * 컨트롤러 응답용
@@ -62,19 +61,19 @@ public class UserService {
      * @return User
      */
     private User getUsers(long idx){
-        UserEntity optional = userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserEntity userEntity = checkUser(idx);
         return User.builder()
-                .idx(optional.getIdx())
-                .id(optional.getId())
-                .nickName(optional.getUserDetailEntity().getNickName())
+                .idx(userEntity.getIdx())
+                .id(userEntity.getId())
+                .nickName(userEntity.getUserDetailEntity().getNickName())
                 .password("")
-                .gender(optional.getUserDetailEntity().getGender().getValue())
-                .birthday(optional.getUserDetailEntity().getBirthday())
-                .lunchAlarm(optional.getUserDetailEntity().getLunchAlarm())
-                .dinnerAlarm(optional.getUserDetailEntity().getDinnerAlarm())
-                .eventAlarm(optional.getUserDetailEntity().getEventAlarm())
-                .serviceAlarm(optional.getUserDetailEntity().getServiceAlarm())
-                .profileImagePath(optional.getUserDetailEntity().getProfileImagePath())
+                .gender(userEntity.getUserDetailEntity().getGender().getValue())
+                .birthday(userEntity.getUserDetailEntity().getBirthday())
+                .lunchAlarm(userEntity.getUserDetailEntity().getLunchAlarm())
+                .dinnerAlarm(userEntity.getUserDetailEntity().getDinnerAlarm())
+                .eventAlarm(userEntity.getUserDetailEntity().getEventAlarm())
+                .serviceAlarm(userEntity.getUserDetailEntity().getServiceAlarm())
+                .profileImagePath(userEntity.getUserDetailEntity().getProfileImagePath())
                 .build();
     }
 
@@ -106,7 +105,7 @@ public class UserService {
     }
 
     public long updateUser(User user) throws IllegalArgumentException{
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(user.getIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + user.getIdx()));
+        UserDetailEntity userDetailEntity = checkUserDetail(user.getIdx());
         userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
         return userDetailEntity.getIdx();
     }
@@ -139,7 +138,7 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = checkUserDetail(idx);
 
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
@@ -162,7 +161,7 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateDinnerAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -182,7 +181,7 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateEventAlarm(Long idx, char alarmYn) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -199,7 +198,7 @@ public class UserService {
      */
     @Transactional
     public EventResultType updateServiceAlarm(Long idx, char alarmYn) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -225,11 +224,19 @@ public class UserService {
 
     @Transactional
     public EventResultType updateUserStatus(long idx, Secession secession) {
-        UserDetailEntity userDetailEntity = userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+        UserDetailEntity userDetailEntity = checkUserDetail(idx);
         userScessionRepository.save(secession.toEntity());
 
         userDetailEntity.updateStatus(UserStatusType.SECESSION);
 
         return EventResultType.SUCCESS;
+    }
+
+    private UserDetailEntity checkUserDetail(Long idx){
+        return userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+    }
+
+    private UserEntity checkUser(Long idx){
+        return userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
     }
 }
