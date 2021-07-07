@@ -1,7 +1,8 @@
 --- #dev
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

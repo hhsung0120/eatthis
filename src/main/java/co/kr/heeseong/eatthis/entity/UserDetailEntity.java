@@ -4,10 +4,8 @@ package co.kr.heeseong.eatthis.entity;
 import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -15,7 +13,6 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Table(name = "user_detail")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserDetailEntity extends TimeEntity {
 
     @Id
@@ -54,6 +51,8 @@ public class UserDetailEntity extends TimeEntity {
     @Enumerated(EnumType.STRING)
     private UserStatusType userStatusType;
 
+    public UserDetailEntity() {}
+
     public void update(String profileImagePath, String nickName, String birthday, GenderType gender){
         this.profileImagePath = profileImagePath;
         this.nickName = nickName;
@@ -63,14 +62,14 @@ public class UserDetailEntity extends TimeEntity {
 
     public void updateLunchAlarm(char lunchAlarm, LocalTime alarmTime){
         this.lunchAlarm = lunchAlarm;
-        if("Y".equals(String.valueOf(lunchAlarm))){
+        if("Y".equals(String.valueOf(this.lunchAlarm))){
             this.lunchAlarmTime = alarmTime;
         }
     }
 
     public void updateDinnerAlarm(char dinnerAlarm, LocalTime alarmTime){
         this.dinnerAlarm = dinnerAlarm;
-        if("Y".equals(String.valueOf(lunchAlarm))){
+        if("Y".equals(String.valueOf( this.dinnerAlarm))){
             this.dinnerAlarmTime = alarmTime;
         }
     }
@@ -92,3 +91,4 @@ public class UserDetailEntity extends TimeEntity {
         this.idx = idx;
     }
 }
+

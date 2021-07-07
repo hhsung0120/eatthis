@@ -32,27 +32,28 @@ public class UserControllerTests {
     @Test
     public void users() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/{page}",1L)
+                RestDocumentationRequestBuilders.get("/users/{idx}",1L)
         );
-
-        FieldDescriptor[] faqs = new FieldDescriptor[]{
-                fieldWithPath("dataList[].idx").type(JsonFieldType.NUMBER).description("고유 번호")
-                , fieldWithPath("dataList[].categoryName").type(JsonFieldType.STRING).description("카테고리")
-                , fieldWithPath("dataList[].title").type(JsonFieldType.STRING).description("제목")
-                , fieldWithPath("dataList[].contents").type(JsonFieldType.STRING).description("내용")
-                , fieldWithPath("dataList[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                , fieldWithPath("dataList[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
-        };
 
         result.andExpect(status().isOk())
                 .andDo(
-                        document("faqs"
+                        document("users"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("page").description("페이지 번호")
+                                        parameterWithName("idx").description("고유 번호")
                                 )
-                                , responseFields(faqs)
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.NUMBER).description("메시지")
+                                        , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                                        , fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디")
+                                        , fieldWithPath("data.nickName").type(JsonFieldType.STRING).description("닉네임")
+                                        , fieldWithPath("data.gender").type(JsonFieldType.STRING).description("성별")
+                                        , fieldWithPath("data.birthday").type(JsonFieldType.STRING).description("생일")
+                                        , fieldWithPath("data.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
+                                        , fieldWithPath("data.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
+                                )
                         )
                 )
                 .andDo(print());

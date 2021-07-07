@@ -1,7 +1,8 @@
 --- #local
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -18,6 +19,7 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
+
 
 logging:
   level:

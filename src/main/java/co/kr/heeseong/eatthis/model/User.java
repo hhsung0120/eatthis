@@ -7,12 +7,7 @@ import co.kr.heeseong.eatthis.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
-@Setter
 @Getter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
 
     private long idx;
@@ -33,6 +28,8 @@ public class User {
     private SignUpType signUpType;
     private String profileImagePath;
     private UserStatusType userStatusType;
+
+    public User() {}
 
     @Builder
     public User(long idx, String id, String password, String nickName, String gender, String birthday, char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath) {

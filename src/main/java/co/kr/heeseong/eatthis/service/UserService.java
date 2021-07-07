@@ -41,19 +41,17 @@ public class UserService {
      */
     public ResponseData getUser(long idx){
         ResponseData responseData;
-        Map<String, Object> dataList = new LinkedHashMap<>();
 
         try{
-            dataList.put("dataList", this.getUsers(idx));
             responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , dataList);
+                    , this.getUsers(idx));
         }catch (Exception e) {
             responseData = new ResponseData(
                     StatusCode.SERVER_ERROR.getValue()
                     , e.getMessage()
-                    , dataList);
+                    , new User());
         }
 
         return responseData;
@@ -149,8 +147,8 @@ public class UserService {
         }
 
         LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
-
         userDetailEntity.updateLunchAlarm(alarmYn, alarmTime);
+
         return EventResultType.SUCCESS;
     }
 

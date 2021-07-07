@@ -1,7 +1,8 @@
 --- #prod
 spring:
-  profiles:
-    active: prod
+  config:
+    activate:
+      on-profile: prod
 
   datasource:
       type: com.zaxxer.hikari.HikariDataSource
