@@ -1,12 +1,12 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.*;
-import co.kr.heeseong.eatthis.model.ResponseData;
-import co.kr.heeseong.eatthis.model.Secession;
-import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.entity.SecessionEntity;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
+import co.kr.heeseong.eatthis.model.ResponseData;
+import co.kr.heeseong.eatthis.model.Secession;
+import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.repository.UserRepository;
@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
