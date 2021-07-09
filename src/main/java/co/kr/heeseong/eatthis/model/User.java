@@ -1,38 +1,54 @@
 package co.kr.heeseong.eatthis.model;
 
+import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.SignUpType;
 import co.kr.heeseong.eatthis.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@Setter
+@ToString
 public class User {
 
     private long idx;
     private String id;
+    @JsonIgnore
     private String password;
     private String nickName;
-    private String gender;
+    private GenderType gender;
     private String birthday;
     private char lunchAlarm;
     private char dinnerAlarm;
-    private int alarmTimeHour;
-    private int alarmTimeMinute;
+    private int lunchAlarmHour;
+    private int lunchAlarmMinute;
+    private int dinnerAlarmHour;
+    private int dinnerAlarmMinute;
     private char eventAlarm;
     private char serviceAlarm;
+    @JsonIgnore
     private char termsAgree;
+    @JsonIgnore
     private char privacyAgree;
+    @JsonIgnore
     private char locationAgree;
+    @JsonIgnore
     private SignUpType signUpType;
     private String profileImagePath;
+    @JsonIgnore
     private UserStatusType userStatusType;
 
     public User() {}
 
     @Builder
-    public User(long idx, String id, String password, String nickName, String gender, String birthday, char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath) {
+    public User(long idx, String id, String password, String nickName, GenderType gender, String birthday
+            , char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath
+            , int lunchAlarmHour, int lunchAlarmMinute, int dinnerAlarmHour, int dinnerAlarmMinute) {
         this.idx = idx;
         this.id = id;
         this.password = password;
@@ -44,6 +60,11 @@ public class User {
         this.eventAlarm = eventAlarm;
         this.serviceAlarm = serviceAlarm;
         this.profileImagePath = profileImagePath;
+        this.lunchAlarmHour = lunchAlarmHour;
+        this.lunchAlarmMinute = lunchAlarmMinute;
+        this.dinnerAlarmHour = dinnerAlarmHour;
+        this.dinnerAlarmMinute = dinnerAlarmMinute;
+
     }
 
     public UserEntity toEntity(){

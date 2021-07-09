@@ -8,25 +8,18 @@ plugins {
 
 group = 'co.kr.heeseong'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
-//2
 ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-//3
 asciidoctor {
+    delete file('src/main/resources/static/docs')
     dependsOn test
     attributes 'snippets': snippetsDir
     inputs.dir snippetsDir
 }
 
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
-
-//4
 bootJar {
     dependsOn asciidoctor
     copy {

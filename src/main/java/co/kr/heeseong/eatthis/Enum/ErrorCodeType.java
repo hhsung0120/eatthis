@@ -8,6 +8,9 @@ public enum ErrorCodeType {
     , USER_DUPLICATE("중복 된 회원 입니다.")
     , INVALID_ARGUMENT("올바른 인자가 아닙니다.")
     , POST_NOT_FOUND("존재하지 않는 게시물 입니다.")
+    , INVALID_PASSWORD("패스워드를 확인해 주세요.")
+
+
     ;
 
     String value = "";

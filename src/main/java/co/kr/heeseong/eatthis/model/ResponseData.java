@@ -12,9 +12,17 @@ public class ResponseData {
     public ResponseData() {
     }
 
+    public ResponseData(int statusCode, Exception e) {
+        this.statusCode = statusCode;
+        this.message = e.getMessage();
+        this.data = "";
+    }
+
     public ResponseData(int statusCode, String message, Object data) {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
     }
+
+
 }

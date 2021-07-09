@@ -13,6 +13,7 @@ import co.kr.heeseong.eatthis.repository.UserRepository;
 import co.kr.heeseong.eatthis.repository.UserSecessionRepository;
 import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
@@ -35,44 +36,25 @@ public class UserService {
     private final UserSecessionRepository userScessionRepository;
 
     /**
-     * 컨트롤러 응답용
-     * @param idx
-     * @return
-     */
-    public ResponseData getUser(long idx){
-        ResponseData responseData;
-
-        try{
-            responseData = new ResponseData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , this.getUsers(idx));
-        }catch (Exception e) {
-            responseData = new ResponseData(
-                    StatusCode.SERVER_ERROR.getValue()
-                    , e.getMessage()
-                    , new User());
-        }
-
-        return responseData;
-    }
-
-    /**
      * 사용자 정보 호출
      * @param idx
      * @return User
      */
-    private User getUsers(long idx){
+    public User getUsers(long idx){
         UserEntity userEntity = checkUser(idx);
         return User.builder()
                 .idx(userEntity.getIdx())
                 .id(userEntity.getId())
                 .nickName(userEntity.getUserDetailEntity().getNickName())
                 .password("")
-                .gender(userEntity.getUserDetailEntity().getGender().getValue())
+                .gender(userEntity.getUserDetailEntity().getGender())
                 .birthday(userEntity.getUserDetailEntity().getBirthday())
                 .lunchAlarm(userEntity.getUserDetailEntity().getLunchAlarm())
+                .lunchAlarmHour(Integer.parseInt(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0,2)))
+                .lunchAlarmMinute(Integer.parseInt(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3,5)))
                 .dinnerAlarm(userEntity.getUserDetailEntity().getDinnerAlarm())
+                .dinnerAlarmHour(Integer.parseInt(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0,2)))
+                .dinnerAlarmMinute(Integer.parseInt(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3,5)))
                 .eventAlarm(userEntity.getUserDetailEntity().getEventAlarm())
                 .serviceAlarm(userEntity.getUserDetailEntity().getServiceAlarm())
                 .profileImagePath(userEntity.getUserDetailEntity().getProfileImagePath())
@@ -108,7 +90,7 @@ public class UserService {
 
     public long updateUser(User user) throws IllegalArgumentException{
         UserDetailEntity userDetailEntity = checkUserDetail(user.getIdx());
-        userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender()));
+        userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender().getValue()));
         return userDetailEntity.getIdx();
     }
 
@@ -117,16 +99,11 @@ public class UserService {
      * @param user
      * @return LoginResultType
      */
-    public LoginResultType loginProsess(User user){
-        if(userRepository.findByEmailId(user.getId()) == null){
-            return LoginResultType.USER_NOT_FOUND;
-        }
-
-        if(userRepository.findByIdAndPassword(user.getId(), user.getPassword()) == 0){
-            return LoginResultType.INVALID_PASSWORD;
-        }
-
-        return LoginResultType.SUCCESS;
+    public User loginProcess(User user){
+        userRepository.findByEmailId(user.getId()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue()));
+        userRepository.findByIdAndPassword(user.getId(), user.getPassword()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.INVALID_PASSWORD.getValue()));
+        //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
+        return this.getUsers(userRepository.findByEmailId(user.getId()).get().getIdx());
     }
 
     /**
