@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 묻고 답하기
+ * 묻고 답하기 1:1
  */
 @RestController
 @RequiredArgsConstructor

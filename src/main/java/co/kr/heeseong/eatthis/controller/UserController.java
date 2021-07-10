@@ -29,14 +29,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseData> login(@ModelAttribute User user){
-        System.out.println(user.toString());
         try{
-            //나중에 없애야하는 코드
-            userService.loginProcess(user);
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , "");//userService.loginProcess(user));
+                    , userService.loginProcess(user));
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
