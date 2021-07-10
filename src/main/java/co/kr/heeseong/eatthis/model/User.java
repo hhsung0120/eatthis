@@ -18,17 +18,16 @@ public class User {
 
     private long idx;
     private String id;
-    @JsonIgnore
     private String password;
     private String nickName;
     private GenderType gender;
     private String birthday;
     private char lunchAlarm;
     private char dinnerAlarm;
-    private int lunchAlarmHour;
-    private int lunchAlarmMinute;
-    private int dinnerAlarmHour;
-    private int dinnerAlarmMinute;
+    private String lunchAlarmHour;
+    private String lunchAlarmMinute;
+    private String dinnerAlarmHour;
+    private String dinnerAlarmMinute;
     private char eventAlarm;
     private char serviceAlarm;
     @JsonIgnore
@@ -48,7 +47,7 @@ public class User {
     @Builder
     public User(long idx, String id, String password, String nickName, GenderType gender, String birthday
             , char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath
-            , int lunchAlarmHour, int lunchAlarmMinute, int dinnerAlarmHour, int dinnerAlarmMinute) {
+            , String lunchAlarmHour, String lunchAlarmMinute, String dinnerAlarmHour, String dinnerAlarmMinute) {
         this.idx = idx;
         this.id = id;
         this.password = password;
@@ -64,7 +63,6 @@ public class User {
         this.lunchAlarmMinute = lunchAlarmMinute;
         this.dinnerAlarmHour = dinnerAlarmHour;
         this.dinnerAlarmMinute = dinnerAlarmMinute;
-
     }
 
     public UserEntity toEntity(){

@@ -1,10 +1,12 @@
 package co.kr.heeseong.eatthis.service;
 
-import co.kr.heeseong.eatthis.Enum.*;
+import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.Enum.EventResultType;
+import co.kr.heeseong.eatthis.Enum.GenderType;
+import co.kr.heeseong.eatthis.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.entity.SecessionEntity;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
-import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.repository.SecessionRepository;
@@ -12,7 +14,6 @@ import co.kr.heeseong.eatthis.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.repository.UserRepository;
 import co.kr.heeseong.eatthis.repository.UserSecessionRepository;
 import co.kr.heeseong.eatthis.util.StringUtil;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,11 +49,11 @@ public class UserService {
                 .gender(userEntity.getUserDetailEntity().getGender())
                 .birthday(userEntity.getUserDetailEntity().getBirthday())
                 .lunchAlarm(userEntity.getUserDetailEntity().getLunchAlarm())
-                .lunchAlarmHour(Integer.parseInt(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0,2)))
-                .lunchAlarmMinute(Integer.parseInt(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3,5)))
+                .lunchAlarmHour(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0,2))
+                .lunchAlarmMinute(userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3,5))
                 .dinnerAlarm(userEntity.getUserDetailEntity().getDinnerAlarm())
-                .dinnerAlarmHour(Integer.parseInt(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0,2)))
-                .dinnerAlarmMinute(Integer.parseInt(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3,5)))
+                .dinnerAlarmHour(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0,2))
+                .dinnerAlarmMinute(userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3,5))
                 .eventAlarm(userEntity.getUserDetailEntity().getEventAlarm())
                 .serviceAlarm(userEntity.getUserDetailEntity().getServiceAlarm())
                 .profileImagePath(userEntity.getUserDetailEntity().getProfileImagePath())

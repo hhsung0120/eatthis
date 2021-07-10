@@ -7,17 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -31,16 +34,23 @@ public class UserControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     public void login() throws Exception{
+
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("id", "hhsung0120@naver.com");
+        user.put("password", "1234");
 
         //json 으로 보내야함
         //받을 때 객체로 안받도록 다시 설계....
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
                         .post("/users/login")
-                        .param("id","hhsung0120@naver.com")
-                        .param("password","12345")
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
         );
 
         result.andExpect(status().isOk())
@@ -48,10 +58,28 @@ public class UserControllerTests {
                         document("login"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
+                                , requestFields(
+                                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디")
+                                        , fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                )
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
-                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("메시지")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("추후 메인 매장 데이터 응답 예정")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data.user.idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                                        , fieldWithPath("data.user.id").type(JsonFieldType.STRING).description("아이디")
+                                        , fieldWithPath("data.user.password").type(JsonFieldType.STRING).description("비밀번호")
+                                        , fieldWithPath("data.user.nickName").type(JsonFieldType.STRING).description("닉네임")
+                                        , fieldWithPath("data.user.gender").type(JsonFieldType.STRING).description("성별")
+                                        , fieldWithPath("data.user.birthday").type(JsonFieldType.STRING).description("생일")
+                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
+                                        , fieldWithPath("data.user.lunchAlarmHour").type(JsonFieldType.STRING).description("점심 알람 시")
+                                        , fieldWithPath("data.user.lunchAlarmMinute").type(JsonFieldType.STRING).description("점심 알람 분")
+                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
+                                        , fieldWithPath("data.user.dinnerAlarmHour").type(JsonFieldType.STRING).description("저녁 알람 시")
+                                        , fieldWithPath("data.user.dinnerAlarmMinute").type(JsonFieldType.STRING).description("저녁 알람 분")
+                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람 여부")
+                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람 여부")
+                                        , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("프로필 이미지 경로")
                                 )
                         )
                 )
@@ -74,22 +102,23 @@ public class UserControllerTests {
                                         parameterWithName("idx").description("고유 번호")
                                 )
                                 , responseFields(
-                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
-                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("메시지")
-                                        , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유 번호")
-                                        , fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디")
-                                        , fieldWithPath("data.nickName").type(JsonFieldType.STRING).description("닉네임")
-                                        , fieldWithPath("data.gender").type(JsonFieldType.STRING).description("성별")
-                                        , fieldWithPath("data.birthday").type(JsonFieldType.STRING).description("생일")
-                                        , fieldWithPath("data.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
-                                        , fieldWithPath("data.lunchAlarmHour").type(JsonFieldType.NUMBER).description("점심 알람 시")
-                                        , fieldWithPath("data.lunchAlarmMinute").type(JsonFieldType.NUMBER).description("점심 알람 분")
-                                        , fieldWithPath("data.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
-                                        , fieldWithPath("data.dinnerAlarmHour").type(JsonFieldType.NUMBER).description("저녁 알람 시")
-                                        , fieldWithPath("data.dinnerAlarmMinute").type(JsonFieldType.NUMBER).description("저녁 알람 분")
-                                        , fieldWithPath("data.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람 여부")
-                                        , fieldWithPath("data.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람 여부")
-                                        , fieldWithPath("data.profileImagePath").type(JsonFieldType.STRING).description("프로필 이미지 경로")
+                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
+                                        , fieldWithPath("data.user.idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                                        , fieldWithPath("data.user.id").type(JsonFieldType.STRING).description("아이디")
+                                        , fieldWithPath("data.user.password").type(JsonFieldType.STRING).description("비밀번호")
+                                        , fieldWithPath("data.user.nickName").type(JsonFieldType.STRING).description("닉네임")
+                                        , fieldWithPath("data.user.gender").type(JsonFieldType.STRING).description("성별")
+                                        , fieldWithPath("data.user.birthday").type(JsonFieldType.STRING).description("생일")
+                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
+                                        , fieldWithPath("data.user.lunchAlarmHour").type(JsonFieldType.STRING).description("점심 알람 시")
+                                        , fieldWithPath("data.user.lunchAlarmMinute").type(JsonFieldType.STRING).description("점심 알람 분")
+                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
+                                        , fieldWithPath("data.user.dinnerAlarmHour").type(JsonFieldType.STRING).description("저녁 알람 시")
+                                        , fieldWithPath("data.user.dinnerAlarmMinute").type(JsonFieldType.STRING).description("저녁 알람 분")
+                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람 여부")
+                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람 여부")
+                                        , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("프로필 이미지 경로")
                                 )
                         )
                 )

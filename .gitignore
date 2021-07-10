@@ -33,5 +33,4 @@ out/
 ### VS Code ###
 .vscode/
 
-src/docs/
 src/main/resources/static/docs/

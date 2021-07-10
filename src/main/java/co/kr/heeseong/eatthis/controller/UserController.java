@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,12 +29,16 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseData> login(@ModelAttribute User user){
+    public ResponseEntity<ResponseData> login(@RequestBody User user){
         try{
+            Map<String, Object> userData = new HashMap<>();
+            //나중에 로그인 성공 후 메인 데이터 어떤걸로 응답주면 될지 결정 해야함
+            userData.put("user", userService.loginProcess(user));
+
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , userService.loginProcess(user));
+                    , userData);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
@@ -43,10 +48,13 @@ public class UserController {
     @GetMapping("/{idx}")
     public ResponseEntity<ResponseData> users(@PathVariable Long idx){
         try{
+            Map<String, Object> user = new HashMap<>();
+            user.put("user", userService.getUsers(idx));
+
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , userService.getUsers(idx));
+                    , user);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
