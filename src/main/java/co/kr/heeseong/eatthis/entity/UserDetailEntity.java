@@ -58,6 +58,12 @@ public class UserDetailEntity extends TimeEntity {
         this.nickName = nickName;
         this.gender = gender;
         this.birthday = birthday;
+        this.lunchAlarm = 'Y';
+        this.dinnerAlarm = 'Y';
+        this.eventAlarm = 'Y';
+        this.serviceAlarm = 'Y';
+        this.lunchAlarmTime = LocalTime.of(12, 0, 0);
+        this.dinnerAlarmTime = LocalTime.of(18, 0, 0);
     }
 
     public void updateLunchAlarm(char lunchAlarm, LocalTime alarmTime){

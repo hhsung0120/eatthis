@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -65,8 +66,7 @@ public class UserService {
      * @param user
      */
     @Transactional
-    public long saveUser(User user){
-        System.out.println(user.toString());
+    public long saveUser(User user) {
         if(user.getIdx() == 0){
             return this.insertUser(user);
         }else{
@@ -74,22 +74,20 @@ public class UserService {
         }
     }
 
-    public long insertUser(User user){
+    public long insertUser(User user) {
         this.checkUserByEmail(user.getId());
-        /*
-
-        long idx;
 
         try{
-
+            User data = new User(user.getId(), user.getPassword());
+            Long idx = userRepository.save(data.toEntity()).getIdx();
             if(idx > 0){
                 userDetailRepository.save(user.toDetailEntity(idx));
             }
-        }catch (DataIntegrityViolationException e){
-
-        }*/
-
-        return 3;
+            return idx;
+        }catch (Exception e){
+            log.info("insertUser Exception : {}", e.getMessage());
+            return 0;
+        }
     }
 
     public long updateUser(User user) throws IllegalArgumentException{
@@ -224,13 +222,8 @@ public class UserService {
     }
 
     private void checkUserByEmail(String email){
-        try{
-            System.out.println(email);
-            userRepository.findByEmailId(email);
-            System.out.println(2);
-        }catch (Exception e){
-            System.out.println(3);
-            e.printStackTrace();
+        Optional<UserEntity> userEntity = userRepository.findByEmailId(email);
+        if(userEntity.isPresent()){
             throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
         }
     }

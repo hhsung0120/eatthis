@@ -18,7 +18,7 @@ public enum GenderType {
     public static GenderType getGenderTypeToEnum(String gender){
         GenderType[] values = GenderType.values();
         for(GenderType value : values){
-            if(gender.equals(value.toString())){
+            if(value.getValue().equals(gender)){
                 return value;
             }
         }

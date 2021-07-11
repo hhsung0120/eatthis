@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.Enum.StatusCode;
 import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
@@ -7,6 +8,7 @@ import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,7 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }
     }
 
@@ -53,7 +55,7 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }
     }
 
@@ -68,28 +70,28 @@ public class UserController {
                     , StatusCode.OK.toString()
                     , data);
             return ResponseEntity.ok(responseData);
+        }catch(DataIntegrityViolationException e){
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), ErrorCodeType.ETC_ERROR.getValue()));
         }
-
-        /*
-        Map<String, Object> result = new LinkedHashMap<>();
-        result.put("userIdx", 0);
-
-        try {
-            result.put("userIdx", userService.saveUser(user));
-        } catch (DataIntegrityViolationException e){
-            result.put("reason", e.getMessage());
-        } catch (IllegalArgumentException e){
-            result.put("reason", e.getMessage());
-        } catch (Exception e){
-            result.put("reason", "기타 오류 입니다. 관리자에게 문의하세요");
-        }
-
-        return result;*/
     }
 
+    @PostMapping("/signUpDetail")
+    public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
+        try{
+            Map<String, Object> data = new HashMap<>();
+            data.put("userIdx", userService.saveUser(user));
 
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+        }
+    }
 
     @PostMapping("lunchAlarm/{idx}")
     public Map<String, Object> lunchAlarm(@PathVariable long idx, @ModelAttribute User user){

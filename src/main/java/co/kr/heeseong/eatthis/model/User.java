@@ -36,13 +36,23 @@ public class User {
     private char privacyAgree;
     @JsonIgnore
     private char locationAgree;
-    @JsonIgnore
     private SignUpType signUpType;
     private String profileImagePath;
     @JsonIgnore
     private UserStatusType userStatusType;
 
     public User() {}
+
+    public User(String id, String password) {
+        this.id = id;
+        this.password = password;
+        this.signUpType = SignUpType.DEFAULTE;
+        this.termsAgree = 'Y';
+        this.privacyAgree = 'Y';
+        this.locationAgree = 'Y';
+
+
+    }
 
     @Builder
     public User(long idx, String id, String password, String nickName, GenderType gender, String birthday
