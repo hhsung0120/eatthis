@@ -66,6 +66,7 @@ public class UserService {
      */
     @Transactional
     public long saveUser(User user){
+        System.out.println(user.toString());
         if(user.getIdx() == 0){
             return this.insertUser(user);
         }else{
@@ -74,17 +75,21 @@ public class UserService {
     }
 
     public long insertUser(User user){
+        this.checkUserByEmail(user.getId());
+        /*
+
         long idx;
+
         try{
-            idx = userRepository.save(user.toEntity()).getIdx();
+
             if(idx > 0){
                 userDetailRepository.save(user.toDetailEntity(idx));
             }
         }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + user.getId());
-        }
 
-        return idx;
+        }*/
+
+        return 3;
     }
 
     public long updateUser(User user) throws IllegalArgumentException{
@@ -216,5 +221,17 @@ public class UserService {
 
     private UserEntity checkUser(Long idx){
         return userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+    }
+
+    private void checkUserByEmail(String email){
+        try{
+            System.out.println(email);
+            userRepository.findByEmailId(email);
+            System.out.println(2);
+        }catch (Exception e){
+            System.out.println(3);
+            e.printStackTrace();
+            throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
+        }
     }
 }

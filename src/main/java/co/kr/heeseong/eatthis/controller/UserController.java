@@ -1,15 +1,12 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.Enum.LoginResultType;
 import co.kr.heeseong.eatthis.Enum.StatusCode;
 import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.service.UserService;
-import co.kr.heeseong.eatthis.util.HttpHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +28,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<ResponseData> login(@RequestBody User user){
         try{
-            Map<String, Object> userData = new HashMap<>();
-            //나중에 로그인 성공 후 메인 데이터 어떤걸로 응답주면 될지 결정 해야함
-            userData.put("user", userService.loginProcess(user));
+            Map<String, Object> data = new HashMap<>();
+            data.put("user", userService.loginProcess(user));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , userData);
+                    , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
@@ -48,13 +44,13 @@ public class UserController {
     @GetMapping("/{idx}")
     public ResponseEntity<ResponseData> users(@PathVariable Long idx){
         try{
-            Map<String, Object> user = new HashMap<>();
-            user.put("user", userService.getUsers(idx));
+            Map<String, Object> data = new HashMap<>();
+            data.put("user", userService.getUsers(idx));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , user);
+                    , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
@@ -62,7 +58,21 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public Map<String, Object> signUp(@ModelAttribute User user){
+    public ResponseEntity<ResponseData> signUp(@RequestBody User user){
+        try{
+            Map<String, Object> data = new HashMap<>();
+            data.put("userIdx", userService.saveUser(user));
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e));
+        }
+
+        /*
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("userIdx", 0);
 
@@ -76,7 +86,7 @@ public class UserController {
             result.put("reason", "기타 오류 입니다. 관리자에게 문의하세요");
         }
 
-        return result;
+        return result;*/
     }
 
 
