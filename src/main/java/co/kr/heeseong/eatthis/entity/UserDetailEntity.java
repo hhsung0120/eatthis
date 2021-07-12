@@ -64,6 +64,7 @@ public class UserDetailEntity extends TimeEntity {
         this.serviceAlarm = 'Y';
         this.lunchAlarmTime = LocalTime.of(12, 0, 0);
         this.dinnerAlarmTime = LocalTime.of(18, 0, 0);
+        this.userStatusType = UserStatusType.NORMAL;
     }
 
     public void updateLunchAlarm(char lunchAlarm, LocalTime alarmTime){

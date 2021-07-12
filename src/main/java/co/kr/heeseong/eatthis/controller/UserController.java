@@ -60,10 +60,10 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<ResponseData> signUp(@RequestBody User user){
+    public ResponseEntity<ResponseData> signUp(@RequestBody User user) {
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userService.saveUser(user));
+            data.put("idx", userService.insertUser(user));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -79,9 +79,10 @@ public class UserController {
 
     @PostMapping("/signUpDetail")
     public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
+        System.out.println(user.toString());
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userService.saveUser(user));
+            data.put("idx", userService.updateUser(user));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()

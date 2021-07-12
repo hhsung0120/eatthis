@@ -61,19 +61,6 @@ public class UserService {
                 .build();
     }
 
-    /**
-     * 회원가입
-     * @param user
-     */
-    @Transactional
-    public long saveUser(User user) {
-        if(user.getIdx() == 0){
-            return this.insertUser(user);
-        }else{
-            return this.updateUser(user);
-        }
-    }
-
     public long insertUser(User user) {
         this.checkUserByEmail(user.getId());
 
@@ -90,17 +77,13 @@ public class UserService {
         }
     }
 
+    @Transactional
     public long updateUser(User user) throws IllegalArgumentException{
         UserDetailEntity userDetailEntity = checkUserDetail(user.getIdx());
         userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender().getValue()));
         return userDetailEntity.getIdx();
     }
 
-    /**
-     * 로그인 처리
-     * @param user
-     * @return LoginResultType
-     */
     public User loginProcess(User user){
         userRepository.findByEmailId(user.getId()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue()));
         userRepository.findByIdAndPassword(user.getId(), user.getPassword()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.INVALID_PASSWORD.getValue()));
