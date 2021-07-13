@@ -206,7 +206,7 @@ public class UserService {
 
     private void checkUserByEmail(String email){
         UserEntity userEntity = userRepository.findByEmailId(email);
-        if(Optional.of(userEntity).isPresent()){
+        if(userEntity != null){
             throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
         }
     }

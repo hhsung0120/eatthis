@@ -30,11 +30,16 @@ public class User {
     private String dinnerAlarmMinute;
     private char eventAlarm;
     private char serviceAlarm;
+    @JsonIgnore
     private char termsAgree;
+    @JsonIgnore
     private char privacyAgree;
+    @JsonIgnore
     private char locationAgree;
+    @JsonIgnore
     private SignUpType signUpType;
     private String profileImagePath;
+    @JsonIgnore
     private UserStatusType userStatusType;
 
     public User() {}

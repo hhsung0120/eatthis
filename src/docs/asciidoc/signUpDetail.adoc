@@ -1,0 +1,15 @@
+// === Index
+=== Request HTTP Example:
+include::{snippets}/signUpDetail/http-request.adoc[]
+
+=== Request Fields:
+include::{snippets}/signUpDetail/request-fields.adoc[]
+
+=== Response
+include::{snippets}/signUpDetail/http-response.adoc[]
+
+=== Response Fields
+include::{snippets}/signUpDetail/response-fields.adoc[]
+
+
+

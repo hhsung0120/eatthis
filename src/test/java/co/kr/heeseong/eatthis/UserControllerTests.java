@@ -1,6 +1,5 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +12,13 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
-import static co.kr.heeseong.eatthis.Enum.GenderType.MALE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,7 +35,6 @@ public class UserControllerTests {
 
     @Test
     public void login() throws Exception{
-
         Map<String, Object> user = new LinkedHashMap<>();
         user.put("id", "hhsung0120@naver.com");
         user.put("password", "1234");
@@ -141,7 +135,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/users/signUp")
+                        .put("/users/signUp")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );

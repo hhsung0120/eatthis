@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "user")
 public class UserEntity{
@@ -42,4 +41,6 @@ public class UserEntity{
     @JoinColumn(name="idx")
     private UserDetailEntity userDetailEntity;
 
+    public UserEntity() {
+    }
 }

@@ -73,11 +73,12 @@ public class UserController {
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), ErrorCodeType.ETC_ERROR.getValue()));
         }
     }
 
-    @PostMapping("/signUpDetail")
+    @PutMapping("/signUpDetail")
     public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
         System.out.println(user.toString());
         try{
