@@ -85,10 +85,10 @@ public class UserService {
     }
 
     public User loginProcess(User user){
-        userRepository.findByEmailId(user.getId()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue()));
-        userRepository.findByIdAndPassword(user.getId(), user.getPassword()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.INVALID_PASSWORD.getValue()));
+        UserEntity userEntity = Optional.of(userRepository.findByEmailId(user.getId())).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue()));
+        Optional.of(userRepository.findByIdAndPassword(user.getId(), user.getPassword())).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.INVALID_PASSWORD.getValue()));
         //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
-        return this.getUsers(userRepository.findByEmailId(user.getId()).get().getIdx());
+        return this.getUsers(userEntity.getIdx());
     }
 
     /**
@@ -205,8 +205,8 @@ public class UserService {
     }
 
     private void checkUserByEmail(String email){
-        Optional<UserEntity> userEntity = userRepository.findByEmailId(email);
-        if(userEntity.isPresent()){
+        UserEntity userEntity = userRepository.findByEmailId(email);
+        if(Optional.of(userEntity).isPresent()){
             throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
         }
     }
