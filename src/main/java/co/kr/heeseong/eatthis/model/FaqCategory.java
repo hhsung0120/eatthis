@@ -3,10 +3,13 @@ package co.kr.heeseong.eatthis.model;
 import lombok.*;
 
 @Getter
-@Setter
-@Builder
-@AllArgsConstructor
 public class FaqCategory {
-    private long idx;
+    private Long idx;
     private String categoryName;
+
+    @Builder
+    public FaqCategory(Long idx, String categoryName) {
+        this.idx = idx;
+        this.categoryName = categoryName;
+    }
 }

@@ -196,15 +196,15 @@ public class UserService {
         return EventResultType.SUCCESS;
     }
 
-    private UserDetailEntity checkUserDetail(Long idx){
+    public UserDetailEntity checkUserDetail(Long idx){
         return userDetailRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
     }
 
-    private UserEntity checkUser(Long idx){
+    public UserEntity checkUser(Long idx){
         return userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
     }
 
-    private void checkUserByEmail(String email){
+    public void checkUserByEmail(String email){
         UserEntity userEntity = userRepository.findByEmailId(email);
         if(userEntity != null){
             throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);

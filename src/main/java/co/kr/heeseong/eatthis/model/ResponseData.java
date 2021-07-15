@@ -12,8 +12,8 @@ public class ResponseData {
     public ResponseData() {
     }
 
-    public ResponseData(int statusCode, String message) {
-        this.statusCode = statusCode;
+    public ResponseData(String message) {
+        this.statusCode = 500;
         this.message = message;
         this.data = "";
     }

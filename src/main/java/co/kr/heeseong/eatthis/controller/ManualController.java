@@ -15,42 +15,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ManualController {
 
-    @GetMapping("/users/signUp")
-    public Map<String, Object> signUp(){
-        Map<String, Object> result = new LinkedHashMap<>();
-        result.put("[request1 - post]", "회원가입 1");
-        result.put("id", "hhsung0120@naver.com");
-        result.put("termsAgree", "Y");
-        result.put("privacyAgree", "Y");
-        result.put("locationAgree", "Y");
-        result.put("signUpType", "DEFAULTE, FACEBOOK, KAKAO");
-        result.put("[response]", "");
-        result.put("[성공]", "userIdx : 70");
-        result.put("[실패]", "userIdx : 0");
-        result.put("[실패]", "reason : 중복 된 아이디 입니다. -> hhsung0120@naver.com");
-
-        result.put("", "");
-        result.put(" ", "");
-        result.put("  ", "");
-        result.put("   ", "");
-
-        result.put("[request2 - post]", "회원가입 2");
-        result.put("idx", "1");
-        result.put("nickName", "닉네임");
-        result.put("gender", "MALE, FEMALE");
-        result.put("birthday", "1992-01-20");
-        result.put("profileImagePath", "https://naver.com");
-        result.put("[성공]", "userIdx : 1");
-        result.put("[실패]", "userIdx : 0");
-        result.put("[실패]", "reason : 유저가 존재하지 않습니다. -> 4421");
-        result.put("    ", "");
-        result.put("     ", "");
-        result.put("      ", "");
-        result.put("comment", "if userIdx > 0 성공으로 보면되고 else reason 출력하시면 됩니다. ");
-
-        return result;
-    }
-
     @GetMapping("/users/lunchAlarm/{idx}")
     public Map<String, Object> setLunchAlarm(){
         Map<String, Object> result = new LinkedHashMap<>();
@@ -104,20 +68,6 @@ public class ManualController {
         result.put("[성공]", "result : SUCCESS");
         result.put("[실패]", "result : e.getMessage()");
 
-        return result;
-    }
-
-
-
-    @GetMapping("/users/login")
-    public Map<String, Object> login(){
-        Map<String, Object> result = new LinkedHashMap<>();
-        result.put("[request - post]", "");
-        result.put("id", "hhsung0120@naver.com");
-        result.put("password", "1234");
-        result.put("[response]", "");
-        result.put("[성공]", "result : SUCCESS");
-        result.put("[실패]", "result : USER_NOT_FOUND, INVALID_PASSWORD, FAIL");
         return result;
     }
 

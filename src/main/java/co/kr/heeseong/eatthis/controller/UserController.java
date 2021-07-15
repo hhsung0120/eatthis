@@ -9,6 +9,7 @@ import co.kr.heeseong.eatthis.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * 유저관련 컨트롤러
- */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -39,8 +37,9 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/{idx}")
@@ -55,8 +54,9 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/signUp")
@@ -71,16 +71,16 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch(DataIntegrityViolationException e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), ErrorCodeType.ETC_ERROR.getValue()));
+            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), ErrorCodeType.ETC_ERROR.getValue()));
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/signUpDetail")
     public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
-        System.out.println(user.toString());
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("idx", userService.updateUser(user));
@@ -91,8 +91,9 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("lunchAlarm/{idx}")
