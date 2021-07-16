@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,38 +29,19 @@ public class FaqService {
     private final UserService userService;
     private static int pageSize = 10;
 
-    /**
-     * 자주묻는 질문 리스트
-     * @param page
-     * @return List<FaqDto>
-     */
+    @Transactional
     public List<Faq> getFaqList(int page) {
-        List<Faq> faqDtoList = new ArrayList<>();
-
         Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
-        for(FaqEntity faqEntity : faqEntityList){
-            Faq faqDto = Faq.builder()
-                    .idx(faqEntity.getIdx())
-                    .title(faqEntity.getTitle())
-                    .categoryName(faqEntity.getFaqCategoryEntity().getCategoryName())
-                    .contents(faqEntity.getContents())
-                    .createDate(faqEntity.getCreateDate())
-                    .lastModifiedDate(faqEntity.getLastModifiedDate())
-                    .build();
-
-            faqDtoList.add(faqDto);
-        }
-
-        return faqDtoList;
+        return faqEntityList.stream()
+                            .map(list -> new Faq(list.getIdx(), list.getTitle(), list.getFaqCategoryEntity().getCategoryName()
+                                                , list.getContents(), list.getCreateDate(), list.getLastModifiedDate()))
+                            .collect(toList());
     }
 
-    public List<FaqCategory> getFaqCategoryList(Long userIdx) {
-        userService.checkUser(userIdx);
-
+    public List<FaqCategory> getFaqCategoryList() {
         List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
-        List<FaqCategory> categoryList = faqCategoryList.stream()
-                                            .map(list -> new FaqCategory(list.getIdx(), list.getCategoryName()))
-                                            .collect(toList());
-        return categoryList;
+        return faqCategoryList.stream()
+                              .map(list -> new FaqCategory(list.getIdx(), list.getCategoryName()))
+                              .collect(toList());
     }
 }

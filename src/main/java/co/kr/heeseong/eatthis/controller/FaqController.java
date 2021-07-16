@@ -1,14 +1,17 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.StatusCode;
+import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -29,16 +32,19 @@ public class FaqController {
     }
 
     @GetMapping("/{page}")
-    public Map<String, Object> faqList(@PathVariable int page){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    public ResponseEntity<ResponseData> faqList(@PathVariable int page){
         try{
-            result.put("dataList", faqService.getFaqList(page));
-        }catch (Exception e){
-            result.put("reason", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
+            data.put("list", faqService.getFaqList(page));
 
-        return result;
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
 }

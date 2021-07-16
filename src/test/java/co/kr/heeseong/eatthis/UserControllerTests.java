@@ -19,6 +19,8 @@ import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,67 +60,20 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data.user.idx").type(JsonFieldType.NUMBER).description("고유 번호")
-                                        , fieldWithPath("data.user.id").type(JsonFieldType.STRING).description("아이디")
-                                        , fieldWithPath("data.user.password").type(JsonFieldType.STRING).description("비밀번호")
-                                        , fieldWithPath("data.user.nickName").type(JsonFieldType.STRING).description("닉네임")
-                                        , fieldWithPath("data.user.gender").type(JsonFieldType.STRING).description("성별")
-                                        , fieldWithPath("data.user.birthday").type(JsonFieldType.STRING).description("생일")
-                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
-                                        , fieldWithPath("data.user.lunchAlarmHour").type(JsonFieldType.STRING).description("점심 알람 시")
-                                        , fieldWithPath("data.user.lunchAlarmMinute").type(JsonFieldType.STRING).description("점심 알람 분")
-                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
-                                        , fieldWithPath("data.user.dinnerAlarmHour").type(JsonFieldType.STRING).description("저녁 알람 시")
-                                        , fieldWithPath("data.user.dinnerAlarmMinute").type(JsonFieldType.STRING).description("저녁 알람 분")
-                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람 여부")
-                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람 여부")
-                                        , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("프로필 이미지 경로")
-                                )
-                        )
-                )
-                .andDo(print());
-    }
-
-
-    @Test
-    public void users() throws Exception {
-        Map<String, Object> user = new LinkedHashMap<>();
-        user.put("id", "hhsung0120@naver.com");
-        user.put("password", "1234");
-
-        ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders
-                        .post("/users/login")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        result.andExpect(status().isOk())
-                .andDo(
-                        document("login"
-                                , getDocumentRequest()
-                                , getDocumentResponse()
-                                , requestFields(
-                                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디")
-                                        , fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
-                                )
-                                , responseFields(
-                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
-                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
                                         , fieldWithPath("data.user.idx").type(JsonFieldType.NUMBER).description("고유번호")
                                         , fieldWithPath("data.user.id").type(JsonFieldType.STRING).description("아이디")
                                         , fieldWithPath("data.user.password").type(JsonFieldType.STRING).description("비밀번호")
                                         , fieldWithPath("data.user.nickName").type(JsonFieldType.STRING).description("닉네임")
                                         , fieldWithPath("data.user.gender").type(JsonFieldType.STRING).description("성별")
                                         , fieldWithPath("data.user.birthday").type(JsonFieldType.STRING).description("생일")
-                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람 여부")
+                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람")
                                         , fieldWithPath("data.user.lunchAlarmHour").type(JsonFieldType.STRING).description("점심 알람 시")
                                         , fieldWithPath("data.user.lunchAlarmMinute").type(JsonFieldType.STRING).description("점심 알람 분")
-                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
+                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람")
                                         , fieldWithPath("data.user.dinnerAlarmHour").type(JsonFieldType.STRING).description("저녁 알람 시")
                                         , fieldWithPath("data.user.dinnerAlarmMinute").type(JsonFieldType.STRING).description("저녁 알람 분")
-                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람 여부")
-                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람 여부")
+                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람")
+                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람")
                                         , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("이미지경로")
                                 )
                         )
@@ -135,7 +90,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/signUp")
+                        .post("/users/signUp")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -170,7 +125,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/users/signUpDetail")
+                        .put("/users/signUpDetail")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -191,6 +146,44 @@ public class UserControllerTests {
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
                                         , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유번호")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
+    @Test
+    public void users() throws Exception {
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/users/{idx}",1L)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("users"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
+                                        , fieldWithPath("data.user.idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                                        , fieldWithPath("data.user.id").type(JsonFieldType.STRING).description("아이디")
+                                        , fieldWithPath("data.user.password").type(JsonFieldType.STRING).description("비밀번호")
+                                        , fieldWithPath("data.user.nickName").type(JsonFieldType.STRING).description("닉네임")
+                                        , fieldWithPath("data.user.gender").type(JsonFieldType.STRING).description("성별")
+                                        , fieldWithPath("data.user.birthday").type(JsonFieldType.STRING).description("생일")
+                                        , fieldWithPath("data.user.lunchAlarm").type(JsonFieldType.STRING).description("점심 알람")
+                                        , fieldWithPath("data.user.lunchAlarmHour").type(JsonFieldType.STRING).description("점심 알람 시")
+                                        , fieldWithPath("data.user.lunchAlarmMinute").type(JsonFieldType.STRING).description("점심 알람 분")
+                                        , fieldWithPath("data.user.dinnerAlarm").type(JsonFieldType.STRING).description("저녁 알람 여부")
+                                        , fieldWithPath("data.user.dinnerAlarmHour").type(JsonFieldType.STRING).description("저녁 알람 시")
+                                        , fieldWithPath("data.user.dinnerAlarmMinute").type(JsonFieldType.STRING).description("저녁 알람 분")
+                                        , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람")
+                                        , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람")
+                                        , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("이미지 경로")
                                 )
                         )
                 )

@@ -1,0 +1,15 @@
+// === Index
+=== Request HTTP Example:
+include::{snippets}/faqs/http-request.adoc[]
+
+=== Path-Parameters
+include::{snippets}/faqs/path-parameters.adoc[]
+
+=== Response
+include::{snippets}/faqs/http-response.adoc[]
+
+=== Response Fields
+include::{snippets}/faqs/response-fields.adoc[]
+
+
+

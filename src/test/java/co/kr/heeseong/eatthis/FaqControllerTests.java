@@ -30,18 +30,20 @@ public class FaqControllerTests {
     private MockMvc mockMvc;
 
     @Test
-    public void faqList() throws Exception {
+    public void faqs() throws Exception {
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/faqs/{page}",1L)
         );
 
         FieldDescriptor[] faqs = new FieldDescriptor[]{
-                fieldWithPath("dataList[].idx").type(JsonFieldType.NUMBER).description("고유 번호")
-                , fieldWithPath("dataList[].categoryName").type(JsonFieldType.STRING).description("카테고리")
-                , fieldWithPath("dataList[].title").type(JsonFieldType.STRING).description("제목")
-                , fieldWithPath("dataList[].contents").type(JsonFieldType.STRING).description("내용")
-                , fieldWithPath("dataList[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                , fieldWithPath("dataList[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
+                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
+                , fieldWithPath("data.list[].idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                , fieldWithPath("data.list[].categoryName").type(JsonFieldType.STRING).description("카테고리")
+                , fieldWithPath("data.list[].title").type(JsonFieldType.STRING).description("제목")
+                , fieldWithPath("data.list[].contents").type(JsonFieldType.STRING).description("내용")
+                , fieldWithPath("data.list[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
+                , fieldWithPath("data.list[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
         };
 
         result.andExpect(status().isOk())

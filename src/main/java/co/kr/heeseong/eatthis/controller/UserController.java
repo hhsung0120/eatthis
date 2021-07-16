@@ -37,9 +37,8 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/{idx}")
@@ -54,9 +53,8 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/signUp")
@@ -71,12 +69,10 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch(DataIntegrityViolationException e){
-            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }catch (Exception e){
-            e.printStackTrace();
-            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), ErrorCodeType.ETC_ERROR.getValue()));
+            return ResponseEntity.ok(new ResponseData(ErrorCodeType.ETC_ERROR.getValue()));
         }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/signUpDetail")
@@ -91,9 +87,8 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            //return ResponseEntity.ok(new ResponseData(StatusCode.SERVER_ERROR.getValue(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("lunchAlarm/{idx}")

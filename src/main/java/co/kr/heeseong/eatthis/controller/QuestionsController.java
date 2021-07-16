@@ -33,7 +33,7 @@ public class QuestionsController {
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("userIdx", userIdx);
-            data.put("categoryList", faqService.getFaqCategoryList(userIdx));
+            data.put("categoryList", faqService.getFaqCategoryList());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
