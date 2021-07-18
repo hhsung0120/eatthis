@@ -101,17 +101,20 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public EventResultType updateLunchAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
+    public void updateLunchAlarm(Long idx, char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
         UserDetailEntity userDetailEntity = checkUserDetail(idx);
 
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
 
-        LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
-        userDetailEntity.updateLunchAlarm(alarmYn, alarmTime);
-
-        return EventResultType.SUCCESS;
+        try{
+            LocalTime alarmTime = LocalTime.of(Integer.parseInt(alarmTimeHour), Integer.parseInt(alarmTimeMinute));
+            userDetailEntity.updateLunchAlarm(alarmYn, alarmTime);
+        }catch (Exception e){
+            log.info("updateLunchAlarm Exception {}", e.getMessage());
+            throw new IllegalArgumentException(ErrorCodeType.ETC_ERROR.getValue() + " : " + e.getMessage());
+        }
     }
 
     /**

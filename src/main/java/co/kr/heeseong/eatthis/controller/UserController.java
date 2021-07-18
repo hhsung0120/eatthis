@@ -9,7 +9,6 @@ import co.kr.heeseong.eatthis.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,19 +90,21 @@ public class UserController {
         }
     }
 
-    @PostMapping("lunchAlarm/{idx}")
-    public Map<String, Object> lunchAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    @PutMapping("lunchAlarm/{idx}")
+    public ResponseEntity<ResponseData> lunchAlarm(@PathVariable long idx, @RequestBody User user){
         try{
-            //result.put("result", userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
-        }catch (IllegalArgumentException e){
-            result.put("result", e.getMessage());
-        }catch (Exception e){
-            result.put("result", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
 
-        return result;
+            userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getLunchAlarmHour(), user.getLunchAlarmMinute());
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
     @PostMapping("/dinnerAlarm/{idx}")
