@@ -1,0 +1,15 @@
+// === Index
+=== Request HTTP Example:
+include::{snippets}/updateLunchAlarm/http-request.adoc[]
+
+=== Path-Parameters
+include::{snippets}/updateLunchAlarm/path-parameters.adoc[]
+
+=== Response
+include::{snippets}/updateLunchAlarm/http-response.adoc[]
+
+=== Response Fields
+include::{snippets}/updateLunchAlarm/response-fields.adoc[]
+
+
+

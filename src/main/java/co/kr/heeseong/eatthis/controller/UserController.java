@@ -90,7 +90,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("lunchAlarm/{idx}")
+    @PutMapping("/lunchAlarm/{idx}")
     public ResponseEntity<ResponseData> lunchAlarm(@PathVariable long idx, @RequestBody User user){
         try{
             Map<String, Object> data = new HashMap<>();
@@ -107,43 +107,55 @@ public class UserController {
         }
     }
 
-    @PostMapping("/dinnerAlarm/{idx}")
-    public Map<String, Object> dinnerAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    @PutMapping("/dinnerAlarm/{idx}")
+    public ResponseEntity<ResponseData> dinnerAlarm(@PathVariable long idx, @RequestBody User user){
         try{
-//            result.put("result", userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getAlarmTimeHour(), user.getAlarmTimeMinute()));
-        }catch (Exception e){
-            result.put("result", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
 
-        return result;
+            userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getDinnerAlarmHour(), user.getDinnerAlarmMinute());
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
-    @PostMapping("/eventAlarm/{idx}")
-    public Map<String, Object> eventAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    @PutMapping("/eventAlarm/{idx}")
+    public ResponseEntity<ResponseData> eventAlarm(@PathVariable long idx, @RequestBody User user){
         try{
-            result.put("result", userService.updateEventAlarm(idx, user.getEventAlarm()));
-        }catch (Exception e){
-            result.put("result", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
 
-        return result;
+            userService.updateEventAlarm(idx, user.getEventAlarm());
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
-    @PostMapping("/serviceAlarm/{idx}")
-    public Map<String, Object> setServiceAlarm(@PathVariable long idx, @ModelAttribute User user){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    @PutMapping("/serviceAlarm/{idx}")
+    public ResponseEntity<ResponseData> setServiceAlarm(@PathVariable long idx, @RequestBody User user){
         try{
-            result.put("result", userService.updateServiceAlarm(idx, user.getServiceAlarm()));
-        }catch (Exception e){
-            result.put("result", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
 
-        return result;
+            userService.updateServiceAlarm(idx, user.getServiceAlarm());
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
     @GetMapping("/secession/{idx}")

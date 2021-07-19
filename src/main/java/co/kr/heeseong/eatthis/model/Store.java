@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class Store {
     private long storeIdx;
     private long storeId;
@@ -18,6 +17,9 @@ public class Store {
     private String locationY;
     private LocalDateTime createDate;
     private LocalDateTime lastModifiedDate;
+
+    public Store() {
+    }
 
     public StoreEntity toEntity(){
         return StoreEntity.builder()
@@ -41,5 +43,4 @@ public class Store {
         this.createDate = createDate;
         this.lastModifiedDate = lastModifiedDate;
     }
-
 }

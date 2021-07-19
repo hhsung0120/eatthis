@@ -1,12 +1,16 @@
 package co.kr.heeseong.eatthis.controller;
 
 import co.kr.heeseong.eatthis.Enum.EventResultType;
+import co.kr.heeseong.eatthis.Enum.StatusCode;
+import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.service.StoreService;
 import co.kr.heeseong.eatthis.model.Review;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,9 +25,20 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    @GetMapping("/list/{locationX}/{locationY}")
-    public Map<String, Object> mainList(@PathVariable int locationX, @PathVariable int locationY){
-        return storeService.getMainList(locationX, locationY);
+    @GetMapping("/{locationX}/{locationY}")
+    public ResponseEntity<ResponseData> mainList(@PathVariable int locationX, @PathVariable int locationY){
+        try{
+            Map<String, Object> data = new HashMap<>();
+            data.put("list", storeService.getMainList(locationX, locationY));
+
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
     @PostMapping("/reviews/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}")

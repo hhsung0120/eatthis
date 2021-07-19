@@ -1,7 +1,9 @@
 package co.kr.heeseong.eatthis.entity;
 
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -9,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "store")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StoreEntity extends TimeEntity {
 
     @Id
@@ -31,9 +32,12 @@ public class StoreEntity extends TimeEntity {
     @Column(name="location_y")
     private String locationY;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="store_idx")
     private ReviewEntity reviewEntity;
+
+    public StoreEntity() {
+    }
 
     @Builder
     public StoreEntity(Long storeIdx, String category, Long storeId, String storeName, String locationX, String locationY){

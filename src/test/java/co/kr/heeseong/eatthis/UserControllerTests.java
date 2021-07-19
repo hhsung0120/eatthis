@@ -190,4 +190,144 @@ public class UserControllerTests {
                 .andDo(print());
     }
 
+    @Test
+    public void lunchAlarm() throws Exception {
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("lunchAlarm", "Y");
+        user.put("lunchAlarmHour", 12);
+        user.put("lunchAlarmMinute", 24);
+
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .put("/users/lunchAlarm/{idx}",1)
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("updateLunchAlarm"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , requestFields(
+                                        fieldWithPath("lunchAlarm").type(JsonFieldType.STRING).description("Y, N")
+                                        , fieldWithPath("lunchAlarmHour").type(JsonFieldType.NUMBER).description("1~23")
+                                        , fieldWithPath("lunchAlarmMinute").type(JsonFieldType.NUMBER).description("0~59")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
+    @Test
+    public void dinnerAlarm() throws Exception {
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("dinnerAlarm", "N");
+        user.put("dinnerAlarmHour", 12);
+        user.put("dinnerAlarmMinute", 24);
+
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .put("/users/dinnerAlarm/{idx}",1)
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("updateDinnerAlarm"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , requestFields(
+                                        fieldWithPath("dinnerAlarm").type(JsonFieldType.STRING).description("Y, N")
+                                        , fieldWithPath("dinnerAlarmHour").type(JsonFieldType.NUMBER).description("1~23")
+                                        , fieldWithPath("dinnerAlarmMinute").type(JsonFieldType.NUMBER).description("0~59")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
+    @Test
+    public void eventAlarm() throws Exception {
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("eventAlarm", "Y");
+
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .put("/users/eventAlarm/{idx}",1)
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("updateEventAlarm"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , requestFields(
+                                        fieldWithPath("eventAlarm").type(JsonFieldType.STRING).description("Y, N")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
+    @Test
+    public void serviceAlarm() throws Exception {
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("serviceAlarm", "Y");
+
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .put("/users/serviceAlarm/{idx}",1)
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("updateServiceAlarm"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , requestFields(
+                                        fieldWithPath("serviceAlarm").type(JsonFieldType.STRING).description("Y, N")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
 }

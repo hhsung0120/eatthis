@@ -127,16 +127,19 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public EventResultType updateDinnerAlarm(Long idx, char alarmYn, int alarmTimeHour, int alarmTimeMinute) {
+    public void updateDinnerAlarm(Long idx, char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
         UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
 
-        LocalTime alarmTime = LocalTime.of(alarmTimeHour, alarmTimeMinute);
-
-        userDetailEntity.updateDinnerAlarm(alarmYn, alarmTime);
-        return EventResultType.SUCCESS;
+        try{
+            LocalTime alarmTime = LocalTime.of(Integer.parseInt(alarmTimeHour), Integer.parseInt(alarmTimeMinute));
+            userDetailEntity.updateDinnerAlarm(alarmYn, alarmTime);
+        }catch (Exception e){
+            log.info("updateDinnerAlarm Exception {}", e.getMessage());
+            throw new IllegalArgumentException(ErrorCodeType.ETC_ERROR.getValue() + " : " + e.getMessage());
+        }
     }
 
     /**
@@ -147,13 +150,18 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public EventResultType updateEventAlarm(Long idx, char alarmYn) {
+    public void updateEventAlarm(Long idx, char alarmYn) {
         UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateEventAlarm(alarmYn);
-        return EventResultType.SUCCESS;
+
+        try{
+            userDetailEntity.updateEventAlarm(alarmYn);
+        }catch (Exception e){
+            log.info("updateEventAlarm Exception {}", e.getMessage());
+            throw new IllegalArgumentException(ErrorCodeType.ETC_ERROR.getValue() + " : " + e.getMessage());
+        }
     }
 
     /**
@@ -164,13 +172,18 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public EventResultType updateServiceAlarm(Long idx, char alarmYn) {
+    public void updateServiceAlarm(Long idx, char alarmYn) {
         UserDetailEntity userDetailEntity = checkUserDetail(idx);
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
-        userDetailEntity.updateServiceAlarm(alarmYn);
-        return EventResultType.SUCCESS;
+
+        try{
+            userDetailEntity.updateServiceAlarm(alarmYn);
+        }catch (Exception e){
+            log.info("updateServiceAlarm Exception {}", e.getMessage());
+            throw new IllegalArgumentException(ErrorCodeType.ETC_ERROR.getValue() + " : " + e.getMessage());
+        }
     }
 
 

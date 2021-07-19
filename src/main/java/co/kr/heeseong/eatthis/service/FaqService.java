@@ -26,7 +26,6 @@ public class FaqService {
 
     private final FaqRepository faqRepository;
     private final FaqCategoryRepository faqCategoryRepository;
-    private final UserService userService;
     private static int pageSize = 10;
 
     @Transactional

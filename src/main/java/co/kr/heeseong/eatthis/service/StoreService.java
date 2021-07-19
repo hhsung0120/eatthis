@@ -2,11 +2,11 @@ package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.Enum.TableCodeType;
+import co.kr.heeseong.eatthis.entity.StoreEntity;
 import co.kr.heeseong.eatthis.mapper.ReviewMapper;
 import co.kr.heeseong.eatthis.model.CommonFile;
 import co.kr.heeseong.eatthis.model.Review;
 import co.kr.heeseong.eatthis.model.Store;
-import co.kr.heeseong.eatthis.entity.StoreEntity;
 import co.kr.heeseong.eatthis.repository.FileRepository;
 import co.kr.heeseong.eatthis.repository.ReviewRepository;
 import co.kr.heeseong.eatthis.repository.StoreRepository;
@@ -26,7 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class StoreService {
 
@@ -43,35 +46,22 @@ public class StoreService {
      * 메인 리스트
      * @return Map<String, Object>
      */
-    public Map<String, Object> getMainList(int locationX, int locationY) {
-        Map<String, Object> result = new HashMap<>();
-
+    public List<Store> getMainList(int locationX, int locationY) {
         Page<StoreEntity> storeEntityList = storeRepository.findAll(PageRequest.of(1,10, Sort.Direction.DESC,"createDate"));
-        List<Store> storeDtoList = new ArrayList<>();
-        for(StoreEntity storeEntity : storeEntityList){
-            Store storeDto = Store.builder()
-                    .storeIdx(storeEntity.getStoreIdx())
-                    .category(storeEntity.getCategory())
-                    .storeId(storeEntity.getStoreId())
-                    .storeName(storeEntity.getStoreName())
-                    .locationX(storeEntity.getLocationX())
-                    .locationY(storeEntity.getLocationY())
-                    .createDate(storeEntity.getCreateDate())
-                    .lastModifiedDate(storeEntity.getLastModifiedDate())
-                    .build();
-
-            storeDtoList.add(storeDto);
-        }
-        result.put("storeList", storeDtoList);
-
-        return result;
+        storeEntityList.stream().forEach(
+                list -> System.out.println(list.toString())
+        );
+        return storeEntityList.stream()
+                                .map(list -> new Store(list.getStoreIdx(), list.getStoreId(), list.getCategory()
+                                                        , list.getStoreName(), list.getLocationX(), list.getLocationY()
+                                                        , list.getCreateDate(), list.getLastModifiedDate()))
+                                .collect(toList());
     }
 
     /**
      * 리뷰 등록 & 수정
      * @param review
      */
-    @Transactional
     public long saveReview(Review review) {
         if(review.getIdx() == 0){
             return this.insertReview(review);
@@ -117,3 +107,4 @@ public class StoreService {
         return reviewMapper.selectReviewList(userIdx);
     }
 }
+

@@ -24,7 +24,7 @@
 
     <h2>[MAIN]</h2>
     <ul class="api_list">
-        <li>[GET] <a href="/stores/list/123/123" target="_blank">/store/list/{현재 위치 X 좌표}/{현재 위치 Y 좌표}</a> : 메인 리스트 (P13) </li>
+        <li><a href="/docs/stores.html" target="_blank">메인 리스트 (P13)</a></li>
         <li><a href="/docs/users.html" target="_blank">내 정보(P14)</a></li>
     </ul>
 
@@ -35,10 +35,10 @@
 
     <h2>[알림]</h2>
     <ul class="api_list">
-        <li>[POST] <a href="/users/lunchAlarm/1" target="_blank">/users/lunchAlarm/{유저idx}</a> : 점심 알림 (P34) </li>
-        <li>[POST] <a href="/users/dinnerAlarm/1" target="_blank">/users/dinnerAlarm/{유저idx}</a> : 저녁 알림 (P34) </li>
-        <li>[POST] <a href="/users/eventAlarm/1" target="_blank">/users/eventAlarm/{유저idx}</a> : 이벤트 알림 (P34) </li>
-        <li>[POST] <a href="/users/serviceAlarm/1" target="_blank">/users/serviceAlarm/{유저idx}</a> : 서비스 알림 (P34) </li>
+        <li><a href="/docs/lunchAlarm.html" target="_blank">점심 알림 (P34)</a></li>
+        <li><a href="/docs/dinnerAlarm.html" target="_blank">저녁 알림 (P34)</a></li>
+        <li><a href="/docs/eventAlarm.html" target="_blank">이벤트 알림 (P34)</a></li>
+        <li><a href="/docs/serviceAlarm.html" target="_blank">서비스 알림 (P34)</a></li>
     </ul>
 
     <h2>[내 정보]</h2>
@@ -55,7 +55,7 @@
 
     <h2>[FAQ]</h2>
     <ul class="api_list">
-        <li>[GET] <a href="/faqs/1" target="_blank">/faqs/{페이지번호}</a> : 자주묻는질문 리스트 (P54)</li>
+        <li><a href="/docs/faqs.html" target="_blank">자주묻는질문 리스트 (P54)</a></li>
     </ul>
 
     <h2>[1:1 문의]</h2>
@@ -69,11 +69,8 @@
 
     <div style="white-space: pre-line;">
         TODO LIST
-        1. 세션 체크 할것
-        2. 암호화 할것
-        3. response 변수 result -> data로 한번 싹 정리 할 것
-            * 예외 사유도 ㅋㅋ 변경할것
-        4. Optinal 리턴 형태로 변경 NULL 처리 변경
+        1. 세션 체크 할것 => JWT 반영
+        2. 암호화
     </div>
 </div>
 </body>

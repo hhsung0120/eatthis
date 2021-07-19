@@ -9,18 +9,13 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "review")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewEntity extends TimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idx;
 
     @Column
     private long storeIdx;
-
-    @Column
-    private String storeName;
 
     @Column
     private long menuIdx;
@@ -37,6 +32,9 @@ public class ReviewEntity extends TimeEntity {
     @Column
     private float star;
 
+    public ReviewEntity() {
+    }
+
     @Builder
     public ReviewEntity(long idx, long storeIdx, long menuIdx, long userIdx, String contents, int totalPrice, float star){
         this.idx = idx;
@@ -46,6 +44,5 @@ public class ReviewEntity extends TimeEntity {
         this.totalPrice = totalPrice;
         this.star = star;
     }
-
 
 }
