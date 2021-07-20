@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Table(name = "secession_reason")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class SecessionEntity extends TimeEntity {
 
@@ -30,4 +29,7 @@ public class SecessionEntity extends TimeEntity {
 
     @Column
     private int order;
+
+    public SecessionEntity() {
+    }
 }

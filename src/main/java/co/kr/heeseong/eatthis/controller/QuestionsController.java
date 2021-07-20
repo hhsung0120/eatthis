@@ -28,11 +28,11 @@ public class QuestionsController {
     private final QuestionsService questionsService;
     private final FaqService faqService;
 
-    @GetMapping("/form/{userIdx}")
-    public ResponseEntity<ResponseData> form(@PathVariable long userIdx){
+    @GetMapping("/form/{idx}")
+    public ResponseEntity<ResponseData> form(@PathVariable long idx){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userIdx);
+            data.put("idx", idx);
             data.put("categoryList", faqService.getFaqCategoryList());
 
             ResponseData responseData = new ResponseData(
@@ -45,13 +45,13 @@ public class QuestionsController {
         }
     }
 
-    @PostMapping("/form/{userIdx}")
-    public Map<String, Object> form(@PathVariable long userIdx, @ModelAttribute Questions questions){
+    @PostMapping("/form/{idx}")
+    public Map<String, Object> form(@PathVariable long idx, @ModelAttribute Questions questions){
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("result", EventResultType.FAIL);
 
         try{
-            questions.setUserIdx(userIdx);
+            questions.setUserIdx(idx);
             result.put("result", questionsService.saveQuestions(questions));
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
@@ -63,11 +63,11 @@ public class QuestionsController {
         return result;
     }
 
-    @GetMapping("/{userIdx}")
-    public Map<String, Object> questionsList(@PathVariable long userIdx){
+    @GetMapping("/{idx}")
+    public Map<String, Object> questionsList(@PathVariable long idx){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
-            result.put("data", questionsService.getQuestionsList(userIdx));
+            result.put("data", questionsService.getQuestionsList(idx));
         }catch (Exception e){
             result.put("reason", e.getMessage());
         }
@@ -75,13 +75,13 @@ public class QuestionsController {
         return result;
     }
 
-    @GetMapping("/{userIdx}/{questionsIdx}")
-    public Map<String, Object> detail(@PathVariable long userIdx
+    @GetMapping("/{idx}/{questionsIdx}")
+    public Map<String, Object> detail(@PathVariable long idx
                                     , @PathVariable long questionsIdx){
         Map<String, Object> result = new LinkedHashMap<>();
         try{
             Questions questions = new Questions();
-            questions.setUserIdx(userIdx);
+            questions.setUserIdx(idx);
             questions.setIdx(questionsIdx);
             result.put("data", questionsService.getQuestions(questions));
         }catch (Exception e){

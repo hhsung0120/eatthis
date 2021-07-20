@@ -16,14 +16,18 @@ import co.kr.heeseong.eatthis.repository.UserSecessionRepository;
 import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -188,28 +192,25 @@ public class UserService {
 
 
     public List<Secession> getSecessionReasonList() {
-        List<Secession> dataList = new ArrayList<>();
         List<SecessionEntity> secessionEntityList = secessionRepository.findAllForOrderNumberAsc();
-        for(SecessionEntity secessionEntity : secessionEntityList){
-            Secession secession = Secession.builder()
-                                    .idx(secessionEntity.getIdx())
-                                    .reason(secessionEntity.getReason())
-                                    .build();
-
-            dataList.add(secession);
-        }
-
-        return dataList;
+        return secessionEntityList.stream()
+                                    .map(list -> new Secession(list.getIdx(), list.getReason()))
+                                    .collect(toList());
     }
 
     @Transactional
-    public EventResultType updateUserStatus(long idx, Secession secession) {
-        UserDetailEntity userDetailEntity = checkUserDetail(idx);
-        userScessionRepository.save(secession.toEntity());
+    public void updateUserStatus(Secession secession) {
+        UserDetailEntity userDetailEntity = checkUserDetail(secession.getUserIdx());
+        if(userScessionRepository.findByUserIdx(secession.getUserIdx()) != null){
+            throw new IllegalArgumentException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + secession.getUserIdx());
+        }
 
-        userDetailEntity.updateStatus(UserStatusType.SECESSION);
-
-        return EventResultType.SUCCESS;
+        try{
+            userScessionRepository.save(secession.toEntity());
+            userDetailEntity.updateStatus(UserStatusType.SECESSION);
+        }catch (Exception e){
+            throw new RuntimeException(ErrorCodeType.ETC_ERROR.getValue());
+        }
     }
 
     public UserDetailEntity checkUserDetail(Long idx){

@@ -11,10 +11,6 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Table(name = "user_secession")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@ToString
-@Builder
 public class UserSecessionEntity{
 
     @Id
@@ -25,4 +21,14 @@ public class UserSecessionEntity{
 
     @Column
     private String memo;
+
+    public UserSecessionEntity() {
+    }
+
+    @Builder
+    public UserSecessionEntity(long userIdx, long secessionReasonIdx, String memo) {
+        this.userIdx = userIdx;
+        this.secessionReasonIdx = secessionReasonIdx;
+        this.memo = memo;
+    }
 }

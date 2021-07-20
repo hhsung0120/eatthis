@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -220,7 +221,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
                                 )
                         )
                 )
@@ -257,7 +258,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
                                 )
                         )
                 )
@@ -290,7 +291,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
                                 )
                         )
                 )
@@ -323,11 +324,71 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
                                 )
                         )
                 )
                 .andDo(print());
     }
+
+    @Test
+    public void secessionReasonList() throws Exception {
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/users/secession/{idx}",1)
+        );
+
+        FieldDescriptor[] response = new FieldDescriptor[]{
+                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
+                , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("유저 고유 번호")
+                , fieldWithPath("data.list[].idx").type(JsonFieldType.NUMBER).description("사유 고유 번호")
+                , fieldWithPath("data.list[].reason").type(JsonFieldType.STRING).description("사유")
+        };
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("secessionReasonList"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , responseFields(response)
+                        )
+                )
+                .andDo(print());
+    }
+
+    @Test
+    public void updateSecession() throws Exception {
+        Map<String, Object> user = new LinkedHashMap<>();
+        user.put("idx", 5);
+        user.put("memo", "memo");
+
+        ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .post("/users/secession/{idx}",1)
+                        .content(objectMapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(
+                        document("updateSecession"
+                                , getDocumentRequest()
+                                , getDocumentResponse()
+                                , pathParameters(
+                                        parameterWithName("idx").description("고유 번호")
+                                )
+                                , responseFields(
+                                        fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
+                                        , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
+                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                )
+                        )
+                )
+                .andDo(print());
+    }
+
 
 }
