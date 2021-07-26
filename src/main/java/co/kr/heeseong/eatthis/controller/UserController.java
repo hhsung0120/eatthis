@@ -40,11 +40,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{idx}")
-    public ResponseEntity<ResponseData> users(@PathVariable Long idx){
+    @GetMapping("/{userIdx}")
+    public ResponseEntity<ResponseData> users(@PathVariable Long userIdx){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("user", userService.getUsers(idx));
+            data.put("user", userService.getUsers(userIdx));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -60,7 +60,7 @@ public class UserController {
     public ResponseEntity<ResponseData> signUp(@RequestBody User user) {
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("idx", userService.insertUser(user));
+            data.put("userIdx", userService.insertUser(user));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -78,7 +78,7 @@ public class UserController {
     public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("idx", userService.updateUser(user));
+            data.put("userIdx", userService.updateUser(user));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -90,72 +90,68 @@ public class UserController {
         }
     }
 
-    @PutMapping("/lunchAlarm/{idx}")
-    public ResponseEntity<ResponseData> lunchAlarm(@PathVariable long idx, @RequestBody User user){
+    @PutMapping("/lunchAlarm/{userIdx}")
+    public ResponseEntity<ResponseData> lunchAlarm(@PathVariable long userIdx, @RequestBody User user){
         try{
-            userService.updateLunchAlarm(idx, user.getLunchAlarm(), user.getLunchAlarmHour(), user.getLunchAlarmMinute());
+            userService.updateLunchAlarm(userIdx, user.getLunchAlarm(), user.getLunchAlarmHour(), user.getLunchAlarmMinute());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , "");
+                    , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
 
-    @PutMapping("/dinnerAlarm/{idx}")
-    public ResponseEntity<ResponseData> dinnerAlarm(@PathVariable long idx, @RequestBody User user){
+    @PutMapping("/dinnerAlarm/{userIdx}")
+    public ResponseEntity<ResponseData> dinnerAlarm(@PathVariable long userIdx, @RequestBody User user){
         try{
-            userService.updateDinnerAlarm(idx, user.getDinnerAlarm(), user.getDinnerAlarmHour(), user.getDinnerAlarmMinute());
+            userService.updateDinnerAlarm(userIdx, user.getDinnerAlarm(), user.getDinnerAlarmHour(), user.getDinnerAlarmMinute());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , "");
+                    , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
 
-    @PutMapping("/eventAlarm/{idx}")
-    public ResponseEntity<ResponseData> eventAlarm(@PathVariable long idx, @RequestBody User user){
+    @PutMapping("/eventAlarm/{userIdx}")
+    public ResponseEntity<ResponseData> eventAlarm(@PathVariable long userIdx, @RequestBody User user){
         try{
-            userService.updateEventAlarm(idx, user.getEventAlarm());
+            userService.updateEventAlarm(userIdx, user.getEventAlarm());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , "");
+                    , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
 
-    @PutMapping("/serviceAlarm/{idx}")
-    public ResponseEntity<ResponseData> setServiceAlarm(@PathVariable long idx, @RequestBody User user){
+    @PutMapping("/serviceAlarm/{userIdx}")
+    public ResponseEntity<ResponseData> setServiceAlarm(@PathVariable long userIdx, @RequestBody User user){
         try{
-            userService.updateServiceAlarm(idx, user.getServiceAlarm());
+            userService.updateServiceAlarm(userIdx, user.getServiceAlarm());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , "");
+                    , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
 
-    @GetMapping("/secession/{idx}")
-    public ResponseEntity<ResponseData> secession(@PathVariable long idx){
+    @GetMapping("/secession/{userIdx}")
+    public ResponseEntity<ResponseData> secession(@PathVariable long userIdx){
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("list", userService.getSecessionReasonList());
-            data.put("userIdx", idx);
+            data.put("userIdx", userIdx);
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -167,15 +163,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/secession/{idx}")
-    public ResponseEntity<ResponseData> secession(@PathVariable long idx, @RequestBody Secession secession){
+    @PostMapping("/secession/{userIdx}")
+    public ResponseEntity<ResponseData> secession(@PathVariable long userIdx, @RequestBody Secession secession){
         try{
-            userService.updateUserStatus(new Secession(secession.getIdx(), idx, secession.getMemo()));
+            userService.updateUserStatus(new Secession(secession.getIdx(), userIdx, secession.getMemo()));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , "");
+                    , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         }catch(IllegalArgumentException e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));

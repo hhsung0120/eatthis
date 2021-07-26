@@ -108,7 +108,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유번호")
+                                        , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("고유번호")
                                 )
                         )
                 )
@@ -146,7 +146,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유번호")
+                                        , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("고유번호")
                                 )
                         )
                 )
@@ -156,7 +156,7 @@ public class UserControllerTests {
     @Test
     public void users() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/{idx}",1L)
+                RestDocumentationRequestBuilders.get("/users/{userIdx}",1L)
         );
 
         result.andExpect(status().isOk())
@@ -165,7 +165,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
@@ -200,7 +200,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/lunchAlarm/{idx}",1)
+                        .put("/users/lunchAlarm/{userIdx}",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -211,7 +211,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , requestFields(
                                         fieldWithPath("lunchAlarm").type(JsonFieldType.STRING).description("Y, N")
@@ -221,7 +221,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
                                 )
                         )
                 )
@@ -237,7 +237,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/dinnerAlarm/{idx}",1)
+                        .put("/users/dinnerAlarm/{userIdx}",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -248,7 +248,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , requestFields(
                                         fieldWithPath("dinnerAlarm").type(JsonFieldType.STRING).description("Y, N")
@@ -258,7 +258,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
                                 )
                         )
                 )
@@ -272,7 +272,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/eventAlarm/{idx}",1)
+                        .put("/users/eventAlarm/{userIdx}",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -283,7 +283,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , requestFields(
                                         fieldWithPath("eventAlarm").type(JsonFieldType.STRING).description("Y, N")
@@ -291,7 +291,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
                                 )
                         )
                 )
@@ -305,7 +305,7 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/serviceAlarm/{idx}",1)
+                        .put("/users/serviceAlarm/{userIdx}",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -316,7 +316,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , requestFields(
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.STRING).description("Y, N")
@@ -324,7 +324,7 @@ public class UserControllerTests {
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
                                 )
                         )
                 )
@@ -334,7 +334,7 @@ public class UserControllerTests {
     @Test
     public void secessionReasonList() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/secession/{idx}",1)
+                RestDocumentationRequestBuilders.get("/users/secession/{userIdx}",1)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -351,7 +351,7 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , responseFields(response)
                         )
@@ -362,12 +362,12 @@ public class UserControllerTests {
     @Test
     public void updateSecession() throws Exception {
         Map<String, Object> user = new LinkedHashMap<>();
-        user.put("idx", 5);
+        user.put("userIdx", 5);
         user.put("memo", "memo");
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/users/secession/{idx}",1)
+                        .post("/users/secession/{userIdx}",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -378,12 +378,12 @@ public class UserControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("idx").description("고유 번호")
+                                        parameterWithName("userIdx").description("고유 번호")
                                 )
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
-                                        , fieldWithPath("data").type(JsonFieldType.STRING).description("빈 값")
+                                        , fieldWithPath("data").type(JsonFieldType.OBJECT).description("빈 값")
                                 )
                         )
                 )

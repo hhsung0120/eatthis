@@ -53,9 +53,13 @@ public class QuestionsService {
         return result;
     }
 
-    public EventResultType saveQuestions(Questions questions) {
-        questionsRepository.save(questions.toEntity());
-        return EventResultType.SUCCESS;
+    public void saveQuestions(Questions questions) {
+        try{
+            questionsRepository.save(questions.toEntity());
+        }catch (Exception e){
+            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue());
+        }
+
     }
 
     /**
@@ -64,9 +68,6 @@ public class QuestionsService {
      * @return
      */
     public Questions getQuestions(Questions questions) {
-        //TODO userIdx 세션이랑 검사해서 아니면 튕겨내기
-        //questions.getUserIdx() != session.userIdx
-
         QuestionsEntity questionsEntity = questionsRepository.findByQuestionsIdx(questions.getIdx())
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 

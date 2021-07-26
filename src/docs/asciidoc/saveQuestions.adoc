@@ -1,0 +1,15 @@
+// === Index
+=== Request HTTP Example:
+include::{snippets}/saveQuestions/http-request.adoc[]
+
+=== Request Fields:
+include::{snippets}/saveQuestions/request-fields.adoc[]
+
+=== Response
+include::{snippets}/saveQuestions/http-response.adoc[]
+
+=== Response Fields
+include::{snippets}/saveQuestions/response-fields.adoc[]
+
+
+

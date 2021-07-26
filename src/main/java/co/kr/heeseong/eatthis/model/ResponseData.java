@@ -2,6 +2,8 @@ package co.kr.heeseong.eatthis.model;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+
 @Getter
 public class ResponseData {
 
@@ -13,9 +15,11 @@ public class ResponseData {
     }
 
     public ResponseData(String message) {
-        this.statusCode = 500;
-        this.message = message;
-        this.data = "";
+        this(500, message, new HashMap<>());
+    }
+
+    public ResponseData(int statusCode, String message) {
+        this(statusCode, message, new HashMap<>());
     }
 
     public ResponseData(int statusCode, String message, Object data) {
