@@ -28,11 +28,6 @@ public class Questions {
     public Questions() {
     }
 
-    public Questions(long idx, long userIdx) {
-        this.idx = idx;
-        this.userIdx = userIdx;
-    }
-
     @Builder
     public Questions(long idx, long userIdx, String userName, long categoryIdx, String categoryName, String questions, String answer, String status, String phone, String email, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
         this.idx = idx;

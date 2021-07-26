@@ -1,13 +1,13 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
-import co.kr.heeseong.eatthis.Enum.EventResultType;
-import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.entity.QuestionsEntity;
+import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.repository.FaqCategoryRepository;
 import co.kr.heeseong.eatthis.repository.QuestionsRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class QuestionsService {
 
-    private QuestionsRepository questionsRepository;
-    private FaqCategoryRepository faqCategoryRepository;
-    private static int pageSize = 10;
+    private final QuestionsRepository questionsRepository;
+    private final FaqCategoryRepository faqCategoryRepository;
 
     public Map<String, Object> getQuestionsList(long userIdx) {
         Map<String, Object> result = new LinkedHashMap<>();
@@ -68,15 +68,13 @@ public class QuestionsService {
      * @return
      */
     public Questions getQuestions(Questions questions) {
-        QuestionsEntity questionsEntity = questionsRepository.findByQuestionsIdx(questions.getIdx())
+        QuestionsEntity questionsEntity = questionsRepository.findById(questions.getIdx())
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
-
-        FaqCategoryEntity faqCategoryEntity = faqCategoryRepository.findByCategoryIdx(questionsEntity.getCategoryIdx());
 
         return Questions.builder()
                 .createDate(questionsEntity.getCreateDate())
                 .status(questionsEntity.getStatus().getValue())
-                .categoryName(faqCategoryEntity.getCategoryName())
+                .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
                 .userName("세션에 있는 이름")
                 .phone(questionsEntity.getPhone())
                 .email(questionsEntity.getEmail())

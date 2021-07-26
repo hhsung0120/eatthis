@@ -17,9 +17,9 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FaqCategoryEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idx;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idx")
+    private Long idx;
 
     @Column
     private String categoryName;

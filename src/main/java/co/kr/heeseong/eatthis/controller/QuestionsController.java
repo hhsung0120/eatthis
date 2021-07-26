@@ -57,15 +57,16 @@ public class QuestionsController {
     }
 
     @GetMapping("/{idx}")
-    public Map<String, Object> questionsList(@PathVariable long idx){
-        Map<String, Object> result = new LinkedHashMap<>();
+    public ResponseEntity<ResponseData> questionsList(@PathVariable long idx){
         try{
-            result.put("data", questionsService.getQuestionsList(idx));
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , questionsService.getQuestionsList(idx));
+            return ResponseEntity.ok(responseData);
         }catch (Exception e){
-            result.put("reason", e.getMessage());
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
-
-        return result;
     }
 
     @GetMapping("/{userIdx}/{questionsIdx}")
@@ -78,7 +79,10 @@ public class QuestionsController {
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , questionsService.getQuestions(new Questions(userIdx, questionsIdx)));
+                    , questionsService.getQuestions(Questions.builder()
+                                                            .userIdx(userIdx)
+                                                            .idx(questionsIdx)
+                                                            .build()));
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));

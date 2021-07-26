@@ -9,20 +9,19 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "questions")
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "questions")
 public class QuestionsEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idx;
+    private Long idx;
 
     @Column
-    private long userIdx;
+    private Long userIdx;
 
-    @Column
-    private long categoryIdx;
+    @Column(name = "category_idx")
+    private Long categoryIdx;
 
     @Column
     private String questions;
@@ -39,8 +38,15 @@ public class QuestionsEntity extends TimeEntity {
     @Column
     private String email;
 
+    @JoinColumn(name="category_idx", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private FaqCategoryEntity faqCategoryEntity;
+
+    public QuestionsEntity() {
+    }
+
     @Builder
-    public QuestionsEntity(long idx, long userIdx, String questions, String phone, String email, long categoryIdx) {
+    public QuestionsEntity(Long idx, Long userIdx, String questions, String phone, String email, Long categoryIdx) {
         this.idx = idx;
         this.userIdx = userIdx;
         this.questions = questions;
