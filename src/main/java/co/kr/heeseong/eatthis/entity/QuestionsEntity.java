@@ -3,9 +3,12 @@ package co.kr.heeseong.eatthis.entity;
 
 import co.kr.heeseong.eatthis.Enum.QuestionsStatusType;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
+import co.kr.heeseong.eatthis.model.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -17,7 +20,7 @@ public class QuestionsEntity extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column
+    @Column(name = "user_idx")
     private Long userIdx;
 
     @Column(name = "category_idx")
@@ -42,7 +45,15 @@ public class QuestionsEntity extends TimeEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private FaqCategoryEntity faqCategoryEntity;
 
+    @JoinColumn(name="user_idx", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private UserEntity user;
+
     public QuestionsEntity() {
+    }
+
+    public String getLastModifiedDateToString(LocalDateTime lastModifiedDateToString) {
+        return lastModifiedDateToString == null ? "" : lastModifiedDateToString.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Builder

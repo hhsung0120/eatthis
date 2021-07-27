@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -23,13 +24,13 @@ public class Questions {
     private String phone;
     private String email;
     private LocalDateTime createDate;
-    private LocalDateTime lastModifiedDate;
+    private String lastModifiedDateToString;
 
     public Questions() {
     }
 
     @Builder
-    public Questions(long idx, long userIdx, String userName, long categoryIdx, String categoryName, String questions, String answer, String status, String phone, String email, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
+    public Questions(long idx, long userIdx, String userName, long categoryIdx, String categoryName, String questions, String answer, String status, String phone, String email, LocalDateTime createDate, String lastModifiedDateToString) {
         this.idx = idx;
         this.userIdx = userIdx;
         this.userName = userName;
@@ -41,7 +42,7 @@ public class Questions {
         this.phone = phone;
         this.email = email;
         this.createDate = createDate;
-        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedDateToString = lastModifiedDateToString;
     }
 
     public QuestionsEntity toEntity(){

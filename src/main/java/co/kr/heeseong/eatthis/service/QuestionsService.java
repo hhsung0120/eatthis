@@ -1,54 +1,54 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
-import co.kr.heeseong.eatthis.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.entity.QuestionsEntity;
 import co.kr.heeseong.eatthis.model.Questions;
-import co.kr.heeseong.eatthis.repository.FaqCategoryRepository;
 import co.kr.heeseong.eatthis.repository.QuestionsRepository;
-import lombok.AllArgsConstructor;
+import co.kr.heeseong.eatthis.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
+
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class QuestionsService {
 
     private final QuestionsRepository questionsRepository;
-    private final FaqCategoryRepository faqCategoryRepository;
+    private final UserService userService;
 
     public Map<String, Object> getQuestionsList(long userIdx) {
         Map<String, Object> result = new LinkedHashMap<>();
-        List<Questions> questionsDtoList = new ArrayList<>();
 
         int count = questionsRepository.findAllCount(userIdx);
         if(count > 0){
             List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
-            for(QuestionsEntity questionsEntity : questionsEntityList){
-                FaqCategoryEntity faqCategoryEntity = faqCategoryRepository.findByCategoryIdx(questionsEntity.getCategoryIdx());
-                Questions questionsDto = Questions.builder()
-                        .idx(questionsEntity.getIdx())
-                        .userIdx(questionsEntity.getUserIdx())
-                        .questions(questionsEntity.getQuestions())
-                        .answer(questionsEntity.getAnswer())
-                        .status(questionsEntity.getStatus().getValue())
-                        .createDate(questionsEntity.getCreateDate())
-                        .categoryName(faqCategoryEntity.getCategoryName())
-                        .categoryIdx(faqCategoryEntity.getIdx())
-                        .lastModifiedDate(questionsEntity.getLastModifiedDate())
-                        .build();
-
-                questionsDtoList.add(questionsDto);
-            }
+            List<Questions> questionsDtoList = questionsEntityList.stream()
+                                                .map(list -> Questions.builder()
+                                                            .idx(list.getIdx())
+                                                            .userIdx(list.getUserIdx())
+                                                            .userName(list.getUser().getUserDetailEntity().getNickName())
+                                                            .questions(list.getQuestions())
+                                                            .answer(list.getAnswer())
+                                                            .status(list.getStatus().getValue())
+                                                            .createDate(list.getCreateDate())
+                                                            .categoryName(list.getFaqCategoryEntity().getCategoryName())
+                                                            .categoryIdx(list.getFaqCategoryEntity().getIdx())
+                                                            .lastModifiedDateToString(list.getLastModifiedDateToString(list.getLastModifiedDate()))
+                                                            .phone(list.getPhone())
+                                                            .email(list.getEmail())
+                                                            .build())
+                                                .collect(toList());
+            result.put("count", count);
+            result.put("list", questionsDtoList);
         }
-        result.put("count", count);
-        result.put("list", questionsDtoList);
 
         return result;
     }
@@ -68,6 +68,8 @@ public class QuestionsService {
      * @return
      */
     public Questions getQuestions(Questions questions) {
+        userService.checkUser(questions.getUserIdx());
+
         QuestionsEntity questionsEntity = questionsRepository.findById(questions.getIdx())
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 
@@ -80,7 +82,7 @@ public class QuestionsService {
                 .email(questionsEntity.getEmail())
                 .questions(questionsEntity.getQuestions())
                 .answer(questionsEntity.getAnswer())
-                .lastModifiedDate(questionsEntity.getLastModifiedDate())
+                .lastModifiedDateToString(questionsEntity.getLastModifiedDateToString(questionsEntity.getLastModifiedDate()))
                 .build();
     }
 }

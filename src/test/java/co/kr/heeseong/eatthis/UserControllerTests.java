@@ -156,7 +156,7 @@ public class UserControllerTests {
     @Test
     public void users() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/{userIdx}",1L)
+                RestDocumentationRequestBuilders.get("/users/{userIdx}",1)
         );
 
         result.andExpect(status().isOk())

@@ -24,22 +24,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-public class FaqControllerTests {
+public class NoticeControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void faqs() throws Exception {
+    public void notices() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/faqs/{page}",1)
+                RestDocumentationRequestBuilders.get("/notices/{page}",1)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
                 fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                 , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
-                , fieldWithPath("data.list[].idx").type(JsonFieldType.NUMBER).description("고유 번호")
-                , fieldWithPath("data.list[].categoryName").type(JsonFieldType.STRING).description("카테고리")
+                , fieldWithPath("data.list[].noticeIdx").type(JsonFieldType.NUMBER).description("고유 번호")
+                , fieldWithPath("data.list[].userIdx").type(JsonFieldType.NUMBER).description("작정자")
                 , fieldWithPath("data.list[].title").type(JsonFieldType.STRING).description("제목")
                 , fieldWithPath("data.list[].contents").type(JsonFieldType.STRING).description("내용")
                 , fieldWithPath("data.list[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
@@ -48,7 +48,7 @@ public class FaqControllerTests {
 
         result.andExpect(status().isOk())
                 .andDo(
-                        document("faqs"
+                        document("notices"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(

@@ -1,22 +1,24 @@
 package co.kr.heeseong.eatthis.service;
 
 import co.kr.heeseong.eatthis.entity.NoticeEntity;
-import co.kr.heeseong.eatthis.repository.NoticeRepository;
 import co.kr.heeseong.eatthis.model.Notice;
-import lombok.AllArgsConstructor;
+import co.kr.heeseong.eatthis.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+import static java.util.stream.Collectors.toList;
+
+
 @Service
+@RequiredArgsConstructor
 public class NoticeService {
 
-    private NoticeRepository noticeRepository;
+    private final NoticeRepository noticeRepository;
     private static int pageSize = 10;
 
     public Long insertNotice(Notice noticeDto) {
@@ -24,21 +26,16 @@ public class NoticeService {
     }
 
     public List<Notice> getNoticeList(int page) {
-        List<Notice> noticeDtoList = new ArrayList<>();
         Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate"));
-
-        for(NoticeEntity noticeEntity : noticeEntityList){
-            Notice notice = Notice.builder()
-                    .noticeIdx(noticeEntity.getNoticeIdx())
-                    .userIdx(noticeEntity.getUserIdx())
-                    .title(noticeEntity.getTitle())
-                    .contents(noticeEntity.getTitle())
-                    .createDate(noticeEntity.getCreateDate())
-                    .lastModifiedDate(noticeEntity.getLastModifiedDate())
-                    .build();
-
-            noticeDtoList.add(notice);
-        }
-        return noticeDtoList;
+        return noticeEntityList.stream()
+                                .map(list -> Notice.builder()
+                                            .noticeIdx(list.getNoticeIdx())
+                                            .userIdx(list.getUserIdx())
+                                            .title(list.getTitle())
+                                            .contents(list.getTitle())
+                                            .createDate(list.getCreateDate())
+                                            .lastModifiedDate(list.getLastModifiedDate())
+                                            .build())
+                                .collect(toList());
     }
 }

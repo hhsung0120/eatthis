@@ -42,10 +42,10 @@ public class StoreController {
     }
 
     @PostMapping("/reviews/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}")
-    public Map<String, Object> reviews(@PathVariable long userIdx
-                                        , @PathVariable long storeIdx
-                                        , @PathVariable long menuIdx
-                                        , @PathVariable long reviewIdx
+    public Map<String, Object> reviews(@PathVariable Long userIdx
+                                        , @PathVariable Long storeIdx
+                                        , @PathVariable Long menuIdx
+                                        , @PathVariable Long reviewIdx
                                         , @ModelAttribute Review review){
         Map<String, Object> result = new LinkedHashMap<>();
 

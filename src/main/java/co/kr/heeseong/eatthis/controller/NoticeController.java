@@ -1,8 +1,11 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.Enum.StatusCode;
+import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.service.NoticeService;
 import co.kr.heeseong.eatthis.model.Notice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +26,19 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/{page}")
-    public Map<String, Object> noticeList(@PathVariable int page){
-        Map<String, Object> result = new LinkedHashMap<>();
-
+    public ResponseEntity<ResponseData> noticeList(@PathVariable int page){
         try{
-            result.put("dataList", noticeService.getNoticeList(page));
-        }catch (Exception e){
-            result.put("reason", e.getMessage());
-        }
+            Map<String, Object> data = new HashMap<>();
+            data.put("list", noticeService.getNoticeList(page));
 
-        return result;
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
     @GetMapping("")
