@@ -76,6 +76,7 @@ public class UserControllerTests {
                                         , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람")
                                         , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람")
                                         , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("이미지경로")
+                                        , fieldWithPath("data.token").type(JsonFieldType.STRING).description("JWT 토근")
                                 )
                         )
                 )
@@ -185,6 +186,7 @@ public class UserControllerTests {
                                         , fieldWithPath("data.user.eventAlarm").type(JsonFieldType.STRING).description("이벤트 알람")
                                         , fieldWithPath("data.user.serviceAlarm").type(JsonFieldType.STRING).description("서비스 알람")
                                         , fieldWithPath("data.user.profileImagePath").type(JsonFieldType.STRING).description("이미지 경로")
+
                                 )
                         )
                 )

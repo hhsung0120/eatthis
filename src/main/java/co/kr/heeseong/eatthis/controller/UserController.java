@@ -6,6 +6,7 @@ import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
 import co.kr.heeseong.eatthis.model.User;
 import co.kr.heeseong.eatthis.service.UserService;
+import co.kr.heeseong.eatthis.util.Jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,6 +29,7 @@ public class UserController {
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("user", userService.loginProcess(user));
+            data.put("token", Jwt.createToken((User)data.get("user")));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -179,5 +181,14 @@ public class UserController {
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(ErrorCodeType.ETC_ERROR.getValue() + "-> " + e.getMessage()));
         }
+    }
+
+    @GetMapping("/invalidToken")
+    public ResponseEntity<ResponseData> invalidToken(){
+        ResponseData responseData = new ResponseData(
+                StatusCode.SERVER_ERROR.getValue()
+                , ErrorCodeType.INVALID_TOKEN.getValue()
+        );
+        return ResponseEntity.ok(responseData);
     }
 }

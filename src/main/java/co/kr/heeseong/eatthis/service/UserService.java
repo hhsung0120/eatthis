@@ -89,8 +89,8 @@ public class UserService {
     }
 
     public User loginProcess(User user){
-        UserEntity userEntity = Optional.of(userRepository.findByEmailId(user.getId())).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue()));
-        Optional.of(userRepository.findByIdAndPassword(user.getId(), user.getPassword())).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.INVALID_PASSWORD.getValue()));
+        UserEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(user.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
+        Optional.ofNullable(userRepository.findByIdAndPassword(user.getId(), user.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
         //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
         return this.getUsers(userEntity.getIdx());
     }
