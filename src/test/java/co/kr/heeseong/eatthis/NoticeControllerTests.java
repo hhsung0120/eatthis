@@ -1,5 +1,8 @@
 package co.kr.heeseong.eatthis;
 
+import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.util.Jwt;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,6 +31,19 @@ public class NoticeControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
+    private static String token = "";
+
+    @BeforeAll
+    static void createToken(){
+        User user = User.builder()
+                .idx(1)
+                .id("hhsung0120@naver.com")
+                .password("1234")
+                .nickName("nickName")
+                .build();
+        token = Jwt.createToken(user);
+    }
 
     @Test
     public void notices() throws Exception {

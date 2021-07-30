@@ -35,24 +35,13 @@ public class Jwt {
         Date expireDate = new Date(); // 토큰 만료 시간
         expireDate.setTime(expireDate.getTime() + expireTime);
 
-        //토큰 발급
-        String jwt = Jwts.builder()
+        return Jwts.builder()
                 .setHeader(header)
                 .setClaims(payload)
                 .setSubject("accountUser")
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
                 .compact();
-
-        return jwt;
-    }
-
-    static private Map<String, String> dummyData(){
-        Map<String, String> dummyData = new HashMap<>();
-        dummyData.put("userId","hhsung0120");
-        dummyData.put("userName","한희성");
-
-        return dummyData;
     }
 
     static public Map<String, Object> verification(String jwt) throws Exception {
