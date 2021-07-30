@@ -63,11 +63,11 @@ public class Jwt {
                 .getBody();
         Map<String, Object> claimsData = claims;
 
-        System.out.println(claimsData);
-        System.out.println(claimsData.get("sub"));
-        System.out.println(claimsData.get("data"));
-        Map<String, Object> data = (Map<String,Object>)claimsData.get("data");
-        System.out.println(data.get("userName"));
+        //System.out.println(claimsData);
+        //System.out.println(claimsData.get("sub"));
+        //System.out.println(claimsData.get("data"));
+        //Map<String, Object> data = (Map<String,Object>)claimsData.get("data");
+        //System.out.println(data.get("userName"));
 
         return claimsData;
     }

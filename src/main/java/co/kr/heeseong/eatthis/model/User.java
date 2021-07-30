@@ -51,8 +51,6 @@ public class User {
         this.termsAgree = 'Y';
         this.privacyAgree = 'Y';
         this.locationAgree = 'Y';
-
-
     }
 
     @Builder

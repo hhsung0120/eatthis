@@ -12,22 +12,16 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
-        System.out.println("요청으로 들어온 토큰 => " + token);
 
         try {
             if (token == null || "".equals(token)) {
                 response.sendRedirect("/users/invalidToken");
             }
-
-            Jwt.verification(token);
+            request.setAttribute("accountUser", Jwt.verification(token));
         }catch (Exception e){
             response.sendRedirect("/users/invalidToken");
         }
-/*
-                Jwt.verification(token);
-            }catch (Exception e){
-                response.sendRedirect("/invalidToken");
-            }*/
+
         return true;
     }
 

@@ -2,6 +2,7 @@ package co.kr.heeseong.eatthis.entity;
 
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;
+import co.kr.heeseong.eatthis.model.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,5 +43,25 @@ public class UserEntity{
     private UserDetailEntity userDetailEntity;
 
     public UserEntity() {
+    }
+
+    public User toValueObject(){
+        return User.builder()
+                .idx(idx)
+                .id(id)
+                .nickName(userDetailEntity.getNickName())
+                .password("")
+                .gender(userDetailEntity.getGender())
+                .birthday(userDetailEntity.getBirthday())
+                .lunchAlarm(userDetailEntity.getLunchAlarm())
+                .lunchAlarmHour(userDetailEntity.getLunchAlarmTime().toString().substring(0,2))
+                .lunchAlarmMinute(userDetailEntity.getLunchAlarmTime().toString().substring(3,5))
+                .dinnerAlarm(userDetailEntity.getDinnerAlarm())
+                .dinnerAlarmHour(userDetailEntity.getDinnerAlarmTime().toString().substring(0,2))
+                .dinnerAlarmMinute(userDetailEntity.getDinnerAlarmTime().toString().substring(3,5))
+                .eventAlarm(userDetailEntity.getEventAlarm())
+                .serviceAlarm(userDetailEntity.getServiceAlarm())
+                .profileImagePath(userDetailEntity.getProfileImagePath())
+                .build();
     }
 }
