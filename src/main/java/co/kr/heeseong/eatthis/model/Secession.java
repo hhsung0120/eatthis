@@ -29,9 +29,8 @@ public class Secession {
     }
 
     @Builder
-    public Secession(Long idx, Long userIdx, String memo) {
+    public Secession(Long idx, String memo, String etc) {
         this.idx = idx;
-        this.userIdx = userIdx;
         this.memo = Optional.ofNullable(memo).orElse("");
     }
 

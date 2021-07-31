@@ -3,7 +3,6 @@ package co.kr.heeseong.eatthis.entity;
 
 import co.kr.heeseong.eatthis.Enum.QuestionsStatusType;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
-import co.kr.heeseong.eatthis.model.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,8 +51,12 @@ public class QuestionsEntity extends TimeEntity {
     public QuestionsEntity() {
     }
 
-    public String getLastModifiedDateToString(LocalDateTime lastModifiedDateToString) {
-        return lastModifiedDateToString == null ? "" : lastModifiedDateToString.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    public String getLastModifiedDateToString(LocalDateTime lastModifiedDate) {
+        return lastModifiedDate == null ? "" : lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getCreateDateToString(LocalDateTime createDate) {
+        return createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Builder

@@ -12,7 +12,6 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
-
         try {
             if (token == null || "".equals(token)) {
                 response.sendRedirect("/users/invalidToken");

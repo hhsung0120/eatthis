@@ -68,14 +68,10 @@ public class QuestionsController {
         }
     }
 
-    @GetMapping("/{userIdx}/{questionsIdx}")
-    public ResponseEntity<ResponseData> detail(@PathVariable Long userIdx
-                                    , @PathVariable Long questionsIdx){
+    @GetMapping("/detail/{questionsIdx}")
+    public ResponseEntity<ResponseData> detail(@PathVariable Long questionsIdx){
         try{
-            //TODO userIdx 세션이랑 검사해서 아니면 튕겨내기
-            //questions.getUserIdx() != session.userIdx
             Questions questions = Questions.builder()
-                                    .userIdx(userIdx)
                                     .idx(questionsIdx)
                                     .build();
 

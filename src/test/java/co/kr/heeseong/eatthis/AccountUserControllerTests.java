@@ -1,7 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.User;
-import co.kr.heeseong.eatthis.service.UserService;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,15 +23,13 @@ import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentRequest;
 import static co.kr.heeseong.eatthis.ApiDocumentUtils.getDocumentResponse;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "eatthis.heeseong.site")
-public class UserControllerTests {
+public class AccountUserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,13 +41,13 @@ public class UserControllerTests {
 
     @BeforeAll
     static void createToken(){
-        User user = User.builder()
+        AccountUser accountUser = AccountUser.builder()
                         .idx(1)
                         .id("hhsung0120@naver.com")
                         .password("1234")
                         .nickName("nickName")
                         .build();
-        token = Jwt.createToken(user);
+        token = Jwt.createToken(accountUser);
     }
 
     @Test
@@ -174,7 +171,7 @@ public class UserControllerTests {
     @Test
     public void users() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/{userIdx}",1)
+                RestDocumentationRequestBuilders.get("/users")
                 .header("token", token)
         );
 
@@ -183,9 +180,6 @@ public class UserControllerTests {
                         document("users"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
@@ -220,9 +214,10 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/lunchAlarm/{userIdx}",1)
+                        .put("/users/lunchAlarm")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())
@@ -230,9 +225,6 @@ public class UserControllerTests {
                         document("updateLunchAlarm"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , requestFields(
                                         fieldWithPath("lunchAlarm").type(JsonFieldType.STRING).description("Y, N")
                                         , fieldWithPath("lunchAlarmHour").type(JsonFieldType.NUMBER).description("1~23")
@@ -257,9 +249,10 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/dinnerAlarm/{userIdx}",1)
+                        .put("/users/dinnerAlarm",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())
@@ -267,9 +260,6 @@ public class UserControllerTests {
                         document("updateDinnerAlarm"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , requestFields(
                                         fieldWithPath("dinnerAlarm").type(JsonFieldType.STRING).description("Y, N")
                                         , fieldWithPath("dinnerAlarmHour").type(JsonFieldType.NUMBER).description("1~23")
@@ -292,9 +282,10 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/eventAlarm/{userIdx}",1)
+                        .put("/users/eventAlarm",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())
@@ -302,9 +293,6 @@ public class UserControllerTests {
                         document("updateEventAlarm"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , requestFields(
                                         fieldWithPath("eventAlarm").type(JsonFieldType.STRING).description("Y, N")
                                 )
@@ -325,9 +313,11 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/serviceAlarm/{userIdx}",1)
+                        .put("/users/serviceAlarm",1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
+
         );
 
         result.andExpect(status().isOk())
@@ -335,9 +325,6 @@ public class UserControllerTests {
                         document("updateServiceAlarm"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , requestFields(
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.STRING).description("Y, N")
                                 )
@@ -354,7 +341,8 @@ public class UserControllerTests {
     @Test
     public void secessionReasonList() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/secession/{userIdx}",1)
+                RestDocumentationRequestBuilders.get("/users/secession")
+                .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -370,9 +358,6 @@ public class UserControllerTests {
                         document("secessionReasonList"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , responseFields(response)
                         )
                 )
@@ -387,9 +372,10 @@ public class UserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/users/secession/{userIdx}",1)
+                        .post("/users/secession")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())
@@ -397,9 +383,6 @@ public class UserControllerTests {
                         document("updateSecession"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , responseFields(
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")

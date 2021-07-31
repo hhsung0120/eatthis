@@ -1,7 +1,9 @@
 package co.kr.heeseong.eatthis.controller;
 
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.model.Test;
 import co.kr.heeseong.eatthis.service.TestService;
+import co.kr.heeseong.eatthis.util.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,4 +57,20 @@ public class TestController {
     public List<Test> list(){
         return testService.getTestList();
     }
+
+    @GetMapping("/createToken")
+    public String createToken(){
+        AccountUser accountUser = AccountUser.builder().id("setse@set").idx(2).birthday("sdfsdf").build();
+        String to = Jwt.createToken(accountUser);
+        System.out.println(to);
+        try{
+            System.out.println(Jwt.verification(to));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "d";
+    }
+
+
+
 }

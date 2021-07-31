@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User {
+public class AccountUser {
 
     private long idx;
     private String id;
@@ -42,9 +42,9 @@ public class User {
     @JsonIgnore
     private UserStatusType userStatusType;
 
-    public User() {}
+    public AccountUser() {}
 
-    public User(String id, String password) {
+    public AccountUser(String id, String password) {
         this.id = id;
         this.password = password;
         this.signUpType = SignUpType.DEFAULTE;
@@ -54,7 +54,7 @@ public class User {
     }
 
     @Builder
-    public User(long idx, String id, String password, String nickName, GenderType gender, String birthday
+    public AccountUser(long idx, String id, String password, String nickName, GenderType gender, String birthday
             , char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath
             , String lunchAlarmHour, String lunchAlarmMinute, String dinnerAlarmHour, String dinnerAlarmMinute) {
         this.idx = idx;

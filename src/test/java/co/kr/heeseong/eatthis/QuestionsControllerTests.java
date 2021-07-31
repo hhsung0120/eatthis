@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,37 +43,38 @@ public class QuestionsControllerTests {
 
     @BeforeAll
     static void createToken(){
-        User user = User.builder()
+        AccountUser accountUser = AccountUser.builder()
                 .idx(1)
                 .id("hhsung0120@naver.com")
                 .password("1234")
                 .nickName("nickName")
                 .build();
-        token = Jwt.createToken(user);
+        token = Jwt.createToken(accountUser);
     }
 
     @Test
     public void detail() throws Exception{
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .get("/questions/{userIdx}/{questionsIdx}", 1, 8)
+                        .get("/questions/detail/{questionsIdx}", 8)
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
                 fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                 , fieldWithPath("message").type(JsonFieldType.STRING).description("성공시 OK, 실패시 사유")
-                , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("유저 고유 번호")
-                , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("유저 고유 번호")
-                , fieldWithPath("data.userName").type(JsonFieldType.STRING).description("이름")
-                , fieldWithPath("data.categoryIdx").type(JsonFieldType.NUMBER).description("카테고리 번호")
-                , fieldWithPath("data.categoryName").type(JsonFieldType.STRING).description("카테고리 이름")
-                , fieldWithPath("data.questions").type(JsonFieldType.STRING).description("문의 내용")
-                , fieldWithPath("data.answer").type(JsonFieldType.STRING).description("답변")
+                , fieldWithPath("data.createDate").type(JsonFieldType.STRING).description("문의 등록일")
                 , fieldWithPath("data.status").type(JsonFieldType.STRING).description("답변 상태")
+                , fieldWithPath("data.categoryName").type(JsonFieldType.STRING).description("카테고리 이름")
+                , fieldWithPath("data.userName").type(JsonFieldType.STRING).description("이름")
                 , fieldWithPath("data.phone").type(JsonFieldType.STRING).description("연락처")
                 , fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일")
-                , fieldWithPath("data.createDate").type(JsonFieldType.STRING).description("문의 등록일")
-                , fieldWithPath("data.lastModifiedDateToString").type(JsonFieldType.STRING).description("답변 등록일")
+                , fieldWithPath("data.questions").type(JsonFieldType.STRING).description("문의 내용")
+                , fieldWithPath("data.answer").type(JsonFieldType.STRING).description("답변")
+                , fieldWithPath("data.lastModifiedDate").type(JsonFieldType.STRING).description("답변 등록일")
+                , fieldWithPath("data.idx").type(JsonFieldType.NUMBER).description("고유 번호")
+                , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("유저 번호")
+                , fieldWithPath("data.categoryIdx").type(JsonFieldType.NUMBER).description("카테고리 번호")
         };
 
         result.andExpect(status().isOk())
@@ -82,8 +83,7 @@ public class QuestionsControllerTests {
                                 , getDocumentRequest()
                                 , getDocumentResponse()
                                 , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                        , parameterWithName("questionsIdx").description("질문 고유 번호")
+                                        parameterWithName("questionsIdx").description("질문 고유 번호")
                                 )
                                 , responseFields(response)
                         )

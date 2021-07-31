@@ -38,10 +38,10 @@ public class QuestionsService {
                                                             .questions(list.getQuestions())
                                                             .answer(list.getAnswer())
                                                             .status(list.getStatus().getValue())
-                                                            .createDate(list.getCreateDate())
+                                                            .createDate(list.getCreateDateToString(list.getCreateDate()))
                                                             .categoryName(list.getFaqCategoryEntity().getCategoryName())
                                                             .categoryIdx(list.getFaqCategoryEntity().getIdx())
-                                                            .lastModifiedDateToString(list.getLastModifiedDateToString(list.getLastModifiedDate()))
+                                                            .lastModifiedDate(list.getLastModifiedDateToString(list.getLastModifiedDate()))
                                                             .phone(list.getPhone())
                                                             .email(list.getEmail())
                                                             .build())
@@ -68,21 +68,23 @@ public class QuestionsService {
      * @return
      */
     public Questions getQuestions(Questions questions) {
-        userService.checkUser(questions.getUserIdx());
-
+        userService.checkUser(userService.getAccountUserIdx());
         QuestionsEntity questionsEntity = questionsRepository.findById(questions.getIdx())
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 
         return Questions.builder()
-                .createDate(questionsEntity.getCreateDate())
+                .createDate(questionsEntity.getCreateDateToString(questionsEntity.getCreateDate()))
                 .status(questionsEntity.getStatus().getValue())
                 .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
-                .userName("세션에 있는 이름")
+                .userName(userService.getAccountUser().getNickName())
                 .phone(questionsEntity.getPhone())
                 .email(questionsEntity.getEmail())
                 .questions(questionsEntity.getQuestions())
                 .answer(questionsEntity.getAnswer())
-                .lastModifiedDateToString(questionsEntity.getLastModifiedDateToString(questionsEntity.getLastModifiedDate()))
+                .lastModifiedDate(questionsEntity.getLastModifiedDateToString(questionsEntity.getLastModifiedDate()))
+                .idx(questionsEntity.getIdx())
+                .userIdx(questionsEntity.getUserIdx())
+                .categoryIdx(questionsEntity.getCategoryIdx())
                 .build();
     }
 }

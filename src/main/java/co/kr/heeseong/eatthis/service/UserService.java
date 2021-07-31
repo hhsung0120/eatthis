@@ -7,7 +7,7 @@ import co.kr.heeseong.eatthis.entity.SecessionEntity;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
 import co.kr.heeseong.eatthis.model.Secession;
-import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.repository.UserRepository;
@@ -40,23 +40,21 @@ public class UserService {
 
     /**
      * 사용자 정보 호출
-     * @param userIdx
-     * @return User
+     * @return AccountUser
      */
-    public User getUsers(long userIdx){
-        compareUserIdxAndTokenIdx(userIdx);
-        UserEntity userEntity = checkUser(userIdx);
+    public AccountUser getUsers(){
+        UserEntity userEntity = checkUser(this.getAccountUserIdx());
         return userEntity.toValueObject();
     }
 
-    public long insertUser(User user) {
-        this.checkUserByEmail(user.getId());
+    public long insertUser(AccountUser accountUser) {
+        this.checkUserByEmail(accountUser.getId());
 
         try{
-            User data = new User(user.getId(), user.getPassword());
+            AccountUser data = new AccountUser(accountUser.getId(), accountUser.getPassword());
             Long idx = userRepository.save(data.toEntity()).getIdx();
             if(idx > 0){
-                userDetailRepository.save(user.toDetailEntity(idx));
+                userDetailRepository.save(accountUser.toDetailEntity(idx));
             }
             return idx;
         }catch (Exception e){
@@ -66,23 +64,21 @@ public class UserService {
     }
 
     @Transactional
-    public long updateUser(User user) throws IllegalArgumentException{
-        compareUserIdxAndTokenIdx(user.getIdx());
-        UserDetailEntity userDetailEntity = checkUserDetail(user.getIdx());
-        userDetailEntity.update(user.getProfileImagePath(), user.getNickName(), user.getBirthday(), GenderType.getGenderTypeToEnum(user.getGender().getValue()));
+    public long updateUser(AccountUser accountUser) throws IllegalArgumentException{
+        UserDetailEntity userDetailEntity = checkUserDetail(accountUser.getIdx());
+        userDetailEntity.update(accountUser.getProfileImagePath(), accountUser.getNickName(), accountUser.getBirthday(), GenderType.getGenderTypeToEnum(accountUser.getGender().getValue()));
         return userDetailEntity.getIdx();
     }
 
-    public User loginProcess(User user){
-        UserEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(user.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
-        Optional.ofNullable(userRepository.findByIdAndPassword(user.getId(), user.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
+    public AccountUser loginProcess(AccountUser accountUser){
+        UserEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(accountUser.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
+        Optional.ofNullable(userRepository.findByIdAndPassword(accountUser.getId(), accountUser.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
         //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
         return userEntity.toValueObject();
     }
 
     /**
      * 점심 알람 업데이트
-     * @param idx
      * @param alarmYn
      * @param alarmTimeHour
      * @param alarmTimeMinute
@@ -90,9 +86,8 @@ public class UserService {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public void updateLunchAlarm(Long idx, char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
-        compareUserIdxAndTokenIdx(idx);
-        UserDetailEntity userDetailEntity = checkUserDetail(idx);
+    public void updateLunchAlarm(char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
+        UserDetailEntity userDetailEntity = checkUserDetail(this.getAccountUserIdx());
 
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new RuntimeException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
@@ -109,7 +104,6 @@ public class UserService {
 
     /**
      * 저녁 알람 업데이트
-     * @param idx
      * @param alarmYn
      * @param alarmTimeHour
      * @param alarmTimeMinute
@@ -117,9 +111,8 @@ public class UserService {
      * @throws RuntimeException
      */
     @Transactional
-    public void updateDinnerAlarm(Long idx, char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
-        compareUserIdxAndTokenIdx(idx);
-        UserDetailEntity userDetailEntity = checkUserDetail(idx);
+    public void updateDinnerAlarm(char alarmYn, String alarmTimeHour, String alarmTimeMinute) {
+        UserDetailEntity userDetailEntity = checkUserDetail(this.getAccountUserIdx());
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new RuntimeException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -135,15 +128,13 @@ public class UserService {
 
     /**
      * 이벤트 알람 업데이트
-     * @param idx
      * @param alarmYn
      * @return
      * @throws RuntimeException
      */
     @Transactional
-    public void updateEventAlarm(Long idx, char alarmYn) {
-        compareUserIdxAndTokenIdx(idx);
-        UserDetailEntity userDetailEntity = checkUserDetail(idx);
+    public void updateEventAlarm(char alarmYn) {
+        UserDetailEntity userDetailEntity = checkUserDetail(this.getAccountUserIdx());
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new RuntimeException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -158,15 +149,13 @@ public class UserService {
 
     /**
      * 서비스 알람 업데이트
-     * @param idx
      * @param alarmYn
      * @return
      * @throws RuntimeException
      */
     @Transactional
-    public void updateServiceAlarm(Long idx, char alarmYn) {
-        compareUserIdxAndTokenIdx(idx);
-        UserDetailEntity userDetailEntity = checkUserDetail(idx);
+    public void updateServiceAlarm(char alarmYn) {
+        UserDetailEntity userDetailEntity = checkUserDetail(this.getAccountUserIdx());
         if(StringUtil.isEmpty(String.valueOf(alarmYn)) || (!"Y".equals(String.valueOf(alarmYn)) && !"N".equals(String.valueOf(alarmYn)))){
             throw new RuntimeException(ErrorCodeType.INVALID_ARGUMENT.getValue() + " -> " + alarmYn);
         }
@@ -189,8 +178,8 @@ public class UserService {
 
     @Transactional
     public void updateUserStatus(Secession secession) {
-        UserDetailEntity userDetailEntity = checkUserDetail(secession.getUserIdx());
-        if(userScessionRepository.findByUserIdx(secession.getUserIdx()) != null){
+        UserDetailEntity userDetailEntity = checkUserDetail(this.getAccountUserIdx());
+        if(userScessionRepository.findByUserIdx(this.getAccountUserIdx()) != null){
             throw new RuntimeException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + secession.getUserIdx());
         }
 
@@ -202,12 +191,12 @@ public class UserService {
         }
     }
 
-    public UserDetailEntity checkUserDetail(Long idx){
-        return userDetailRepository.findById(idx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+    public UserDetailEntity checkUserDetail(Long userIdx){
+        return userDetailRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
     }
 
-    public UserEntity checkUser(Long idx){
-        return userRepository.findById(idx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + idx));
+    public UserEntity checkUser(Long userIdx){
+        return userRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
     }
 
     public void checkUserByEmail(String email){
@@ -217,12 +206,12 @@ public class UserService {
         }
     }
 
-    private void compareUserIdxAndTokenIdx(Long userIdx) {
-        Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) request.getAttribute("accountUser");
-        int idx = Integer.parseInt(data.get("data").get("idx").toString());
+    public AccountUser getAccountUser() {
+        return (AccountUser) request.getAttribute("accountUser");
+    }
 
-        if(userIdx != idx){
-            throw new RuntimeException(ErrorCodeType.INVALID_REQUEST.getValue());
-        }
+    public Long getAccountUserIdx() {
+        AccountUser accountUser = Optional.ofNullable((AccountUser) request.getAttribute("accountUser")).orElseThrow(() -> new RuntimeException(ErrorCodeType.ACCOUNTUSER_NOT_FOUNT.getValue()));
+        return accountUser.getIdx();
     }
 }

@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -36,13 +36,13 @@ public class FaqControllerTests {
 
     @BeforeAll
     static void createToken(){
-        User user = User.builder()
+        AccountUser accountUser = AccountUser.builder()
                 .idx(1)
                 .id("hhsung0120@naver.com")
                 .password("1234")
                 .nickName("nickName")
                 .build();
-        token = Jwt.createToken(user);
+        token = Jwt.createToken(accountUser);
     }
 
     @Test

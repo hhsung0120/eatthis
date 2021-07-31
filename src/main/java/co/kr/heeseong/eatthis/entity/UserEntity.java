@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.entity;
 
 
 import co.kr.heeseong.eatthis.Enum.SignUpType;
-import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,8 +45,8 @@ public class UserEntity{
     public UserEntity() {
     }
 
-    public User toValueObject(){
-        return User.builder()
+    public AccountUser toValueObject(){
+        return AccountUser.builder()
                 .idx(idx)
                 .id(id)
                 .nickName(userDetailEntity.getNickName())

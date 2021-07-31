@@ -4,7 +4,7 @@ import co.kr.heeseong.eatthis.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.Enum.StatusCode;
 import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.model.Secession;
-import co.kr.heeseong.eatthis.model.User;
+import co.kr.heeseong.eatthis.model.AccountUser;
 import co.kr.heeseong.eatthis.service.UserService;
 import co.kr.heeseong.eatthis.util.Jwt;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +25,11 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseData> login(@RequestBody User user){
+    public ResponseEntity<ResponseData> login(@RequestBody AccountUser accountUser){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("user", userService.loginProcess(user));
-            data.put("token", Jwt.createToken((User)data.get("user")));
+            data.put("user", userService.loginProcess(accountUser));
+            data.put("token", Jwt.createToken((AccountUser)data.get("user")));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -41,11 +41,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userIdx}")
-    public ResponseEntity<ResponseData> users(@PathVariable Long userIdx){
+    @GetMapping("")
+    public ResponseEntity<ResponseData> users(){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("user", userService.getUsers(userIdx));
+            data.put("user", userService.getUsers());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -58,10 +58,10 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<ResponseData> signUp(@RequestBody User user) {
+    public ResponseEntity<ResponseData> signUp(@RequestBody AccountUser accountUser) {
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userService.insertUser(user));
+            data.put("userIdx", userService.insertUser(accountUser));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -76,10 +76,10 @@ public class UserController {
     }
 
     @PutMapping("/signUpDetail")
-    public ResponseEntity<ResponseData> signUpDetail(@RequestBody User user){
+    public ResponseEntity<ResponseData> signUpDetail(@RequestBody AccountUser accountUser){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userService.updateUser(user));
+            data.put("userIdx", userService.updateUser(accountUser));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -91,10 +91,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/lunchAlarm/{userIdx}")
-    public ResponseEntity<ResponseData> lunchAlarm(@PathVariable long userIdx, @RequestBody User user){
+    @PutMapping("/lunchAlarm")
+    public ResponseEntity<ResponseData> lunchAlarm(@RequestBody AccountUser accountUser){
         try{
-            userService.updateLunchAlarm(userIdx, user.getLunchAlarm(), user.getLunchAlarmHour(), user.getLunchAlarmMinute());
+            userService.updateLunchAlarm(accountUser.getLunchAlarm(), accountUser.getLunchAlarmHour(), accountUser.getLunchAlarmMinute());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -105,10 +105,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/dinnerAlarm/{userIdx}")
-    public ResponseEntity<ResponseData> dinnerAlarm(@PathVariable long userIdx, @RequestBody User user){
+    @PutMapping("/dinnerAlarm")
+    public ResponseEntity<ResponseData> dinnerAlarm(@RequestBody AccountUser accountUser){
         try{
-            userService.updateDinnerAlarm(userIdx, user.getDinnerAlarm(), user.getDinnerAlarmHour(), user.getDinnerAlarmMinute());
+            userService.updateDinnerAlarm(accountUser.getDinnerAlarm(), accountUser.getDinnerAlarmHour(), accountUser.getDinnerAlarmMinute());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -119,10 +119,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/eventAlarm/{userIdx}")
-    public ResponseEntity<ResponseData> eventAlarm(@PathVariable long userIdx, @RequestBody User user){
+    @PutMapping("/eventAlarm")
+    public ResponseEntity<ResponseData> eventAlarm(@RequestBody AccountUser accountUser){
         try{
-            userService.updateEventAlarm(userIdx, user.getEventAlarm());
+            userService.updateEventAlarm(accountUser.getEventAlarm());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -133,10 +133,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/serviceAlarm/{userIdx}")
-    public ResponseEntity<ResponseData> setServiceAlarm(@PathVariable long userIdx, @RequestBody User user){
+    @PutMapping("/serviceAlarm")
+    public ResponseEntity<ResponseData> setServiceAlarm(@RequestBody AccountUser accountUser){
         try{
-            userService.updateServiceAlarm(userIdx, user.getServiceAlarm());
+            userService.updateServiceAlarm(accountUser.getServiceAlarm());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -147,12 +147,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/secession/{userIdx}")
-    public ResponseEntity<ResponseData> secession(@PathVariable long userIdx){
+    @GetMapping("/secession")
+    public ResponseEntity<ResponseData> secession(){
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("list", userService.getSecessionReasonList());
-            data.put("userIdx", userIdx);
+            data.put("userIdx", userService.getAccountUserIdx());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -164,10 +164,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/secession/{userIdx}")
-    public ResponseEntity<ResponseData> secession(@PathVariable long userIdx, @RequestBody Secession secession){
+    @PostMapping("/secession")
+    public ResponseEntity<ResponseData> secession(@RequestBody Secession secession){
         try{
-            userService.updateUserStatus(new Secession(secession.getIdx(), userIdx, secession.getMemo()));
+            userService.updateUserStatus(new Secession(secession.getIdx(), secession.getMemo(), ""));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -189,6 +189,7 @@ public class UserController {
                 StatusCode.SERVER_ERROR.getValue()
                 , ErrorCodeType.INVALID_TOKEN.getValue()
         );
+
         return ResponseEntity.ok(responseData);
     }
 }

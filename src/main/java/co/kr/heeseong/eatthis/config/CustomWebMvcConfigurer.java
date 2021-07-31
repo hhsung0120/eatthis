@@ -22,11 +22,11 @@ public class CustomWebMvcConfigurer extends WebMvcConfigurationSupport {
 		registry.addInterceptor(new TokenCheckInterceptor())
 				.excludePathPatterns("/docs/**")
 				.excludePathPatterns("/api/**")
+				.excludePathPatterns("/test/**")
 				.excludePathPatterns("/users/login")
 				.excludePathPatterns("/users/invalidToken")
 				.excludePathPatterns("/users/signUp")
 				.excludePathPatterns("/users/signUpDetail")
-				.addPathPatterns("/**")
 				;
 
 	}

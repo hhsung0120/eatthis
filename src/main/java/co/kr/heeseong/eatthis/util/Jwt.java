@@ -1,6 +1,8 @@
 package co.kr.heeseong.eatthis.util;
 
-import co.kr.heeseong.eatthis.model.User;
+import aj.org.objectweb.asm.TypeReference;
+import co.kr.heeseong.eatthis.model.AccountUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,7 +15,7 @@ public class Jwt {
 
     final static String secretKey = "eatthis_let's_hti_the_jackpot";
 
-    static public String createToken(User user){
+    static public String createToken(AccountUser accountUser){
         //토큰 구조
         //header.payload.signature
 
@@ -22,9 +24,9 @@ public class Jwt {
         header.put("typ", "JWT");
         header.put("alg", "HS256");
 
-        //정
+        //데이터
         Map<String, Object> payload = new HashMap<>();
-        payload.put("data", user);
+        payload.put("accountUser", accountUser);
 
         //토큰 유효 시간 2시간
         //1000 * 60 = 1분
@@ -44,20 +46,23 @@ public class Jwt {
                 .compact();
     }
 
-    static public Map<String, Object> verification(String jwt) throws Exception {
+    static public AccountUser verification(String jwt) throws Exception {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(secretKey.getBytes("UTF-8")) // Set Key
                 .parseClaimsJws(jwt) // 파싱 및 검증
                 .getBody();
-        Map<String, Object> claimsData = claims;
 
-        //System.out.println(claimsData);
-        //System.out.println(claimsData.get("sub"));
-        //System.out.println(claimsData.get("data"));
-        //Map<String, Object> data = (Map<String,Object>)claimsData.get("data");
-        //System.out.println(data.get("userName"));
+        ObjectMapper objectMapper = new ObjectMapper();
+//        Map<String, Object> claimsData = claims;
+        AccountUser accountUser = objectMapper.readValue(objectMapper.writeValueAsString(claims.get("accountUser")), AccountUser.class);
+//
+//        System.out.println(claimsData);
+//        System.out.println(claimsData.get("sub"));
+//        System.out.println(claimsData.get("accountUser"));
+//        Map<String, Object> data = (Map<String,Object>)claims.get("accountUser");
+//        System.out.println(data.get("userName"));
 
-        return claimsData;
+        return accountUser;
     }
 }
