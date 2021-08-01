@@ -2,9 +2,6 @@
 === Request HTTP Example:
 include::{snippets}/updateEventAlarm/http-request.adoc[]
 
-=== Path-Parameters
-include::{snippets}/updateEventAlarm/path-parameters.adoc[]
-
 === Response
 include::{snippets}/updateEventAlarm/http-response.adoc[]
 

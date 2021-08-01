@@ -34,7 +34,6 @@ public class NoticeService {
                                             .title(list.getTitle())
                                             .contents(list.getTitle())
                                             .createDate(list.getCreateDate())
-                                            .lastModifiedDate(list.getLastModifiedDate())
                                             .build())
                                 .collect(toList());
     }

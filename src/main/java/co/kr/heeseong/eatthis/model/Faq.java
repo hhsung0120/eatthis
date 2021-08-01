@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class Faq {
     private long idx;
     private String categoryName;
     private String title;
     private String contents;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModifiedDate;
+
+    public Faq() {
+    }
 
     public FaqEntity toEntity(){
         return FaqEntity.builder()
@@ -26,13 +26,11 @@ public class Faq {
     }
 
     @Builder
-    public Faq(Long idx, String categoryName, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Faq(Long idx, String categoryName, String title, String contents){
         this.idx = idx;
         this.categoryName = categoryName;
         this.title = title;
         this.contents = contents;
-        this.createDate = createDate;
-        this.lastModifiedDate = lastModifiedDate;
     }
 
 }

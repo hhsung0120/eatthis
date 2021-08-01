@@ -4,6 +4,7 @@ import co.kr.heeseong.eatthis.entity.StoreEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -15,8 +16,8 @@ public class Store {
     private String storeName;
     private String locationX;
     private String locationY;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModifiedDate;
+    private String createDate;
+    private String lastModifiedDate;
 
     public Store() {
     }
@@ -40,7 +41,7 @@ public class Store {
         this.storeName = storeName;
         this.locationX = locationX;
         this.locationY = locationY;
-        this.createDate = createDate;
-        this.lastModifiedDate = lastModifiedDate;
+        this.createDate = createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.lastModifiedDate = lastModifiedDate == null ? "" : lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

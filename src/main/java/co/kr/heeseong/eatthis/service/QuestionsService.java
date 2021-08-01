@@ -24,9 +24,9 @@ public class QuestionsService {
     private final QuestionsRepository questionsRepository;
     private final UserService userService;
 
-    public Map<String, Object> getQuestionsList(long userIdx) {
+    public Map<String, Object> getQuestionsList() {
         Map<String, Object> result = new LinkedHashMap<>();
-
+        Long userIdx = userService.getAccountUserIdx();
         int count = questionsRepository.findAllCount(userIdx);
         if(count > 0){
             List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
@@ -38,10 +38,10 @@ public class QuestionsService {
                                                             .questions(list.getQuestions())
                                                             .answer(list.getAnswer())
                                                             .status(list.getStatus().getValue())
-                                                            .createDate(list.getCreateDateToString(list.getCreateDate()))
+                                                            .createDate(list.getCreateDate())
                                                             .categoryName(list.getFaqCategoryEntity().getCategoryName())
                                                             .categoryIdx(list.getFaqCategoryEntity().getIdx())
-                                                            .lastModifiedDate(list.getLastModifiedDateToString(list.getLastModifiedDate()))
+                                                            .lastModifiedDate(list.getLastModifiedDate())
                                                             .phone(list.getPhone())
                                                             .email(list.getEmail())
                                                             .build())
@@ -55,6 +55,7 @@ public class QuestionsService {
 
     public void saveQuestions(Questions questions) {
         try{
+            questions.setUserIdx(userService.getAccountUserIdx());
             questionsRepository.save(questions.toEntity());
         }catch (Exception e){
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue());
@@ -62,29 +63,10 @@ public class QuestionsService {
 
     }
 
-    /**
-     * 질문 상세
-     * @param questions
-     * @return
-     */
-    public Questions getQuestions(Questions questions) {
-        userService.checkUser(userService.getAccountUserIdx());
-        QuestionsEntity questionsEntity = questionsRepository.findById(questions.getIdx())
+    public Questions getQuestionsDetail(Long questionsIdx) {
+        QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 
-        return Questions.builder()
-                .createDate(questionsEntity.getCreateDateToString(questionsEntity.getCreateDate()))
-                .status(questionsEntity.getStatus().getValue())
-                .categoryName(questionsEntity.getFaqCategoryEntity().getCategoryName())
-                .userName(userService.getAccountUser().getNickName())
-                .phone(questionsEntity.getPhone())
-                .email(questionsEntity.getEmail())
-                .questions(questionsEntity.getQuestions())
-                .answer(questionsEntity.getAnswer())
-                .lastModifiedDate(questionsEntity.getLastModifiedDateToString(questionsEntity.getLastModifiedDate()))
-                .idx(questionsEntity.getIdx())
-                .userIdx(questionsEntity.getUserIdx())
-                .categoryIdx(questionsEntity.getCategoryIdx())
-                .build();
+        return questionsEntity.toValueObject(userService.getAccountUser().getNickName());
     }
 }

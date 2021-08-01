@@ -2,9 +2,6 @@
 === Request HTTP Example:
 include::{snippets}/updateSecession/http-request.adoc[]
 
-=== Path-Parameters
-include::{snippets}/updateSecession/path-parameters.adoc[]
-
 === Response
 include::{snippets}/updateSecession/http-response.adoc[]
 

@@ -124,6 +124,7 @@ public class AccountUserControllerTests {
                                         fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 값")
                                         , fieldWithPath("message").type(JsonFieldType.STRING).description("성공 OK, 실패시 사유")
                                         , fieldWithPath("data.userIdx").type(JsonFieldType.NUMBER).description("고유번호")
+                                        , fieldWithPath("data.token").type(JsonFieldType.STRING).description("JWT TOKEN")
                                 )
                         )
                 )
@@ -133,7 +134,7 @@ public class AccountUserControllerTests {
     @Test
     public void signUpDetail() throws Exception {
         Map<String, Object> user = new LinkedHashMap<>();
-        user.put("idx", 73);
+        user.put("idx", 1);
         user.put("nickName", "nickName");
         user.put("gender", "MALE");
         user.put("birthday", "1992-01-25");
@@ -171,8 +172,9 @@ public class AccountUserControllerTests {
     @Test
     public void users() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users")
-                .header("token", token)
+                RestDocumentationRequestBuilders
+                        .get("/users")
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())
@@ -341,8 +343,9 @@ public class AccountUserControllerTests {
     @Test
     public void secessionReasonList() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/users/secession")
-                .header("token", token)
+                RestDocumentationRequestBuilders
+                        .get("/users/secession")
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{

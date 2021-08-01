@@ -95,7 +95,8 @@ public class QuestionsControllerTests {
     public void form() throws Exception{
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .get("/questions/form/{userIdx}", 1)
+                        .get("/questions/form")
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -111,9 +112,6 @@ public class QuestionsControllerTests {
                         document("questionsForm"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , responseFields(response)
                         )
                 )
@@ -124,7 +122,8 @@ public class QuestionsControllerTests {
     public void list() throws Exception{
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .get("/questions/{userIdx}", 1)
+                        .get("/questions")
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -142,7 +141,7 @@ public class QuestionsControllerTests {
                 , fieldWithPath("data.list[].phone").type(JsonFieldType.STRING).description("휴대폰 번호")
                 , fieldWithPath("data.list[].email").type(JsonFieldType.STRING).description("이메일")
                 , fieldWithPath("data.list[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                , fieldWithPath("data.list[].lastModifiedDateToString").type(JsonFieldType.STRING).description("수정 날짜")
+                , fieldWithPath("data.list[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
         };
 
         result.andExpect(status().isOk())
@@ -150,9 +149,6 @@ public class QuestionsControllerTests {
                         document("questions"
                                 , getDocumentRequest()
                                 , getDocumentResponse()
-                                , pathParameters(
-                                        parameterWithName("userIdx").description("고유 번호")
-                                )
                                 , responseFields(response)
                         )
                 )
@@ -169,9 +165,10 @@ public class QuestionsControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/questions/form/{userIdx}", 2)
+                        .post("/questions/form")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("token", token)
         );
 
         result.andExpect(status().isOk())

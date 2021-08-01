@@ -2,9 +2,6 @@
 === Request HTTP Example:
 include::{snippets}/questionsForm/http-request.adoc[]
 
-=== Path-Parameters
-include::{snippets}/questionsForm/path-parameters.adoc[]
-
 === Response
 include::{snippets}/questionsForm/http-response.adoc[]
 

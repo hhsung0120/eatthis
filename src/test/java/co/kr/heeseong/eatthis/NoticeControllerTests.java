@@ -48,7 +48,9 @@ public class NoticeControllerTests {
     @Test
     public void notices() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/notices/{page}",1)
+                RestDocumentationRequestBuilders
+                        .get("/notices/{page}",1)
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -59,7 +61,6 @@ public class NoticeControllerTests {
                 , fieldWithPath("data.list[].title").type(JsonFieldType.STRING).description("제목")
                 , fieldWithPath("data.list[].contents").type(JsonFieldType.STRING).description("내용")
                 , fieldWithPath("data.list[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                , fieldWithPath("data.list[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
         };
 
         result.andExpect(status().isOk())

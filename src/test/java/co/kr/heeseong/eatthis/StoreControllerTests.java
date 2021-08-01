@@ -46,9 +46,11 @@ public class StoreControllerTests {
     }
 
     @Test
-    public void faqs() throws Exception {
+    public void stores() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/stores/{locationX}/{locationY}",1, 1)
+                RestDocumentationRequestBuilders
+                        .get("/stores/{locationX}/{locationY}",1, 1)
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{

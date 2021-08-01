@@ -8,6 +8,7 @@ import co.kr.heeseong.eatthis.repository.FaqCategoryRepository;
 import co.kr.heeseong.eatthis.repository.FaqRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,8 +33,12 @@ public class FaqService {
     public List<Faq> getFaqList(int page) {
         Page<FaqEntity> faqEntityList = faqRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"idx"));
         return faqEntityList.stream()
-                            .map(list -> new Faq(list.getIdx(), list.getTitle(), list.getFaqCategoryEntity().getCategoryName()
-                                                , list.getContents(), list.getCreateDate(), list.getLastModifiedDate()))
+                            .map(list -> Faq.builder()
+                                            .idx(list.getIdx())
+                                            .title(list.getTitle())
+                                            .categoryName(list.getFaqCategoryEntity().getCategoryName())
+                                            .contents(list.getContents())
+                                            .build())
                             .collect(toList());
     }
 

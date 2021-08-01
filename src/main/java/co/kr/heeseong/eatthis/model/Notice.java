@@ -4,6 +4,7 @@ import co.kr.heeseong.eatthis.entity.NoticeEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -14,8 +15,7 @@ public class Notice {
     private long userIdx;
     private String title;
     private String contents;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModifiedDate;
+    private String createDate;
 
     public NoticeEntity toEntity(){
         return NoticeEntity.builder()
@@ -27,13 +27,12 @@ public class Notice {
     }
 
     @Builder
-    public Notice(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Notice(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate){
         this.noticeIdx = noticeIdx;
         this.userIdx = userIdx;
         this.title = title;
         this.contents = contents;
-        this.createDate = createDate;
-        this.lastModifiedDate = lastModifiedDate;
+        this.createDate = createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
 }

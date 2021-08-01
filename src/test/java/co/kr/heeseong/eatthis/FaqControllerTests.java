@@ -48,7 +48,9 @@ public class FaqControllerTests {
     @Test
     public void faqs() throws Exception {
         ResultActions result = this.mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/faqs/{page}",1)
+                RestDocumentationRequestBuilders
+                        .get("/faqs/{page}",1)
+                        .header("token", token)
         );
 
         FieldDescriptor[] response = new FieldDescriptor[]{
@@ -58,8 +60,6 @@ public class FaqControllerTests {
                 , fieldWithPath("data.list[].categoryName").type(JsonFieldType.STRING).description("카테고리")
                 , fieldWithPath("data.list[].title").type(JsonFieldType.STRING).description("제목")
                 , fieldWithPath("data.list[].contents").type(JsonFieldType.STRING).description("내용")
-                , fieldWithPath("data.list[].createDate").type(JsonFieldType.STRING).description("등록 날짜")
-                , fieldWithPath("data.list[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 날짜")
         };
 
         result.andExpect(status().isOk())

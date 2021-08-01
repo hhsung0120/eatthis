@@ -5,6 +5,7 @@ import co.kr.heeseong.eatthis.model.Questions;
 import co.kr.heeseong.eatthis.model.ResponseData;
 import co.kr.heeseong.eatthis.service.FaqService;
 import co.kr.heeseong.eatthis.service.QuestionsService;
+import co.kr.heeseong.eatthis.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,15 @@ import java.util.Map;
 public class QuestionsController {
 
     private final QuestionsService questionsService;
+    private final UserService userService;
     private final FaqService faqService;
 
-    @GetMapping("/form/{userIdx}")
-    public ResponseEntity<ResponseData> form(@PathVariable Long userIdx){
+    @GetMapping("/form")
+    public ResponseEntity<ResponseData> form(){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userIdx);
             data.put("categoryList", faqService.getFaqCategoryList());
+            data.put("userIdx", userService.getAccountUserIdx());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -40,10 +42,9 @@ public class QuestionsController {
         }
     }
 
-    @PostMapping("/form/{userIdx}")
-    public ResponseEntity<ResponseData> form(@PathVariable Long userIdx, @RequestBody Questions questions){
+    @PostMapping("/form")
+    public ResponseEntity<ResponseData> save(@RequestBody Questions questions){
         try{
-            questions.setUserIdx(userIdx);
             questionsService.saveQuestions(questions);
 
             ResponseData responseData = new ResponseData(
@@ -55,13 +56,13 @@ public class QuestionsController {
         }
     }
 
-    @GetMapping("/{userIdx}")
-    public ResponseEntity<ResponseData> questionsList(@PathVariable Long userIdx){
+    @GetMapping("")
+    public ResponseEntity<ResponseData> questionsList(){
         try{
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , questionsService.getQuestionsList(userIdx));
+                    , questionsService.getQuestionsList());
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
@@ -71,16 +72,13 @@ public class QuestionsController {
     @GetMapping("/detail/{questionsIdx}")
     public ResponseEntity<ResponseData> detail(@PathVariable Long questionsIdx){
         try{
-            Questions questions = Questions.builder()
-                                    .idx(questionsIdx)
-                                    .build();
-
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , questionsService.getQuestions(questions));
+                    , questionsService.getQuestionsDetail(questionsIdx));
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }

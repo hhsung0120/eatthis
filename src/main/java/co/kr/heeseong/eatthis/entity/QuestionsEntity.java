@@ -3,6 +3,7 @@ package co.kr.heeseong.eatthis.entity;
 
 import co.kr.heeseong.eatthis.Enum.QuestionsStatusType;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
+import co.kr.heeseong.eatthis.model.Questions;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
-@ToString
 @Table(name = "questions")
 public class QuestionsEntity extends TimeEntity {
 
@@ -51,14 +51,6 @@ public class QuestionsEntity extends TimeEntity {
     public QuestionsEntity() {
     }
 
-    public String getLastModifiedDateToString(LocalDateTime lastModifiedDate) {
-        return lastModifiedDate == null ? "" : lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    public String getCreateDateToString(LocalDateTime createDate) {
-        return createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
     @Builder
     public QuestionsEntity(Long idx, Long userIdx, String questions, String phone, String email, Long categoryIdx) {
         this.idx = idx;
@@ -69,5 +61,22 @@ public class QuestionsEntity extends TimeEntity {
         this.phone = phone;
         this.email = email;
         this.categoryIdx= categoryIdx;
+    }
+
+    public Questions toValueObject(String userName){
+        return Questions.builder()
+                .createDate(this.getCreateDate())
+                .status(this.getStatus().getValue())
+                .categoryName(this.getFaqCategoryEntity().getCategoryName())
+                .userName(userName)
+                .phone(this.getPhone())
+                .email(this.getEmail())
+                .questions(this.getQuestions())
+                .answer(this.getAnswer())
+                .lastModifiedDate(getLastModifiedDate())
+                .idx(this.getIdx())
+                .userIdx(this.getUserIdx())
+                .categoryIdx(this.getCategoryIdx())
+                .build();
     }
 }

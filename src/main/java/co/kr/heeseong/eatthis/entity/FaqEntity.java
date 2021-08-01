@@ -4,11 +4,13 @@ package co.kr.heeseong.eatthis.entity;
 import co.kr.heeseong.eatthis.entity.common.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@ToString
 @Table(name = "faq")
 public class FaqEntity extends TimeEntity {
 

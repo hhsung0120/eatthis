@@ -62,6 +62,7 @@ public class UserController {
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("userIdx", userService.insertUser(accountUser));
+            data.put("token", Jwt.createToken(AccountUser.builder().idx(Long.parseLong(data.get("userIdx").toString())).build()));
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
@@ -69,8 +70,10 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch(DataIntegrityViolationException e){
+            e.printStackTrace();
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.ok(new ResponseData(ErrorCodeType.ETC_ERROR.getValue()));
         }
     }
