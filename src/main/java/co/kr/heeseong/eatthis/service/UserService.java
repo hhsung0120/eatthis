@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -211,7 +210,9 @@ public class UserService {
     }
 
     public Long getAccountUserIdx() {
-        AccountUser accountUser = Optional.ofNullable((AccountUser) request.getAttribute("accountUser")).orElseThrow(() -> new RuntimeException(ErrorCodeType.ACCOUNTUSER_NOT_FOUNT.getValue()));
-        return accountUser.getIdx();
+        return Optional
+                .ofNullable((AccountUser) request.getAttribute("accountUser"))
+                .orElseThrow(() -> new RuntimeException(ErrorCodeType.ACCOUNTS_NOT_FOUNT.getValue()))
+                .getIdx();
     }
 }

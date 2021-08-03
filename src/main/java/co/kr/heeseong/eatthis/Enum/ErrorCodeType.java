@@ -11,7 +11,8 @@ public enum ErrorCodeType {
     , INVALID_PASSWORD("패스워드를 확인해 주세요.")
     , INVALID_TOKEN("유효한 토큰이 아닙니다.")
     , ETC_ERROR("기타 오류 입니다.")
-    , ACCOUNTUSER_NOT_FOUNT("ACCOUNTUSER 정보를 찾을 수 없습니다.")
+    , ACCOUNTS_NOT_FOUNT("ACCOUNTS 정보를 찾을 수 없습니다.")
+    , FILE_UPLOAD_ERROR("파일 업로드 중 오류가 발생 하였습니다.")
 
     ;
 

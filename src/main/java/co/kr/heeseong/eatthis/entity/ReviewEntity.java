@@ -12,16 +12,16 @@ import javax.persistence.*;
 public class ReviewEntity extends TimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idx;
+    private Long idx;
 
     @Column
-    private long storeIdx;
+    private Long storeIdx;
 
     @Column
-    private long menuIdx;
+    private Long menuIdx;
 
     @Column
-    private long userIdx;
+    private Long userIdx;
 
     @Column
     private String contents;
@@ -36,13 +36,13 @@ public class ReviewEntity extends TimeEntity {
     }
 
     @Builder
-    public ReviewEntity(long idx, long storeIdx, long menuIdx, long userIdx, String contents, int totalPrice, float star){
+    public ReviewEntity(Long idx, Long storeIdx, Long menuIdx, Long userIdx, String contents, int totalPrice, float star) {
         this.idx = idx;
+        this.storeIdx = storeIdx;
         this.menuIdx = menuIdx;
         this.userIdx = userIdx;
         this.contents = contents;
         this.totalPrice = totalPrice;
         this.star = star;
     }
-
 }

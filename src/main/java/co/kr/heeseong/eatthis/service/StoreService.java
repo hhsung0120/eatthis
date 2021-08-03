@@ -28,10 +28,14 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
-@RequiredArgsConstructor
-@Transactional
+
+
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class StoreService {
+
+    private final UserService userService;
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
@@ -63,32 +67,34 @@ public class StoreService {
      * @param review
      */
     public long saveReview(Review review) {
-        if(review.getIdx() == 0){
-            return this.insertReview(review);
-        }else{
-            return this.updateReview(review);
-        }
+        return review.getIdx() == 0 ? this.insertReview(review) : this.updateReview(review);
     }
 
-    private long insertReview(Review review){
-        userDetailRepository.findById(review.getUserIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
-        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
+    private long insertReview(Review review) {
+        userDetailRepository.findById(userService.getAccountUserIdx()).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
+        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCodeType.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
+
+        System.out.println(review.toString());
         //없는 메뉴도 검사할것
         if(review.getTotalPrice() > 100000){
             throw new IllegalArgumentException("유효한 금액을 입력 하세요.");
         }
 
-        long idx = reviewRepository.save(review.toEntity()).getIdx();
+        review.setUserIdx(userService.getAccountUserIdx());
+        Long idx = reviewRepository.save(review.toEntity()).getIdx();
         if(idx > 0){
-            CommonFile commonFile;
-            for(MultipartFile file : review.getFile()){
-                if(!file.isEmpty()){
-                    commonFile = FileUtil.executeFileUpload(file, uploadPath);
-                    commonFile.setTableIdx(idx);
-                    commonFile.setTableType(TableCodeType.REVIEW);
-                    fileRepository.save(commonFile.toEntity());
+            review.getFile().stream().forEach(file -> {
+                try{
+                    if(!file.isEmpty()){
+                        CommonFile commonFile = FileUtil.executeFileUpload(file, uploadPath);
+                        commonFile.setTableIdx(idx);
+                        commonFile.setTableType(TableCodeType.REVIEW);
+                        fileRepository.save(commonFile.toEntity());
+                    }
+                }catch (Exception e){
+                    throw new RuntimeException(ErrorCodeType.FILE_UPLOAD_ERROR.getValue());
                 }
-            }
+            });
         }
         return idx;
     }

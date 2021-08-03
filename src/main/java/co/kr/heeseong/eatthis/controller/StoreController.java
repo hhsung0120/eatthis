@@ -41,30 +41,18 @@ public class StoreController {
         }
     }
 
-    @PostMapping("/reviews/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}")
-    public Map<String, Object> reviews(@PathVariable Long userIdx
-                                        , @PathVariable Long storeIdx
-                                        , @PathVariable Long menuIdx
-                                        , @PathVariable Long reviewIdx
-                                        , @ModelAttribute Review review){
-        Map<String, Object> result = new LinkedHashMap<>();
-
-        try {
-            review.setUserIdx(userIdx);
-            review.setStoreIdx(storeIdx);
-            review.setMenuIdx(menuIdx);
-            review.setIdx(reviewIdx);
+    @PostMapping("/reviews/{storeIdx}/{menuIdx}")
+    public ResponseEntity<ResponseData> reviews(@ModelAttribute Review review){
+        try{
             storeService.saveReview(review);
-            result.put("result", EventResultType.SUCCESS);
-        }catch (IllegalArgumentException e){
-            result.put("result", EventResultType.FAIL);
-            result.put("reason", e.getMessage());
-        }catch (Exception e){
-            result.put("result", EventResultType.FAIL);
-            result.put("reason", "리뷰 저장 실패 또는 파일 업로드, 저장 실패 입니다.");
-        }
 
-        return result;
+            ResponseData responseData = new ResponseData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString());
+            return ResponseEntity.ok(responseData);
+        }catch (Exception e){
+            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+        }
     }
 
     @GetMapping("/reviews/{userIdx}")
