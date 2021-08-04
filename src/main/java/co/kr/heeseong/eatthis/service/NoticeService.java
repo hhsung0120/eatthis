@@ -26,7 +26,9 @@ public class NoticeService {
     }
 
     public List<Notice> getNoticeList(int page) {
-        Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate"));
+        PageRequest request = PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate");
+        Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(request);
+        //System.out.println(noticeEntityList.getTotalElements());
         return noticeEntityList.stream()
                                 .map(list -> Notice.builder()
                                             .noticeIdx(list.getNoticeIdx())

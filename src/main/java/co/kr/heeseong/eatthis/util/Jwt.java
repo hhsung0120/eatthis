@@ -32,7 +32,7 @@ public class Jwt {
         //1000 * 60 = 1분
         //1000 * 60 * 60 = 1시간
         //1000 * 60 * 60 * 2 = 2시간
-        int expireTime = 1000 * 60;
+        int expireTime = 1000 * 60 * 60 * 24;
 
         Date expireDate = new Date(); // 토큰 만료 시간
         expireDate.setTime(expireDate.getTime() + expireTime);
