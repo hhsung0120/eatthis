@@ -2,21 +2,18 @@ package co.kr.heeseong.eatthis.model;
 
 import co.kr.heeseong.eatthis.Enum.GenderType;
 import co.kr.heeseong.eatthis.Enum.SignUpType;
-import co.kr.heeseong.eatthis.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @ToString
 public class AccountUser {
 
-    private long idx;
+    private Long idx;
     private String id;
     private String password;
     private String nickName;
@@ -39,8 +36,6 @@ public class AccountUser {
     @JsonIgnore
     private SignUpType signUpType;
     private String profileImagePath;
-    @JsonIgnore
-    private UserStatusType userStatusType;
 
     public AccountUser() {}
 
