@@ -6,7 +6,7 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://kanak.dev-epayday.co.kr:60501/eatthis?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root1234
     hikari:

@@ -27,6 +27,7 @@ public class CustomWebMvcConfigurer extends WebMvcConfigurationSupport {
 				.excludePathPatterns("/users/invalidToken")
 				.excludePathPatterns("/users/signUp")
 				.excludePathPatterns("/users/signUpDetail")
+				.addPathPatterns("/**")
 				;
 
 	}

@@ -37,6 +37,7 @@ public class UserController {
                     , data);
             return ResponseEntity.ok(responseData);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
