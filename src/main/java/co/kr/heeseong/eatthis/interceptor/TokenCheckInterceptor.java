@@ -24,7 +24,6 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
             if(value != null){
                 log.info("headers name: {}, value : {}", name, value);
             }
-
         }
 
         try {
