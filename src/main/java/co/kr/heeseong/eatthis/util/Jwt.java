@@ -1,16 +1,17 @@
 package co.kr.heeseong.eatthis.util;
 
-import aj.org.objectweb.asm.TypeReference;
 import co.kr.heeseong.eatthis.model.AccountUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class Jwt {
 
     final static String secretKey = "eatthis_let's_hti_the_jackpot";
@@ -37,6 +38,7 @@ public class Jwt {
         Date expireDate = new Date(); // 토큰 만료 시간
         expireDate.setTime(expireDate.getTime() + expireTime);
 
+        log.info("토큰 생성!!!!!!");
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(payload)

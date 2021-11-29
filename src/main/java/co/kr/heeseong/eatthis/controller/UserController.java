@@ -26,6 +26,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseData> login(@RequestBody AccountUser accountUser){
+        log.info("AccountUser Info : {}", accountUser.getId());
         try{
             Map<String, Object> data = new HashMap<>();
             data.put("user", userService.loginProcess(accountUser));

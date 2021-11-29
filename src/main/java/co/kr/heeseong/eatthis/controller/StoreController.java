@@ -1,10 +1,9 @@
 package co.kr.heeseong.eatthis.controller;
 
-import co.kr.heeseong.eatthis.Enum.EventResultType;
 import co.kr.heeseong.eatthis.Enum.StatusCode;
 import co.kr.heeseong.eatthis.model.ResponseData;
-import co.kr.heeseong.eatthis.service.StoreService;
 import co.kr.heeseong.eatthis.model.Review;
+import co.kr.heeseong.eatthis.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

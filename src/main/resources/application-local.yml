@@ -20,7 +20,6 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
 
-
 logging:
   level:
     org.springframework.web: info
