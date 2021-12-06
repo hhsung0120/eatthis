@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.mapper;
 
-import co.kr.heeseong.eatthis.model.Review;
+import co.kr.heeseong.eatthis.questions.domain.model.Review;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

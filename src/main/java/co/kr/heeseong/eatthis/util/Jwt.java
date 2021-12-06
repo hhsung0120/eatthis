@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.util;
 
-import co.kr.heeseong.eatthis.model.AccountUser;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
