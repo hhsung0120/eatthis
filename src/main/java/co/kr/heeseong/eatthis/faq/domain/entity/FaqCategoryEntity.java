@@ -14,7 +14,8 @@ import java.util.Set;
 @Table(name = "faq_category")
 public class FaqCategoryEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idx")
     private Long idx;
 

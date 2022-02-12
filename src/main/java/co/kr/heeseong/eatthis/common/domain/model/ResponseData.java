@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.common.model;
+package co.kr.heeseong.eatthis.common.domain.model;
 
 import lombok.Getter;
 

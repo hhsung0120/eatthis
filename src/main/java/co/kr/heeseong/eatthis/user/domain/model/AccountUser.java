@@ -37,7 +37,8 @@ public class AccountUser {
     private SignUpType signUpType;
     private String profileImagePath;
 
-    public AccountUser() {}
+    public AccountUser() {
+    }
 
     public AccountUser(String id, String password) {
         this.id = id;
@@ -69,7 +70,7 @@ public class AccountUser {
         this.dinnerAlarmMinute = dinnerAlarmMinute;
     }
 
-    public UserEntity toEntity(){
+    public UserEntity toEntity() {
         return UserEntity.builder()
                 .idx(idx)
                 .id(id)
@@ -81,10 +82,28 @@ public class AccountUser {
                 .build();
     }
 
-    public UserDetailEntity toDetailEntity(long idx){
+    public UserDetailEntity toDetailEntity(long idx) {
         return UserDetailEntity.builder()
                 .idx(idx)
                 .build();
+    }
+
+    public AccountUser (UserEntity userEntity) {
+        this.idx = userEntity.getIdx();
+        this.id = userEntity.getId();
+        this.nickName = userEntity.getUserDetailEntity().getNickName();
+        this.password = "";
+        this.gender = userEntity.getUserDetailEntity().getGender();
+        this.birthday = userEntity.getUserDetailEntity().getBirthday();
+        this.lunchAlarm = userEntity.getUserDetailEntity().getLunchAlarm();
+        this.lunchAlarmHour = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0, 2);
+        this.lunchAlarmMinute = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3, 5);
+        this.dinnerAlarm = userEntity.getUserDetailEntity().getDinnerAlarm();
+        this.dinnerAlarmHour = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0, 2);
+        this.dinnerAlarmMinute = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3, 5);
+        this.eventAlarm = userEntity.getUserDetailEntity().getEventAlarm();
+        this.serviceAlarm = userEntity.getUserDetailEntity().getServiceAlarm();
+        this.profileImagePath = userEntity.getUserDetailEntity().getProfileImagePath();
     }
 
 }

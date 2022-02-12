@@ -45,14 +45,14 @@ public class Questions {
         this.lastModifiedDate = lastModifiedDate == null ? "" : lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public QuestionsEntity toEntity(){
-        return  QuestionsEntity.builder()
-                    .userIdx(userIdx)
-                    .questions(questions)
-                    .phone(phone)
-                    .email(email)
-                    .categoryIdx(categoryIdx)
-                    .build();
+    public QuestionsEntity toEntity() {
+        return QuestionsEntity.builder()
+                .userIdx(userIdx)
+                .questions(questions)
+                .phone(phone)
+                .email(email)
+                .categoryIdx(categoryIdx)
+                .build();
     }
 
 }

@@ -16,7 +16,7 @@ public class Jwt {
 
     final static String secretKey = "eatthis_let's_hti_the_jackpot";
 
-    static public String createToken(AccountUser accountUser){
+    static public String createToken(AccountUser accountUser) {
         //토큰 구조
         //header.payload.signature
 

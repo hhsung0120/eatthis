@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.common.entity;
+package co.kr.heeseong.eatthis.common.domain.entity;
 
 
 import co.kr.heeseong.eatthis.common.Enum.TableCodeType;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class FileEntity extends TimeEntity{
+public class FileEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

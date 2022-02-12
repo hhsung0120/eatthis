@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.questions.repository;
+package co.kr.heeseong.eatthis.questions.domain.repository;
 
 import co.kr.heeseong.eatthis.questions.domain.entity.QuestionsEntity;
 import org.apache.ibatis.annotations.Param;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface QuestionsRepository extends JpaRepository<QuestionsEntity,Long> {
+public interface QuestionsRepository extends JpaRepository<QuestionsEntity, Long> {
 
     @Query("SELECT COUNT(q) FROM QuestionsEntity q WHERE q.userIdx = :userIdx")
     int findAllCount(@Param("userIdx") long userIdx);

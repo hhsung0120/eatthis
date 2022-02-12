@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.common.entity;
+package co.kr.heeseong.eatthis.common.domain.entity;
 
 
 import lombok.AccessLevel;
@@ -31,7 +31,7 @@ public class TestEntity extends TimeEntity {
         this.userName = userName;
     }
 
-    public void update(String userId, String userName){
+    public void update(String userId, String userName) {
         this.userId = userId;
         this.userName = userName;
     }

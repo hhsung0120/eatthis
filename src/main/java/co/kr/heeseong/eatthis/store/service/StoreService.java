@@ -2,16 +2,16 @@ package co.kr.heeseong.eatthis.store.service;
 
 import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.common.Enum.TableCodeType;
-import co.kr.heeseong.eatthis.common.model.CommonFile;
-import co.kr.heeseong.eatthis.common.repository.FileRepository;
+import co.kr.heeseong.eatthis.common.domain.model.CommonFile;
+import co.kr.heeseong.eatthis.common.domain.repository.FileRepository;
 import co.kr.heeseong.eatthis.common.util.FileUtil;
 import co.kr.heeseong.eatthis.mapper.ReviewMapper;
 import co.kr.heeseong.eatthis.questions.domain.model.Review;
 import co.kr.heeseong.eatthis.store.domain.entity.StoreEntity;
 import co.kr.heeseong.eatthis.store.domain.model.Store;
-import co.kr.heeseong.eatthis.store.repository.ReviewRepository;
-import co.kr.heeseong.eatthis.store.repository.StoreRepository;
-import co.kr.heeseong.eatthis.user.repository.UserDetailRepository;
+import co.kr.heeseong.eatthis.store.domain.repository.ReviewRepository;
+import co.kr.heeseong.eatthis.store.domain.repository.StoreRepository;
+import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,16 +19,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-
 
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class StoreService {
 
@@ -45,24 +41,21 @@ public class StoreService {
 
     /**
      * 메인 리스트
+     *
      * @return Map<String, Object>
      */
+    @Transactional
     public List<Store> getMainList(int locationX, int locationY) {
-        Page<StoreEntity> storeEntityList = storeRepository.findAll(PageRequest.of(1,10, Sort.Direction.DESC,"createDate"));
-        storeEntityList.stream().forEach(
-                list -> System.out.println(list.toString())
-        );
-        return storeEntityList.stream()
-                                .map(list -> new Store(list.getStoreIdx(), list.getStoreId(), list.getCategory()
-                                                        , list.getStoreName(), list.getLocationX(), list.getLocationY()
-                                                        , list.getCreateDate(), list.getLastModifiedDate()))
-                                .collect(toList());
+        Page<StoreEntity> storeEntityList = storeRepository.findAll(PageRequest.of(1, 10, Sort.Direction.DESC, "createDate"));
+        return new Store().entityToVoList(storeEntityList);
     }
 
     /**
      * 리뷰 등록 & 수정
+     *
      * @param review
      */
+    @Transactional
     public long saveReview(Review review) {
         return review.getIdx() == 0 ? this.insertReview(review) : this.updateReview(review);
     }
@@ -73,22 +66,22 @@ public class StoreService {
 
         System.out.println(review.toString());
         //없는 메뉴도 검사할것
-        if(review.getTotalPrice() > 100000){
+        if (review.getTotalPrice() > 100000) {
             throw new IllegalArgumentException("유효한 금액을 입력 하세요.");
         }
 
         review.setUserIdx(userService.getAccountUserIdx());
         Long idx = reviewRepository.save(review.toEntity()).getIdx();
-        if(idx > 0){
+        if (idx > 0) {
             review.getFile().stream().forEach(file -> {
-                try{
-                    if(!file.isEmpty()){
+                try {
+                    if (!file.isEmpty()) {
                         CommonFile commonFile = FileUtil.executeFileUpload(file, uploadPath);
                         commonFile.setTableIdx(idx);
                         commonFile.setTableType(TableCodeType.REVIEW);
                         fileRepository.save(commonFile.toEntity());
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     throw new RuntimeException(ErrorCodeType.FILE_UPLOAD_ERROR.getValue());
                 }
             });
@@ -102,6 +95,7 @@ public class StoreService {
 
     /**
      * 리뷰 리스트
+     *
      * @param userIdx
      * @return
      */

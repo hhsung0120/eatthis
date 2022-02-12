@@ -24,11 +24,11 @@ logging:
   level:
     org.springframework.web: info
     co.kr.heeseong: info
-    jdbc.sqlonly : off
-    jdbc.sqltiming : off
+    jdbc.sqlonly: off
+    jdbc.sqltiming: off
     jdbc.audit: off
     jdbc.resultset: off
-    jdbc.resultsettable : off
+    jdbc.resultsettable: off
     jdbc.connection: off
   file:
     name: ${file.separator}home${file.separator}logs${file.separator}eatthis.log

@@ -1,6 +1,6 @@
-package co.kr.heeseong.eatthis.common.model;
+package co.kr.heeseong.eatthis.common.domain.model;
 
-import co.kr.heeseong.eatthis.common.entity.TestEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TestEntity;
 import lombok.*;
 
 @Getter
@@ -12,7 +12,7 @@ public class Test {
     private String userId;
     private String userName;
 
-    public TestEntity toEntity(){
+    public TestEntity toEntity() {
         return TestEntity.builder()
                 .idx(idx)
                 .userId(userId)
@@ -21,7 +21,7 @@ public class Test {
     }
 
     @Builder
-    public Test(Long idx, String userId, String userName){
+    public Test(Long idx, String userId, String userName) {
         this.idx = idx;
         this.userId = userId;
         this.userName = userName;

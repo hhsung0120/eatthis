@@ -5,9 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Getter
-@Setter
 @ToString
 public class Faq {
     private long idx;
@@ -18,7 +22,7 @@ public class Faq {
     public Faq() {
     }
 
-    public FaqEntity toEntity(){
+    public FaqEntity toEntity() {
         return FaqEntity.builder()
                 .idx(idx)
                 .title(title)
@@ -27,11 +31,21 @@ public class Faq {
     }
 
     @Builder
-    public Faq(Long idx, String categoryName, String title, String contents){
+    public Faq(Long idx, String categoryName, String title, String contents) {
         this.idx = idx;
         this.categoryName = categoryName;
         this.title = title;
         this.contents = contents;
     }
 
+    public List<Faq> entityToVoList(Page<FaqEntity> faqEntityList) {
+        return faqEntityList.stream()
+                .map(list -> Faq.builder()
+                        .idx(list.getIdx())
+                        .title(list.getTitle())
+                        .categoryName(list.getFaqCategoryEntity().getCategoryName())
+                        .contents(list.getContents())
+                        .build())
+                .collect(toList());
+    }
 }

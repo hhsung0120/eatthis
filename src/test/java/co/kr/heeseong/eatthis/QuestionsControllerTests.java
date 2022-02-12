@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.AccountUser;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -42,7 +42,7 @@ public class QuestionsControllerTests {
     private static String token = "";
 
     @BeforeAll
-    static void createToken(){
+    static void createToken() {
         AccountUser accountUser = AccountUser.builder()
                 .idx(1)
                 .id("hhsung0120@naver.com")
@@ -53,7 +53,7 @@ public class QuestionsControllerTests {
     }
 
     @Test
-    public void detail() throws Exception{
+    public void detail() throws Exception {
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
                         .get("/questions/detail/{questionsIdx}", 8)
@@ -92,7 +92,7 @@ public class QuestionsControllerTests {
     }
 
     @Test
-    public void form() throws Exception{
+    public void form() throws Exception {
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
                         .get("/questions/form")
@@ -119,7 +119,7 @@ public class QuestionsControllerTests {
     }
 
     @Test
-    public void list() throws Exception{
+    public void list() throws Exception {
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
                         .get("/questions")
@@ -156,7 +156,7 @@ public class QuestionsControllerTests {
     }
 
     @Test
-    public void save() throws Exception{
+    public void save() throws Exception {
         Map<String, Object> user = new LinkedHashMap<>();
         user.put("categoryIdx", 4);
         user.put("questions", "test");

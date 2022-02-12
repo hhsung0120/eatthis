@@ -34,7 +34,7 @@ public class Secession {
         this.memo = Optional.ofNullable(memo).orElse("");
     }
 
-    public UserSecessionEntity toEntity(){
+    public UserSecessionEntity toEntity() {
         return UserSecessionEntity.builder()
                 .userIdx(userIdx)
                 .secessionReasonIdx(idx)

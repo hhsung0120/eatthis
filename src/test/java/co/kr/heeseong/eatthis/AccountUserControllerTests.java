@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.AccountUser;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,18 +40,18 @@ public class AccountUserControllerTests {
     private static String token = "";
 
     @BeforeAll
-    static void createToken(){
+    static void createToken() {
         AccountUser accountUser = AccountUser.builder()
-                        .idx(1)
-                        .id("hhsung0120@naver.com")
-                        .password("1234")
-                        .nickName("nickName")
-                        .build();
+                .idx(1)
+                .id("hhsung0120@naver.com")
+                .password("1234")
+                .nickName("nickName")
+                .build();
         token = Jwt.createToken(accountUser);
     }
 
     @Test
-    public void login() throws Exception{
+    public void login() throws Exception {
         Map<String, Object> user = new LinkedHashMap<>();
         user.put("id", "hhsung0120@naver.com");
         user.put("password", "1234");
@@ -100,7 +100,7 @@ public class AccountUserControllerTests {
     @Test
     public void signUp() throws Exception {
         Map<String, Object> user = new LinkedHashMap<>();
-        String id = "hhsung" + (int)(Math.random()*10000) + "@naver.com";
+        String id = "hhsung" + (int) (Math.random() * 10000) + "@naver.com";
         user.put("id", id);
         user.put("password", "1234");
 
@@ -251,7 +251,7 @@ public class AccountUserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/dinnerAlarm",1)
+                        .put("/users/dinnerAlarm", 1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("token", token)
@@ -284,7 +284,7 @@ public class AccountUserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/eventAlarm",1)
+                        .put("/users/eventAlarm", 1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("token", token)
@@ -315,7 +315,7 @@ public class AccountUserControllerTests {
 
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .put("/users/serviceAlarm",1)
+                        .put("/users/serviceAlarm", 1)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("token", token)

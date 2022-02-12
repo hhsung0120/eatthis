@@ -1,14 +1,18 @@
 // === Index
 === Request HTTP Example:
+
 include::{snippets}/secessionReasonList/http-request.adoc[]
 
 === Path-Parameters
+
 include::{snippets}/secessionReasonList/path-parameters.adoc[]
 
 === Response
+
 include::{snippets}/secessionReasonList/http-response.adoc[]
 
 === Response Fields
+
 include::{snippets}/secessionReasonList/response-fields.adoc[]
 
 

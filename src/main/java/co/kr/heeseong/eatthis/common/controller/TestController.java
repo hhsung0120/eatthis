@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.common.controller;
 
-import co.kr.heeseong.eatthis.common.model.Test;
+import co.kr.heeseong.eatthis.common.domain.model.Test;
 import co.kr.heeseong.eatthis.common.service.TestService;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
@@ -20,7 +20,7 @@ public class TestController {
     private final TestService testService;
 
     @GetMapping("/insert")
-    public String insert(){
+    public String insert() {
         Test test = new Test();
         test.setUserId("아이디");
         test.setUserName("이름");
@@ -30,7 +30,7 @@ public class TestController {
     }
 
     @GetMapping("/update")
-    public String update(){
+    public String update() {
         Test test = new Test();
         test.setIdx(3L);
         test.setUserId("수정zz");
@@ -41,7 +41,7 @@ public class TestController {
     }
 
     @GetMapping("/delete")
-    public String delete(){
+    public String delete() {
         Test test = new Test();
         test.setIdx(2L);
         testService.deleteTestUser(test);
@@ -49,28 +49,27 @@ public class TestController {
     }
 
     @GetMapping("/jenkinsTest")
-    public String jenkinsTest(){
+    public String jenkinsTest() {
         return "젠킨스";
     }
 
     @GetMapping("/list")
-    public List<Test> list(){
+    public List<Test> list() {
         return testService.getTestList();
     }
 
     @GetMapping("/createToken")
-    public String createToken(){
+    public String createToken() {
         AccountUser accountUser = AccountUser.builder().id("setse@set").idx(2).birthday("sdfsdf").build();
         String to = Jwt.createToken(accountUser);
         System.out.println(to);
-        try{
+        try {
             System.out.println(Jwt.verification(to));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "d";
     }
-
 
 
 }

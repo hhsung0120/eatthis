@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis;
 
-import co.kr.heeseong.eatthis.model.AccountUser;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.util.Jwt;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class StoreControllerTests {
     private static String token = "";
 
     @BeforeAll
-    static void createToken(){
+    static void createToken() {
         AccountUser accountUser = AccountUser.builder()
                 .idx(1)
                 .id("hhsung0120@naver.com")
@@ -49,7 +49,7 @@ public class StoreControllerTests {
     public void stores() throws Exception {
         ResultActions result = this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .get("/stores/{locationX}/{locationY}",1, 1)
+                        .get("/stores/{locationX}/{locationY}", 1, 1)
                         .header("token", token)
         );
 

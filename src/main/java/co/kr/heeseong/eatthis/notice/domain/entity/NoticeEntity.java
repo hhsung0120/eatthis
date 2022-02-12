@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.notice.domain.entity;
 
 
-import co.kr.heeseong.eatthis.common.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.store.domain.entity;
 
-import co.kr.heeseong.eatthis.common.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Table(name = "review")
 public class ReviewEntity extends TimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column

@@ -1,8 +1,8 @@
 package co.kr.heeseong.eatthis.common.service;
 
-import co.kr.heeseong.eatthis.common.entity.TestEntity;
-import co.kr.heeseong.eatthis.common.repository.TestRepository;
-import co.kr.heeseong.eatthis.common.model.Test;
+import co.kr.heeseong.eatthis.common.domain.entity.TestEntity;
+import co.kr.heeseong.eatthis.common.domain.repository.TestRepository;
+import co.kr.heeseong.eatthis.common.domain.model.Test;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +26,7 @@ public class TestService {
     @Transactional
     public void updateTestUser(Test test) {
         TestEntity t = testRepository.findById(test.getIdx()).orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다." + test.getIdx()));
-        t.update(test.getUserId(),test.getUserName());
+        t.update(test.getUserId(), test.getUserName());
     }
 
     public void deleteTestUser(Test test) {
@@ -36,9 +36,9 @@ public class TestService {
 
     public List<Test> getTestList() {
         List<Test> testList = new ArrayList<>();
-        Page<TestEntity> testEntity = testRepository.findAll(PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"regDate")));
+        Page<TestEntity> testEntity = testRepository.findAll(PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "regDate")));
 
-        for(TestEntity entity : testEntity){
+        for (TestEntity entity : testEntity) {
             Test testDto = Test.builder()
                     .idx(entity.getIdx())
                     .userId(entity.getUserId())

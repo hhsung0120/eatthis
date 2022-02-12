@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.user.repository;
+package co.kr.heeseong.eatthis.user.domain.repository;
 
 import co.kr.heeseong.eatthis.user.domain.entity.SecessionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

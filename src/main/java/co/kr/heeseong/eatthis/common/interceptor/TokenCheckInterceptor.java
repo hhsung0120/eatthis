@@ -18,10 +18,10 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
         log.info("user token : {}", token);
 
         Enumeration headers = request.getHeaderNames();
-        while (headers.hasMoreElements()){
-            String name = (String)headers.nextElement();
+        while (headers.hasMoreElements()) {
+            String name = (String) headers.nextElement();
             String value = request.getHeader(name);
-            if(value != null){
+            if (value != null) {
                 log.info("headers name: {}, value : {}", name, value);
             }
         }
@@ -32,7 +32,7 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
                 return false;
             }
             request.setAttribute("accountUser", Jwt.verification(token));
-        }catch (Exception e){
+        } catch (Exception e) {
             response.sendRedirect("/users/invalidToken");
             return false;
         }

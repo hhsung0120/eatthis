@@ -16,9 +16,8 @@ import java.util.Map;
 public class ManualController {
 
 
-
     @GetMapping("/store/{userIdx}/{storeIdx}/{menuIdx}/{reviewIdx}/saveReview")
-    public Map<String, Object> saveReview(){
+    public Map<String, Object> saveReview() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("[request - post]", "");
         result.put("contents", "리뷰내용입니다.");

@@ -2,23 +2,22 @@ package co.kr.heeseong.eatthis.common.Enum;
 
 public enum GenderType {
 
-      MALE("남성")
-    , FEMALE("여성")
-    ;
+    MALE("남성"), FEMALE("여성");
 
     String value = "";
-    GenderType(String value){
+
+    GenderType(String value) {
         this.value = value;
     }
 
-    public String getValue(){
+    public String getValue() {
         return this.value;
     }
 
-    public static GenderType getGenderTypeToEnum(String gender){
+    public static GenderType getGenderTypeToEnum(String gender) {
         GenderType[] values = GenderType.values();
-        for(GenderType value : values){
-            if(value.getValue().equals(gender)){
+        for (GenderType value : values) {
+            if (value.getValue().equals(gender)) {
                 return value;
             }
         }

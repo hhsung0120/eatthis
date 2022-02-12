@@ -1,14 +1,18 @@
 // === Index
 === Request HTTP Example:
+
 include::{snippets}/questionsDetail/http-request.adoc[]
 
 === Path-Parameters
+
 include::{snippets}/questionsDetail/path-parameters.adoc[]
 
 === Response
+
 include::{snippets}/questionsDetail/http-response.adoc[]
 
 === Response Fields
+
 include::{snippets}/questionsDetail/response-fields.adoc[]
 
 

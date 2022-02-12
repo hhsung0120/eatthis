@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.faq.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
-import co.kr.heeseong.eatthis.common.model.ResponseData;
+import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.faq.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +27,13 @@ public class FaqController {
     private final FaqService faqService;
 
     @GetMapping("/insert")
-    public int faqSave(){
+    public int faqSave() {
         return 3;
     }
 
     @GetMapping("/{page}")
-    public ResponseEntity<ResponseData> faqList(@PathVariable int page){
-        try{
+    public ResponseEntity<ResponseData> faqList(@PathVariable int page) {
+        try {
             Map<String, Object> data = new HashMap<>();
             data.put("list", faqService.getFaqList(page));
 
@@ -42,7 +42,7 @@ public class FaqController {
                     , StatusCode.OK.toString()
                     , data);
             return ResponseEntity.ok(responseData);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }

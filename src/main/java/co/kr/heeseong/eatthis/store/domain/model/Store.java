@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Getter
-@Setter
 @ToString
 public class Store {
     private long storeIdx;
@@ -25,7 +28,7 @@ public class Store {
     public Store() {
     }
 
-    public StoreEntity toEntity(){
+    public StoreEntity toEntity() {
         return StoreEntity.builder()
                 .storeIdx(storeIdx)
                 .storeId(storeId)
@@ -37,7 +40,7 @@ public class Store {
     }
 
     @Builder
-    public Store(long storeIdx, long storeId, String category, String storeName, String locationX, String locationY, LocalDateTime createDate, LocalDateTime lastModifiedDate){
+    public Store(long storeIdx, long storeId, String category, String storeName, String locationX, String locationY, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
         this.storeIdx = storeIdx;
         this.storeId = storeId;
         this.category = category;
@@ -46,5 +49,13 @@ public class Store {
         this.locationY = locationY;
         this.createDate = createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.lastModifiedDate = lastModifiedDate == null ? "" : lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public List<Store> entityToVoList(Page<StoreEntity> storeEntityList) {
+        return storeEntityList.stream()
+                .map(list -> new Store(list.getStoreIdx(), list.getStoreId(), list.getCategory()
+                        , list.getStoreName(), list.getLocationX(), list.getLocationY()
+                        , list.getCreateDate(), list.getLastModifiedDate()))
+                .collect(toList());
     }
 }

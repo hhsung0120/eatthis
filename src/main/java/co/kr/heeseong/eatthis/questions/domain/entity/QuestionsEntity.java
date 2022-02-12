@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.questions.domain.entity;
 
 
 import co.kr.heeseong.eatthis.common.Enum.QuestionsStatusType;
-import co.kr.heeseong.eatthis.common.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
 import co.kr.heeseong.eatthis.faq.domain.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.questions.domain.model.Questions;
 import co.kr.heeseong.eatthis.user.domain.entity.UserEntity;
@@ -41,11 +41,11 @@ public class QuestionsEntity extends TimeEntity {
     @Column
     private String email;
 
-    @JoinColumn(name="category_idx", insertable = false, updatable = false)
+    @JoinColumn(name = "category_idx", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private FaqCategoryEntity faqCategoryEntity;
 
-    @JoinColumn(name="user_idx", insertable = false, updatable = false)
+    @JoinColumn(name = "user_idx", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
@@ -61,10 +61,10 @@ public class QuestionsEntity extends TimeEntity {
         this.status = QuestionsStatusType.WAITING;
         this.phone = phone;
         this.email = email;
-        this.categoryIdx= categoryIdx;
+        this.categoryIdx = categoryIdx;
     }
 
-    public Questions toValueObject(String userName){
+    public Questions toValueObject(String userName) {
         return Questions.builder()
                 .createDate(this.getCreateDate())
                 .status(this.getStatus().getValue())

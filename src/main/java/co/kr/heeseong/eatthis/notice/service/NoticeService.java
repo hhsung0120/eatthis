@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.notice.service;
 
 import co.kr.heeseong.eatthis.notice.domain.entity.NoticeEntity;
 import co.kr.heeseong.eatthis.notice.domain.model.Notice;
-import co.kr.heeseong.eatthis.notice.repository.NoticeRepository;
+import co.kr.heeseong.eatthis.notice.domain.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,17 +26,8 @@ public class NoticeService {
     }
 
     public List<Notice> getNoticeList(int page) {
-        PageRequest request = PageRequest.of((page-1), pageSize, Sort.Direction.DESC,"createDate");
+        PageRequest request = PageRequest.of((page - 1), pageSize, Sort.Direction.DESC, "createDate");
         Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(request);
-        //System.out.println(noticeEntityList.getTotalElements());
-        return noticeEntityList.stream()
-                                .map(list -> Notice.builder()
-                                            .noticeIdx(list.getNoticeIdx())
-                                            .userIdx(list.getUserIdx())
-                                            .title(list.getTitle())
-                                            .contents(list.getTitle())
-                                            .createDate(list.getCreateDate())
-                                            .build())
-                                .collect(toList());
+        return new Notice().entityToVoList(noticeEntityList);
     }
 }

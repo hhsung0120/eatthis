@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Table(name = "user_secession")
-public class UserSecessionEntity{
+public class UserSecessionEntity {
 
     @Id
     private long userIdx;

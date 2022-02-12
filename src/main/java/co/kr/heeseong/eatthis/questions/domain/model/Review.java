@@ -52,7 +52,7 @@ public class Review {
         this.menuName = menuName;
     }
 
-    public ReviewEntity toEntity(){
+    public ReviewEntity toEntity() {
         return ReviewEntity.builder()
                 .idx(idx)
                 .storeIdx(storeIdx)

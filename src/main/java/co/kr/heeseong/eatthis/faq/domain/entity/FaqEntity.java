@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.faq.domain.entity;
 
 
-import co.kr.heeseong.eatthis.common.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,7 +20,7 @@ public class FaqEntity extends TimeEntity {
 
     //외래키를 여기서 가지고 있어서 여기가 주인
     //mappedBy = 연관관계 주인은 FaqEntity.faqCategoryEntity 이기 때문에 faqCategoryEntity 가 mappedBy 이름
-    @JoinColumn(name="category_idx")
+    @JoinColumn(name = "category_idx")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private FaqCategoryEntity faqCategoryEntity;
 

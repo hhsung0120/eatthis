@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.notice.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
-import co.kr.heeseong.eatthis.common.model.ResponseData;
+import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.notice.domain.model.Notice;
 import co.kr.heeseong.eatthis.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/{page}")
-    public ResponseEntity<ResponseData> noticeList(@PathVariable int page){
-        try{
+    public ResponseEntity<ResponseData> noticeList(@PathVariable int page) {
+        try {
             Map<String, Object> data = new HashMap<>();
             data.put("list", noticeService.getNoticeList(page));
 
@@ -35,17 +35,17 @@ public class NoticeController {
                     , StatusCode.OK.toString()
                     , data);
             return ResponseEntity.ok(responseData);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e.getMessage()));
         }
     }
 
     @GetMapping("")
-    public String insert(){
+    public String insert() {
         Notice notice = new Notice();
-        notice.setUserIdx(1L);
-        notice.setTitle("제목이 엄청나게 길어욤ㅇㅇㅇㅇㅇㅇㅇ");
-        notice.setContents("내용입니다다다ㅏ다다ㅏ다다다다다다");
+//        notice.setUserIdx(1L);
+//        notice.setTitle("제목이 엄청나게 길어욤ㅇㅇㅇㅇㅇㅇㅇ");
+//        notice.setContents("내용입니다다다ㅏ다다ㅏ다다다다다다");
 
         //Long idx = noticeService.insertNotice(notice);
         return "인설트예정";//String.valueOf(idx);
