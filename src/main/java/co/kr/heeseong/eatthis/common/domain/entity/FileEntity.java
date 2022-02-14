@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "file")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 public class FileEntity extends TimeEntity {
@@ -32,4 +31,7 @@ public class FileEntity extends TimeEntity {
 
     @Column
     private String extension;
+
+    public FileEntity() {
+    }
 }

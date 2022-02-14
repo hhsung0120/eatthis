@@ -10,8 +10,9 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalTime;
 
-@Entity
+
 @Getter
+@Entity
 @Table(name = "user_detail")
 public class UserDetailEntity extends TimeEntity {
 

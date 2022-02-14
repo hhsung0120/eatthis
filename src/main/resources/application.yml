@@ -22,7 +22,8 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
-        ddl-auto: none
+    hibernate:
+      ddl-auto: none
 
 #DB configuration
 mybatis:

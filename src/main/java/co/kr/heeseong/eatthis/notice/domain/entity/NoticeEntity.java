@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "notice")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeEntity extends TimeEntity {
 
     @Id
@@ -28,6 +27,9 @@ public class NoticeEntity extends TimeEntity {
     @Column
     private String contents;
 
+    public NoticeEntity() {
+    }
+
     @Builder
     public NoticeEntity(Long noticeIdx, Long userIdx, String title, String contents) {
         this.noticeIdx = noticeIdx;
@@ -35,4 +37,5 @@ public class NoticeEntity extends TimeEntity {
         this.title = title;
         this.contents = contents;
     }
+
 }

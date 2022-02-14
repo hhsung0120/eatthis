@@ -12,12 +12,12 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Table(name = "secession_reason")
 @ToString
+@Table(name = "secession_reason")
 public class SecessionEntity extends TimeEntity {
 
     @Id
-    private long idx;
+    private Long idx;
 
     @Column
     private String reason;
