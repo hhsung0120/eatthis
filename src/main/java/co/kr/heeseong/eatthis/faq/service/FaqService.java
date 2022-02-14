@@ -35,8 +35,6 @@ public class FaqService {
 
     public List<FaqCategory> getFaqCategoryList() {
         List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
-        return faqCategoryList.stream()
-                .map(list -> new FaqCategory(list.getIdx(), list.getCategoryName()))
-                .collect(toList());
+        return new FaqCategory().entityToVoList(faqCategoryList);
     }
 }
