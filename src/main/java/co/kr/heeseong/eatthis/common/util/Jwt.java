@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis.util;
+package co.kr.heeseong.eatthis.common.util;
 
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import com.fasterxml.jackson.databind.ObjectMapper;

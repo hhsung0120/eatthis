@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.common.interceptor;
 
-import co.kr.heeseong.eatthis.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.Jwt;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis;
 
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
-import co.kr.heeseong.eatthis.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.Jwt;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

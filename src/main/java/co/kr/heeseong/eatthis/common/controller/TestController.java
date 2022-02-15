@@ -3,7 +3,7 @@ package co.kr.heeseong.eatthis.common.controller;
 import co.kr.heeseong.eatthis.common.domain.model.Test;
 import co.kr.heeseong.eatthis.common.service.TestService;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
-import co.kr.heeseong.eatthis.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

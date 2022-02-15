@@ -6,7 +6,7 @@ import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.service.UserService;
-import co.kr.heeseong.eatthis.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.Jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
