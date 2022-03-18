@@ -5,7 +5,7 @@ import co.kr.heeseong.eatthis.common.Enum.QuestionsStatusType;
 import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
 import co.kr.heeseong.eatthis.faq.domain.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.questions.domain.model.Questions;
-import co.kr.heeseong.eatthis.user.domain.entity.UserEntity;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -47,7 +47,7 @@ public class QuestionsEntity extends TimeEntity {
 
     @JoinColumn(name = "user_idx", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL)
-    private UserEntity user;
+    private UsersEntity user;
 
     public QuestionsEntity() {
     }

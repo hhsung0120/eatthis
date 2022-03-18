@@ -3,7 +3,7 @@ package co.kr.heeseong.eatthis.user.domain.model;
 import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.Enum.SignUpType;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
-import co.kr.heeseong.eatthis.user.domain.entity.UserEntity;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class AccountUser {
     public AccountUser(String id, String password) {
         this.id = id;
         this.password = password;
-        this.signUpType = SignUpType.DEFAULTE;
+        this.signUpType = SignUpType.DEFAULT;
         this.termsAgree = 'Y';
         this.privacyAgree = 'Y';
         this.locationAgree = 'Y';
@@ -70,8 +70,8 @@ public class AccountUser {
         this.dinnerAlarmMinute = dinnerAlarmMinute;
     }
 
-    public UserEntity toEntity() {
-        return UserEntity.builder()
+    public UsersEntity toEntity() {
+        return UsersEntity.builder()
                 .idx(idx)
                 .id(id)
                 .password(password)
@@ -88,7 +88,7 @@ public class AccountUser {
                 .build();
     }
 
-    public AccountUser (UserEntity userEntity) {
+    public AccountUser (UsersEntity userEntity) {
         this.idx = userEntity.getIdx();
         this.id = userEntity.getId();
         this.nickName = userEntity.getUserDetailEntity().getNickName();

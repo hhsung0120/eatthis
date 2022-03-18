@@ -6,7 +6,7 @@ import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.common.util.StringUtil;
 import co.kr.heeseong.eatthis.user.domain.entity.SecessionEntity;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
-import co.kr.heeseong.eatthis.user.domain.entity.UserEntity;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
@@ -44,7 +44,7 @@ public class UserService {
      * @return AccountUser
      */
     public AccountUser getUsers() {
-        UserEntity userEntity = checkUser(this.getAccountUserIdx());
+        UsersEntity userEntity = checkUser(this.getAccountUserIdx());
         return new AccountUser(userEntity);
     }
 
@@ -72,7 +72,7 @@ public class UserService {
     }
 
     public AccountUser loginProcess(AccountUser accountUser) {
-        UserEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(accountUser.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
+        UsersEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(accountUser.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
         Optional.ofNullable(userRepository.findByIdAndPassword(accountUser.getId(), accountUser.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
         //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
         return new AccountUser(userEntity);
@@ -200,12 +200,12 @@ public class UserService {
         return userDetailRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
     }
 
-    public UserEntity checkUser(Long userIdx) {
+    public UsersEntity checkUser(Long userIdx) {
         return userRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
     }
 
     public void checkUserByEmail(String email) {
-        UserEntity userEntity = userRepository.findByEmailId(email);
+        UsersEntity userEntity = userRepository.findByEmailId(email);
         if (userEntity != null) {
             throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
         }

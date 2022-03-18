@@ -24,12 +24,7 @@ import java.util.Map;
 @RequestMapping("/faqs")
 public class FaqController {
 
-    private final FaqService faqService;
-
-    @GetMapping("/insert")
-    public int faqSave() {
-        return 3;
-    }
+    final FaqService faqService;
 
     @GetMapping("/{page}")
     public ResponseEntity<ResponseData> faqList(@PathVariable int page) {
