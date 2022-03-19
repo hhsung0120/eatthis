@@ -49,7 +49,7 @@ public class AccountUser {
 
     @Builder
     public AccountUser(long idx, String id, String password, String nickName, GenderType gender, String birthday
-            , char lunchAlarm, char dinnerAlarm, char eventAlarm, char serviceAlarm, String profileImagePath
+            , String lunchAlarm, String dinnerAlarm, String eventAlarm, String serviceAlarm, String profileImagePath
             , String lunchAlarmHour, String lunchAlarmMinute, String dinnerAlarmHour, String dinnerAlarmMinute) {
         this.seq = idx;
         this.userId = id;

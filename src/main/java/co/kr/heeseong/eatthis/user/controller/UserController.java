@@ -2,8 +2,11 @@ package co.kr.heeseong.eatthis.user.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
+import co.kr.heeseong.eatthis.common.domain.model.RequestData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
+import co.kr.heeseong.eatthis.common.service.ValidationService;
 import co.kr.heeseong.eatthis.common.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.SecretAes;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.service.UserService;
@@ -22,18 +25,23 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
+    final ValidationService validationService;
     final UserService userService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<ResponseData> signUp(@RequestParam Map<String, String> data) {
+    public ResponseEntity<ResponseData> signUp(@RequestBody RequestData requestData) {
+
+        log.info("request data {}", requestData);
+        AccountUser accountUser = validationService.validation(requestData);
+
         try {
-            //Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", userService.insertUser(accountUser));
+
+            //data.put("userIdx", userService.insertUser(accountUser));
             //data.put("token", Jwt.createToken(AccountUser.builder().idx(Long.parseLong(data.get("userIdx").toString())).build()));
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , data);
+                    , "data");
             return ResponseEntity.ok(responseData);
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();

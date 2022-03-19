@@ -39,19 +39,20 @@ public class UserService {
     final HttpServletRequest request;
 
     public long insertUser(AccountUser accountUser) {
-        this.checkUserByEmail(accountUser.getId());
-
-        try {
-            AccountUser data = new AccountUser(accountUser.getId(), accountUser.getPassword());
-            Long idx = userRepository.save(data.toEntity()).getIdx();
-            if (idx > 0) {
-                userDetailRepository.save(accountUser.toDetailEntity(idx));
-            }
-            return idx;
-        } catch (Exception e) {
-            log.info("insertUser Exception : {}", e.getMessage());
-            return 0;
-        }
+//        this.checkUserByEmail(accountUser.getId());
+//
+//        try {
+//            AccountUser data = new AccountUser(accountUser.getId(), accountUser.getPassword());
+//            Long idx = userRepository.save(data.toEntity()).getIdx();
+//            if (idx > 0) {
+//                userDetailRepository.save(accountUser.toDetailEntity(idx));
+//            }
+//            return idx;
+//        } catch (Exception e) {
+//            log.info("insertUser Exception : {}", e.getMessage());
+//            return 0;
+//        }
+        return 0;
     }
 
 //    /**

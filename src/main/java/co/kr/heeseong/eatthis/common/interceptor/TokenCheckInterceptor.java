@@ -22,7 +22,7 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
             String name = (String) headers.nextElement();
             String value = request.getHeader(name);
             if (value != null) {
-                log.info("headers name: {}, value : {}", name, value);
+                //log.info("headers name: {}, value : {}", name, value);
             }
         }
 
