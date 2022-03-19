@@ -61,7 +61,7 @@ public class StoreService {
     }
 
     private long insertReview(Review review) {
-        userDetailRepository.findById(userService.getAccountUserIdx()).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
+        userDetailRepository.findById(0L).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
         storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCodeType.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
 
         System.out.println(review.toString());
@@ -70,7 +70,7 @@ public class StoreService {
             throw new IllegalArgumentException("유효한 금액을 입력 하세요.");
         }
 
-        review.setUserIdx(userService.getAccountUserIdx());
+        review.setUserIdx(0L);
         Long idx = reviewRepository.save(review.toEntity()).getIdx();
         if (idx > 0) {
             review.getFile().stream().forEach(file -> {

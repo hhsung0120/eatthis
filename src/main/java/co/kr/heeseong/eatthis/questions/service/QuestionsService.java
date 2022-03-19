@@ -26,7 +26,8 @@ public class QuestionsService {
 
     public Map<String, Object> getQuestionsList() {
         Map<String, Object> result = new LinkedHashMap<>();
-        Long userIdx = userService.getAccountUserIdx();
+//        Long userIdx = userService.getAccountUserIdx();
+        Long userIdx = 0L;
         int count = questionsRepository.findAllCount(userIdx);
         if (count > 0) {
             List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
@@ -34,7 +35,7 @@ public class QuestionsService {
                     .map(list -> Questions.builder()
                             .idx(list.getIdx())
                             .userIdx(list.getUserIdx())
-                            .userName(list.getUser().getUserDetailEntity().getNickName())
+                            .userName("")
                             .questions(list.getQuestions())
                             .answer(list.getAnswer())
                             .status(list.getStatus().getValue())
@@ -55,7 +56,7 @@ public class QuestionsService {
 
     public void saveQuestions(Questions questions) {
         try {
-            questions.setUserIdx(userService.getAccountUserIdx());
+            questions.setUserIdx(0L);
             questionsRepository.save(questions.toEntity());
         } catch (Exception e) {
             throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue());
@@ -67,6 +68,6 @@ public class QuestionsService {
         QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
 
-        return questionsEntity.toValueObject(userService.getAccountUser().getNickName());
+        return questionsEntity.toValueObject("");
     }
 }

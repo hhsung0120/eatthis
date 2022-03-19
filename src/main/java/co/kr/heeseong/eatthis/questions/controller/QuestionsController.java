@@ -30,7 +30,7 @@ public class QuestionsController {
         try {
             Map<String, Object> data = new HashMap<>();
             data.put("categoryList", faqService.getFaqCategoryList());
-            data.put("userIdx", userService.getAccountUserIdx());
+            //data.put("userIdx", userService.getAccountUserIdx());
 
             ResponseData responseData = new ResponseData(
                     StatusCode.OK.getValue()

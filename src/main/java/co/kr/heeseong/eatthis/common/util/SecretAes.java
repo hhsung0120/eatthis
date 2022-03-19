@@ -7,9 +7,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Secret {
+public class SecretAes {
 
-    private Secret() {
+    private SecretAes() {
     }
 
     private final static String SECRET_ALGORITHM = "AES";
@@ -26,7 +26,6 @@ public class Secret {
         Cipher c = Cipher.getInstance(SECRET_TRANSFORMATION);
         String iv = SECRET_IV.substring(0, 16);
         c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv.getBytes()));
-
         byte[] encrypted = c.doFinal(message.getBytes(SECRET_CHARSET));
         return new String(Base64.encodeBase64URLSafe(encrypted));
     }
