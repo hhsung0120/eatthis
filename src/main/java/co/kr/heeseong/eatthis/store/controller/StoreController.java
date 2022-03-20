@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.store.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
-import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
+import co.kr.heeseong.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.heeseong.eatthis.questions.domain.model.Review;
 import co.kr.heeseong.eatthis.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +25,32 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("/{locationX}/{locationY}")
-    public ResponseEntity<ResponseData> mainList(@PathVariable int locationX, @PathVariable int locationY) {
+    public ResponseEntity<ResponseTTTData> mainList(@PathVariable int locationX, @PathVariable int locationY) {
         try {
             Map<String, Object> data = new HashMap<>();
             data.put("list", storeService.getMainList(locationX, locationY));
 
-            ResponseData responseData = new ResponseData(
+            ResponseTTTData responseData = new ResponseTTTData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
                     , data);
             return ResponseEntity.ok(responseData);
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         }
     }
 
     @PostMapping("/reviews/{storeIdx}/{menuIdx}")
-    public ResponseEntity<ResponseData> reviews(@ModelAttribute Review review) {
+    public ResponseEntity<ResponseTTTData> reviews(@ModelAttribute Review review) {
         try {
             storeService.saveReview(review);
 
-            ResponseData responseData = new ResponseData(
+            ResponseTTTData responseData = new ResponseTTTData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString());
             return ResponseEntity.ok(responseData);
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         }
     }
 

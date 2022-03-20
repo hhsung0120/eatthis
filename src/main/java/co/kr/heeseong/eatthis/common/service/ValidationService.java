@@ -1,23 +1,35 @@
 package co.kr.heeseong.eatthis.common.service;
 
 import co.kr.heeseong.eatthis.common.domain.model.RequestData;
-import lombok.NoArgsConstructor;
+import co.kr.heeseong.eatthis.common.util.LogUtils;
+import co.kr.heeseong.eatthis.common.util.ObjectConverter;
+import co.kr.heeseong.eatthis.common.util.SecretAes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
+import java.util.Map;
 
-@NoArgsConstructor
+@Slf4j
 @Service
 public class ValidationService {
 
-    public <T> T validation(RequestData data) {
-        Assert.notNull(data.getParameter(), "the request parameter must not be null");
+    public <T> T validation(RequestData data, Class<T> returnTypeClass) throws Exception {
+        log.info("request parameter : {}", data.getParameter());
 
-        String jsonString;
-        return null;
-//        try{
-//
-//        }
-        //return ObjectConverter.jsonToObject()
+        String jsonText;
+        try {
+            jsonText = SecretAes.decrypt("data.getParameter()");
+        } catch (Exception e) {
+            LogUtils.errorLog("decrypt exception", data.getParameter(), e);
+            throw e;
+        }
+
+        try {
+            Map<String, Object> jsonMap = ObjectConverter.jsonToMap(jsonText);
+            return (T) ObjectConverter.mapToObject(jsonMap, returnTypeClass);
+        } catch (Exception e) {
+            LogUtils.errorLog("ObjectConverter exception", data.getParameter(), e);
+            throw e;
+        }
     }
 }

@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
@@ -391,28 +389,21 @@ public class AccountUserControllerTests {
         String location = "Y";
 
         Map<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("password", password);
-        data.put("checkPassword", checkPassword);
-        data.put("terms", terms);
-        data.put("location", location);
+        data.put("userId", "hhsung0120@naver.com");
+        data.put("password", "1234");
+        data.put("checkPassword", "12345");
+        data.put("termsAgree", "Y");
+        data.put("privacyAgree", "Y");
+        data.put("locationAgree", "Y");
         System.out.println("Map : " + data);
 
         ObjectMapper obj = new ObjectMapper();
         String json = obj.writeValueAsString(data);
         System.out.println("json obj : " + json);
 
-        AccountUser accountUser = AccountUser.signUpOneStepInfoBuilder()
-                .userId(email)
-                .password(password)
-                .checkPassword(checkPassword)
-                .termsAgree(terms)
-                .privacyAgree(privacy)
-                .locationAgree(location)
-                .build();
-
-        System.out.println(accountUser.toString());
-        System.out.println(SecretAes.encrypt(json));
+        String encText = SecretAes.encrypt(json);
+        System.out.println("encText : " + encText);
+        System.out.println("decText : " + SecretAes.decryptWithoutCatch(encText));
         System.out.println("비밀번호 글자 수  : " + "6Wn7FguCRRrCCThipwsgqtFk4KNH+AGCfTr3B+5AoauJBec51+xrs7tiewKVditP05w/GyXxoRpiNKGl0iDsw3QXiaaO3c9y".length());
         System.out.println("데이터 암호문 : " + "6pW3gVl70VetMWTNfK2Nk5JScqAhYnWwR7h1WfBI30R3e1r_i1aM0f2TlNG6l8413uSWninH_TnoZn4hpjqo865VimCM6npoZXMVS9NYFhymH4tlKWsnQ0BZ64bVgiCAU8gkjcOsK09_o2HyBppHrt9Qu75qPLJELL38J8eLcXRhL6qewt6TkfHn4w84Y2f-hUww7k6K_ZgebQ-51jtldfDa-Pc3SEyYSFgRzuSKUncxmmim0CVVysIuKw6DAr1ycmsvwI6kg5zJgCqiqf3sZJ_2TXBGjWj-rkZzayZnDybfANW4gVO3dCRxChpL67rNOT0qVyjzLOx78roE7hd_hV4nA3w5ygN-MXwSQ7-L5hQYDG4KOKZkfEx04YRYxuO1Ms6OBZ-FDO4Pl_odwyJybfq9qd3HvkNaqAkZ3C50NwD2Bs_vcwrHrFDPaSyEEMvNI_UJr7mROrAyxP1w-UpXdQrg2fjp_9GTWyzP3SUhS5Zua00b-3JaZ-KEqjQ0eOIguu2h9hp7nKVKzHBJWt1KeLrzEYB3ebFxTMHUYRG1hEKBBFsizWeBik1o_yhq5IOKS-7F84pQf6MCz8v4NOlwUTvLEJ_mW6EG9-X2jEoAg1oENM3PN-nsESSnzbqcy-cmbUFomLwpMllZtNFtYo0zJeQIa25KESVLBi0JGG284FYU-w-Bd6pp2zH0Rg_d6PpNDhe2g2hWz9B-lgnbhwsW8Mg1eiFnNDzPVb1iUS85qEQ".length());
 

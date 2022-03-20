@@ -61,6 +61,8 @@ dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     // https://mvnrepository.com/artifact/org.jasypt/jasypt
     implementation group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
+    //org.apache.commons.codec.binary.Base64;
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.0.0'
 
 }
 

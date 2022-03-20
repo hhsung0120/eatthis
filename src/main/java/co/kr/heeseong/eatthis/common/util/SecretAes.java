@@ -1,11 +1,13 @@
 package co.kr.heeseong.eatthis.common.util;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 
 public class SecretAes {
 
@@ -14,7 +16,7 @@ public class SecretAes {
 
     private final static String SECRET_ALGORITHM = "AES";
     private final static String SECRET_TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private final static String SECRET_KEY = "756NVL1TZ5FHVTZV";
+    private final static String SECRET_KEY = "756NVL1TZC4HVTZV";
     private final static String SECRET_IV = "SZD7WJ9YJL936SYW";
     private final static String SECRET_CHARSET = "UTF-8";
 
@@ -26,6 +28,7 @@ public class SecretAes {
         Cipher c = Cipher.getInstance(SECRET_TRANSFORMATION);
         String iv = SECRET_IV.substring(0, 16);
         c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv.getBytes()));
+
         byte[] encrypted = c.doFinal(message.getBytes(SECRET_CHARSET));
         return new String(Base64.encodeBase64URLSafe(encrypted));
     }

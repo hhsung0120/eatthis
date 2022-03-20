@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.notice.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
-import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
+import co.kr.heeseong.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.heeseong.eatthis.notice.domain.model.Notice;
 import co.kr.heeseong.eatthis.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +25,18 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/{page}")
-    public ResponseEntity<ResponseData> noticeList(@PathVariable int page) {
+    public ResponseEntity<ResponseTTTData> noticeList(@PathVariable int page) {
         try {
             Map<String, Object> data = new HashMap<>();
             data.put("list", noticeService.getNoticeList(page));
 
-            ResponseData responseData = new ResponseData(
+            ResponseTTTData responseData = new ResponseTTTData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
                     , data);
             return ResponseEntity.ok(responseData);
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseData(e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         }
     }
 

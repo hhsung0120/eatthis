@@ -88,14 +88,9 @@ public class ObjectConverter {
      * @param output 출력 포조 객체 타입
      * @return Object
      */
-    static public <T> T jsonToObject(String input, Class<T> output) {
+    static public <T> T jsonToObject(String input, Class<T> output) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            return (T) mapper.readValue(input, output);
-        } catch (IOException e) {
-            log.info("jsonToObject Exception", e.getMessage());
-            return null;
-        }
+        return (T) mapper.readValue(input, output);
     }
 
     /**
@@ -104,7 +99,7 @@ public class ObjectConverter {
      * @param input 입력 문자열
      * @return map
      */
-    static public <T> T jsonToMap(String input) {
+    static public <T> T jsonToMap(String input) throws Exception {
         return (T) ObjectConverter.jsonToObject(input, Map.class);
     }
 
@@ -151,6 +146,11 @@ public class ObjectConverter {
             log.info("stringToMap", e);
             return null;
         }
+    }
+
+    static public <T> T mapToObject(Object obj, Class<T> outPut) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(obj, outPut);
     }
 
 
