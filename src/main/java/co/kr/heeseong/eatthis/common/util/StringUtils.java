@@ -1,10 +1,15 @@
 package co.kr.heeseong.eatthis.common.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class StringUtil {
+@Slf4j
+public class StringUtils {
 
     /**
      * 공백, null 검사
@@ -126,5 +131,16 @@ public class StringUtil {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    public static void isEmail(String userId) throws Exception{
+        String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regx);
+        Matcher matcher = pattern.matcher(userId);
+        if (!matcher.matches()) {
+            LogUtils.errorLog("not a valid email format");
+            throw new IllegalAccessException("not a valid email format");
+        }
+
     }
 }

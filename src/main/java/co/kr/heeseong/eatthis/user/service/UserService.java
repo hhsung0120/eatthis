@@ -1,14 +1,8 @@
 package co.kr.heeseong.eatthis.user.service;
 
 import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
-import co.kr.heeseong.eatthis.common.Enum.GenderType;
-import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
-import co.kr.heeseong.eatthis.common.util.StringUtil;
-import co.kr.heeseong.eatthis.user.domain.entity.SecessionEntity;
-import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
-import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
+import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
-import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserRepository;
@@ -17,15 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -38,20 +26,22 @@ public class UserService {
     final UserSecessionRepository userScessionRepository;
     final HttpServletRequest request;
 
-    public Long insertUser(AccountUser accountUser) {
-        this.checkUserByEmail(accountUser.getId());
+    public Long insertUser(AccountUser accountUser) throws Exception{
+        StringUtils.isEmail(accountUser.getUserId());
+
+        this.checkUserByEmail(accountUser.getUserId());
 
         try {
-            AccountUser data = new AccountUser(accountUser.getId(), accountUser.getPassword());
-            Long idx = userRepository.save(data.toEntity()).getIdx();
-            if (idx > 0) {
-                userDetailRepository.save(accountUser.toDetailEntity(idx));
-            }
-            return idx;
+//            Long idx = userRepository.save(data.toEntity());
+//            if (idx > 0) {
+//                userDetailRepository.save(accountUser.toDetailEntity(idx));
+//            }
+//            return idx;
         } catch (Exception e) {
             log.info("insertUser Exception : {}", e.getMessage());
-            return 0;
+//            return 0;
         }
+        return 0L;
     }
 
 //    /**
@@ -65,7 +55,7 @@ public class UserService {
 //    }
 //
 
-//
+    //
 //    @Transactional
 //    public long updateUser(AccountUser accountUser) throws IllegalArgumentException {
 //        UserDetailEntity userDetailEntity = checkUserDetail(accountUser.getIdx());
@@ -206,12 +196,14 @@ public class UserService {
 //        return userRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
 //    }
 //
-//    public void checkUserByEmail(String email) {
+    public void checkUserByEmail(String email) {
 //        UsersEntity userEntity = userRepository.findByEmailId(email);
 //        if (userEntity != null) {
-//            throw new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email);
+//            throw ;
 //        }
-//    }
+        Optional.ofNullable(userRepository.findByEmailId(email))
+                .orElseThrow(() -> new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email));
+    }
 //
 //    public AccountUser getAccountUser() {
 //        return (AccountUser) request.getAttribute("accountUser");

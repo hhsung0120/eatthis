@@ -37,7 +37,6 @@ public class UserController {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             userService.insertUser(accountUser);
         } catch (Exception e) {
-            //LogUtils.errorLog("Failed to signUp API");
             return ResponseEntity.ok(new ResponseData(e));
         }
 

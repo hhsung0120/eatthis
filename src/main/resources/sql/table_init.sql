@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS users RESTRICT;
 -- 회원
 CREATE TABLE users (
                        seq                BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
-                       user_id            BIGINT       NOT NULL COMMENT '유저 아이디', -- 유저아이디
+                       user_id            VARCHAR(80)  NOT NULL COMMENT '유저 아이디', -- 유저아이디
                        password           VARCHAR(300) NOT NULL COMMENT '비밀번호', -- 비밀번호
                        nick_name          VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
                        gender             VARCHAR(5)   NOT NULL COMMENT 'MALE : 남자, FEMALE : 여자', -- 성별
