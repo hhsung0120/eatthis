@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class SecretAesTests {
 
+
     @Test
     public void signUp() throws Exception {
         String encText = SecretAes.encrypt("test");

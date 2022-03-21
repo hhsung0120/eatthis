@@ -26,9 +26,8 @@ public class UserService {
     final UserSecessionRepository userScessionRepository;
     final HttpServletRequest request;
 
-    public Long insertUser(AccountUser accountUser) throws Exception{
+    public Long insertUser(AccountUser accountUser) throws Exception {
         StringUtils.isEmail(accountUser.getUserId());
-
         this.checkUserByEmail(accountUser.getUserId());
 
         try {

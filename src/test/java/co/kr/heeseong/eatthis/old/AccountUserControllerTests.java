@@ -1,4 +1,4 @@
-package co.kr.heeseong.eatthis;
+package co.kr.heeseong.eatthis.old;
 
 import co.kr.heeseong.eatthis.common.util.Jwt;
 import co.kr.heeseong.eatthis.common.util.SecretAes;
