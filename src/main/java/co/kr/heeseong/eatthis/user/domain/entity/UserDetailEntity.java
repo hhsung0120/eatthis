@@ -24,22 +24,22 @@ public class UserDetailEntity extends TimeEntity {
 
     private LocalTime lunchAlarmTime;
 
-    private char dinnerAlarmUseYn;
+    private String dinnerAlarmUseYn;
 
     private LocalTime dinnerAlarmTime;
 
-    private char eventAlarmUseYn;
+    private String eventAlarmUseYn;
 
-    private char serviceAlarmUseYn;
+    private String serviceAlarmUseYn;
 
     @Enumerated(EnumType.STRING)
     private UserStatusType userStatusType;
 
-    private char privacyAgree;
+    private String privacyAgree;
 
-    private char termsAgree;
+    private String termsAgree;
 
-    private char locationAgree;
+    private String locationAgree;
 
     public UserDetailEntity() {
     }

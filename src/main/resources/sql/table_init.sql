@@ -10,14 +10,14 @@ CREATE TABLE users (
                        seq                BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
                        user_id            VARCHAR(80)  NOT NULL COMMENT '유저 아이디', -- 유저아이디
                        password           VARCHAR(300) NOT NULL COMMENT '비밀번호', -- 비밀번호
-                       nick_name          VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
-                       gender             VARCHAR(5)   NOT NULL COMMENT 'MALE : 남자, FEMALE : 여자', -- 성별
-                       birthday           DATE         NOT NULL COMMENT '생일', -- 생일
+                       nick_name          VARCHAR(50)  NULL     COMMENT '닉네임', -- 닉네임
+                       gender             VARCHAR(5)   NULL     COMMENT 'MALE : 남자, FEMALE : 여자', -- 성별
+                       birthday           DATE         NULL     COMMENT '생일', -- 생일
                        profile_image_path VARCHAR(200) NULL     COMMENT '이미지 경로', -- 프로필 이미지 경로
                        sign_up_type       VARCHAR(10)  NOT NULL COMMENT 'DEFAULT : 일반, FACEBOOK : 페이스북, GOOGLE : 구글, KAKAO : 카카오, NAVER : 네이버', -- 회원가입 구분
-                       created_id         VARCHAR(50)  NOT NULL COMMENT '생성자', -- 생성자
+                       created_id         VARCHAR(80)  NOT NULL COMMENT '생성자', -- 생성자
                        created_datetime   DATETIME     NOT NULL DEFAULT NOW() COMMENT '생성일시', -- 생성일시
-                       modified_id        VARCHAR(50)  NULL     COMMENT '수정자', -- 수정자
+                       modified_id        VARCHAR(80)  NULL     COMMENT '수정자', -- 수정자
                        modified_datetime  DATETIME     NULL     COMMENT '수정일시' -- 수정일시
 )
     COMMENT '회원';

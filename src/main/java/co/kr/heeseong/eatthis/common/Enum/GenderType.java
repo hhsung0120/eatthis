@@ -2,7 +2,10 @@ package co.kr.heeseong.eatthis.common.Enum;
 
 public enum GenderType {
 
-    MALE("남성"), FEMALE("여성");
+    MALE("남성")
+    , FEMALE("여성")
+    ;
+
 
     String value = "";
 

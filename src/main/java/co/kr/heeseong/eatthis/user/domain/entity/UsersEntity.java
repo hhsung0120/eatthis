@@ -39,14 +39,8 @@ public class UsersEntity {
     }
 
     @Builder(builderClassName = "byInsertForUsersEntity", builderMethodName = "byInsertForUsersEntity")
-    public UsersEntity(Long seq, String userId, String password, String nickName, GenderType gender, LocalDate birthday, String profileImagePath, SignUpType signUpType) {
-        this.seq = seq;
+    public UsersEntity(String userId, String password) {
         this.userId = userId;
         this.password = password;
-        this.nickName = nickName;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.profileImagePath = profileImagePath;
-        this.signUpType = signUpType;
     }
 }

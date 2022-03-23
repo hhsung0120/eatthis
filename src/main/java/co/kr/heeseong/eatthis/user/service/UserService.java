@@ -1,6 +1,7 @@
 package co.kr.heeseong.eatthis.user.service;
 
 import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
@@ -27,8 +28,10 @@ public class UserService {
     final HttpServletRequest request;
 
     public Long insertUser(AccountUser accountUser) throws Exception {
-        StringUtils.isEmail(accountUser.getUserId());
-        this.checkUserByEmail(accountUser.getUserId());
+        log.info("accountUser : {}", accountUser);
+
+        accountUserDataValidation(accountUser);
+
 
         try {
 //            Long idx = userRepository.save(data.toEntity());
@@ -41,6 +44,29 @@ public class UserService {
 //            return 0;
         }
         return 0L;
+    }
+
+    private void accountUserDataValidation(AccountUser accountUser) throws Exception {
+        StringUtils.isEmail(accountUser.getUserId());
+
+        //this.checkUserByEmail(accountUser.getUserId());
+
+        if (!"y".equalsIgnoreCase(accountUser.getTermsAgree())) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", accountUser.getTermsAgree());
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getTermsAgree());
+        }
+
+        if (!"y".equalsIgnoreCase(accountUser.getPrivacyAgree())) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", accountUser.getPrivacyAgree());
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getPrivacyAgree());
+        }
+
+        if (!"y".equalsIgnoreCase(accountUser.getLocationAgree())) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", accountUser.getLocationAgree());
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getLocationAgree());
+        }
+
+        //TODO : 비밀번호 영문/숫자 조합 8자리 이상, 20자리 이하 (기획에 없음 말해야함)
     }
 
 //    /**

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-public class AccountUserControllerTests {
+public class AccountAccountUserControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;

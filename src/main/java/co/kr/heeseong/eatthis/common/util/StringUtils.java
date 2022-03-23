@@ -8,8 +8,12 @@ import java.util.regex.Pattern;
 @Slf4j
 public class StringUtils {
 
-    final static String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-    final static Pattern pattern = Pattern.compile(regx);
+    static final String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+    static final Pattern pattern = Pattern.compile(regx);
+
+    public static final String MUST_NOT_BE_NULL = "must not be null";
+    public static final String NOT_A_VALID_PARAMETER = "not a valid parameter";
+    public static final String NOT_A_VALID = "not a valid";
 
     public static boolean isNotBlank(String str) {
         return (str != null && !str.isEmpty() && containsText(str));
@@ -27,14 +31,14 @@ public class StringUtils {
 
     public static void isEmail(String userId) throws Exception {
         if (!isNotBlank(userId)) {
-            LogUtils.errorLog("userId must not be null");
-            throw new IllegalAccessException("userId must not be null");
+            LogUtils.errorLog("userId " + MUST_NOT_BE_NULL);
+            throw new IllegalAccessException("userId " + MUST_NOT_BE_NULL);
         }
 
         Matcher matcher = pattern.matcher(userId);
         if (!matcher.matches()) {
-            LogUtils.errorLog("not a valid email format");
-            throw new IllegalAccessException("not a valid email format");
+            LogUtils.errorLog(NOT_A_VALID + " email format");
+            throw new IllegalAccessException(NOT_A_VALID + " email format");
         }
 
     }

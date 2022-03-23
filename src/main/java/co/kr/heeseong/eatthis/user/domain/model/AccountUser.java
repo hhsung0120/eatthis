@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.user.domain.model;
 
 import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.Enum.SignUpType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -42,9 +42,6 @@ public class AccountUser {
         this.userId = id;
         this.password = password;
         this.signUpType = SignUpType.DEFAULT;
-        this.termsAgree = "Y";
-        this.privacyAgree = "Y";
-        this.locationAgree = "Y";
     }
 
     @Builder
@@ -68,17 +65,12 @@ public class AccountUser {
         this.dinnerAlarmMinute = dinnerAlarmMinute;
     }
 
-//    public UsersEntity toEntity() {
-//        return UsersEntity.builder()
-//                .idx(idx)
-//                .id(id)
-//                .password(password)
-//                .termsAgree(termsAgree)
-//                .privacyAgree(privacyAgree)
-//                .locationAgree(locationAgree)
-//                .signUpType(signUpType)
-//                .build();
-//    }
+    public UsersEntity toEntity() {
+        return UsersEntity.byInsertForUsersEntity()
+                .userId(userId)
+                .password(password)
+                .build();
+    }
 
 //    public UserDetailEntity toDetailEntity(long idx) {
 //        return UserDetailEntity.builder()

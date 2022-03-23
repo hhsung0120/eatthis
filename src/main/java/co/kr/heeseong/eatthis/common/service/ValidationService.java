@@ -18,7 +18,7 @@ public class ValidationService {
 
         String jsonText;
         try {
-            jsonText = SecretAes.decrypt("data.getParameter()");
+            jsonText = SecretAes.decrypt(data.getParameter());
         } catch (Exception e) {
             LogUtils.errorLog("decrypt exception", data.getParameter(), e);
             throw e;
