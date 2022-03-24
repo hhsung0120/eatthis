@@ -32,16 +32,14 @@ public class UserService {
 
         accountUserDataValidation(accountUser);
 
-
         try {
-//            Long idx = userRepository.save(data.toEntity());
-//            if (idx > 0) {
-//                userDetailRepository.save(accountUser.toDetailEntity(idx));
-//            }
-//            return idx;
+            Long idx = userRepository.save(data.toEntity());
+            if (idx > 0) {
+                userDetailRepository.save(accountUser.toDetailEntity(idx));
+            }
+            return idx;
         } catch (Exception e) {
             log.info("insertUser Exception : {}", e.getMessage());
-//            return 0;
         }
         return 0L;
     }

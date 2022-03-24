@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -52,10 +53,11 @@ public class Store {
     }
 
     public List<Store> entityToVoList(Page<StoreEntity> storeEntityList) {
-        return storeEntityList.stream()
-                .map(list -> new Store(list.getStoreIdx(), list.getStoreId(), list.getCategory()
-                        , list.getStoreName(), list.getLocationX(), list.getLocationY()
-                        , list.getCreateDate(), list.getLastModifiedDate()))
-                .collect(toList());
+//        return storeEntityList.stream()
+//                .map(list -> new Store(list.getStoreIdx(), list.getStoreId(), list.getCategory()
+//                        , list.getStoreName(), list.getLocationX(), list.getLocationY()
+//                        , list.getCreateDate(), list.getLastModifiedDate()))
+//                .collect(toList());
+        return new ArrayList<>();
     }
 }

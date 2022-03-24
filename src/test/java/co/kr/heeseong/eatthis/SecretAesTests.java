@@ -18,9 +18,16 @@ public class SecretAesTests {
         data.put("userId", "hhsung0120@naver.com");
         data.put("password", "1234");
         data.put("checkPassword", "12345");
-        data.put("termsAgree", "Y");
-        data.put("privacyAgree", "Y");
-        data.put("locationAgree", "n");
+
+        Map<String, String> agreeList = new HashMap<>();
+        agreeList.put("terms", "y");
+        agreeList.put("privacy", "y");
+        agreeList.put("location", "y");
+        data.put("agreeList", agreeList);
+
+        Map<String, String> agree = (Map<String, String>)data.get("agreeList");
+        System.out.println("agree : " + agree);
+
         System.out.println("Map : " + data);
 
         ObjectMapper obj = new ObjectMapper();

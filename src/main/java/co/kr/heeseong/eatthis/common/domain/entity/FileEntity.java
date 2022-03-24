@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "file")
 @AllArgsConstructor
 @Getter
-public class FileEntity extends TimeEntity {
+public class FileEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

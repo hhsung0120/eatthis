@@ -2,7 +2,7 @@ package co.kr.heeseong.eatthis.questions.domain.entity;
 
 
 import co.kr.heeseong.eatthis.common.Enum.QuestionsStatusType;
-import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import co.kr.heeseong.eatthis.faq.domain.entity.FaqCategoryEntity;
 import co.kr.heeseong.eatthis.questions.domain.model.Questions;
 import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "questions")
-public class QuestionsEntity extends TimeEntity {
+public class QuestionsEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,7 @@ public class QuestionsEntity extends TimeEntity {
 
     public Questions toValueObject(String userName) {
         return Questions.builder()
-                .createDate(this.getCreateDate())
+                //.createDate(this.getCreateDate())
                 .status(this.getStatus().getValue())
                 .categoryName(this.getFaqCategoryEntity().getCategoryName())
                 .userName(userName)
@@ -74,7 +74,7 @@ public class QuestionsEntity extends TimeEntity {
                 .email(this.getEmail())
                 .questions(this.getQuestions())
                 .answer(this.getAnswer())
-                .lastModifiedDate(getLastModifiedDate())
+              //  .lastModifiedDate(getLastModifiedDate())
                 .idx(this.getIdx())
                 .userIdx(this.getUserIdx())
                 .categoryIdx(this.getCategoryIdx())

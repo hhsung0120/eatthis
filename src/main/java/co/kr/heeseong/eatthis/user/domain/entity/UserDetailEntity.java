@@ -2,17 +2,18 @@ package co.kr.heeseong.eatthis.user.domain.entity;
 
 
 import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
-import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Map;
 
 
 @Getter
 @Entity
 @Table(name = "user_detail")
-public class UserDetailEntity extends TimeEntity {
+public class UserDetailEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +43,14 @@ public class UserDetailEntity extends TimeEntity {
     private String locationAgree;
 
     public UserDetailEntity() {
+    }
+
+    public UserDetailEntity(Map<String, String> agreeMap) {
+        this.lunchAlarmUseYn = "y";
+        this.lunchAlarmTime = LocalTime.of(11, 30);
+        this.dinnerAlarmUseYn = "y";
+        this.lunchAlarmTime = LocalTime.of(11, 30);
+
     }
 
 //    public void update(String profileImagePath, String nickName, String birthday, GenderType gender) {

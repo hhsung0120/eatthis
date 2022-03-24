@@ -38,33 +38,6 @@ public class AccountUser {
     public AccountUser() {
     }
 
-    public AccountUser(String id, String password) {
-        this.userId = id;
-        this.password = password;
-        this.signUpType = SignUpType.DEFAULT;
-    }
-
-    @Builder
-    public AccountUser(long idx, String id, String password, String nickName, GenderType gender, String birthday
-            , String lunchAlarm, String dinnerAlarm, String eventAlarm, String serviceAlarm, String profileImagePath
-            , String lunchAlarmHour, String lunchAlarmMinute, String dinnerAlarmHour, String dinnerAlarmMinute) {
-        this.seq = idx;
-        this.userId = id;
-        this.password = password;
-        this.nickName = nickName;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.lunchAlarm = lunchAlarm;
-        this.dinnerAlarm = dinnerAlarm;
-        this.eventAlarm = eventAlarm;
-        this.serviceAlarm = serviceAlarm;
-        this.profileImagePath = profileImagePath;
-        this.lunchAlarmHour = lunchAlarmHour;
-        this.lunchAlarmMinute = lunchAlarmMinute;
-        this.dinnerAlarmHour = dinnerAlarmHour;
-        this.dinnerAlarmMinute = dinnerAlarmMinute;
-    }
-
     public UsersEntity toEntity() {
         return UsersEntity.byInsertForUsersEntity()
                 .userId(userId)

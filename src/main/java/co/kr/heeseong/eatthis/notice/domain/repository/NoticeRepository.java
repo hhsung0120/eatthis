@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Long> {
 
-    @Query("SELECT n FROM NoticeEntity n ORDER BY n.createDate DESC")
-    List<NoticeEntity> findAllDesc();
+//    @Query("SELECT n FROM NoticeEntity n ORDER BY n.createDate DESC")
+//    List<NoticeEntity> findAllDesc();
 }

@@ -48,7 +48,7 @@ public class Notice {
                         .userIdx(list.getUserIdx())
                         .title(list.getTitle())
                         .contents(list.getTitle())
-                        .createDate(list.getCreateDate())
+                        //.createDate(list.getCreateDate())
                         .build())
                 .collect(toList());
     }

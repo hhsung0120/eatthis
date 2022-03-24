@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.faq.domain.entity;
 
 
-import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @ToString
 @Table(name = "faq")
-public class FaqEntity extends TimeEntity {
+public class FaqEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

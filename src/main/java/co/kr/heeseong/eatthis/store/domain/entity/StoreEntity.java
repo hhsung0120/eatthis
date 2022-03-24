@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.store.domain.entity;
 
-import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "store")
-public class StoreEntity extends TimeEntity {
+public class StoreEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

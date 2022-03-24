@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "test")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TestEntity extends TimeEntity {
+public class TestEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

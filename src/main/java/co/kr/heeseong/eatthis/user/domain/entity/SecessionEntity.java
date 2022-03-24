@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.user.domain.entity;
 
 
-import co.kr.heeseong.eatthis.common.domain.entity.TimeEntity;
+import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @ToString
 @Table(name = "secession_reason")
-public class SecessionEntity extends TimeEntity {
+public class SecessionEntity extends TimeAndUserIdEntity {
 
     @Id
     private Long idx;
