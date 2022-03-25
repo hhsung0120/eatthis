@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class ValidationService {
 
-    public <T> T validation(RequestData data, Class<T> returnTypeClass) throws Exception {
+    public <T> T validation(RequestData data, Class<T> returnTypeClass) {
         log.info("request parameter : {}", data.getParameter());
 
         String jsonText;
@@ -21,7 +21,7 @@ public class ValidationService {
             jsonText = SecretAes.decrypt(data.getParameter());
         } catch (Exception e) {
             LogUtils.errorLog("decrypt exception", data.getParameter(), e);
-            throw e;
+            throw new IllegalArgumentException("decrypt exception");
         }
 
         try {
@@ -29,7 +29,7 @@ public class ValidationService {
             return (T) ObjectConverter.mapToObject(jsonMap, returnTypeClass);
         } catch (Exception e) {
             LogUtils.errorLog("ObjectConverter exception", data.getParameter(), e);
-            throw e;
+            throw new IllegalArgumentException("ObjectConverter exception");
         }
     }
 }

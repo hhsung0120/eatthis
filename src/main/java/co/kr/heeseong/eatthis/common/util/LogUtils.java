@@ -8,9 +8,9 @@ public class LogUtils {
 
     public static void errorLog(String description, String requestData, Exception exception) {
         log.error("===========================================");
-        if (StringUtils.hasText(description)) log.error("description : {}", description);
-        if (StringUtils.hasText(requestData)) log.error("requestData : {}", requestData);
-        if (exception != null) log.error("exception message : {}", exception.getMessage());
+        if (StringUtils.hasText(description)) log.error("description : [{}]", description);
+        log.error("requestData : [{}]", requestData);
+        if (exception != null) log.error("exception message : [{}]", exception.getMessage());
         log.error("===========================================");
     }
 

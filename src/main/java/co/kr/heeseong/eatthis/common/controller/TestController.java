@@ -60,14 +60,14 @@ public class TestController {
 
     @GetMapping("/createToken")
     public String createToken() {
-        AccountUser accountUser = AccountUser.builder().id("setse@set").idx(2).birthday("sdfsdf").build();
-        String to = Jwt.createToken(accountUser);
-        System.out.println(to);
-        try {
-            System.out.println(Jwt.verification(to));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        AccountUser accountUser = AccountUser.builder().id("setse@set").idx(2).birthday("sdfsdf").build();
+//        String to = Jwt.createToken(accountUser);
+//        System.out.println(to);
+//        try {
+//            System.out.println(Jwt.verification(to));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return "d";
     }
 

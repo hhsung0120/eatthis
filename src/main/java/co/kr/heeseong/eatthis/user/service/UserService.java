@@ -33,12 +33,9 @@ public class UserService {
         accountUserDataValidation(accountUser);
 
         try {
-            Long idx = userRepository.save(data.toEntity());
-            if (idx > 0) {
-                userDetailRepository.save(accountUser.toDetailEntity(idx));
-            }
-            return idx;
+            return userRepository.save(accountUser.toEntity()).getSeq();
         } catch (Exception e) {
+            e.printStackTrace();
             log.info("insertUser Exception : {}", e.getMessage());
         }
         return 0L;
@@ -48,20 +45,19 @@ public class UserService {
         StringUtils.isEmail(accountUser.getUserId());
 
         //this.checkUserByEmail(accountUser.getUserId());
-
-        if (!"y".equalsIgnoreCase(accountUser.getTermsAgree())) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", accountUser.getTermsAgree());
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getTermsAgree());
+        if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", accountUser.getAgreeMap().get("terms"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getAgreeMap().get("terms"));
         }
 
-        if (!"y".equalsIgnoreCase(accountUser.getPrivacyAgree())) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", accountUser.getPrivacyAgree());
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getPrivacyAgree());
+        if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("privacy"))) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", accountUser.getAgreeMap().get("privacy"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getAgreeMap().get("privacy"));
         }
 
-        if (!"y".equalsIgnoreCase(accountUser.getLocationAgree())) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", accountUser.getLocationAgree());
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getLocationAgree());
+        if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("location"))) {
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", accountUser.getAgreeMap().get("location"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getAgreeMap().get("location"));
         }
 
         //TODO : 비밀번호 영문/숫자 조합 8자리 이상, 20자리 이하 (기획에 없음 말해야함)

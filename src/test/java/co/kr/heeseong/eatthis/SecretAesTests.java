@@ -19,11 +19,11 @@ public class SecretAesTests {
         data.put("password", "1234");
         data.put("checkPassword", "12345");
 
-        Map<String, String> agreeList = new HashMap<>();
-        agreeList.put("terms", "y");
-        agreeList.put("privacy", "y");
-        agreeList.put("location", "y");
-        data.put("agreeList", agreeList);
+        Map<String, String> agreeMap = new HashMap<>();
+        agreeMap.put("terms", "y");
+        agreeMap.put("privacy", "y");
+        agreeMap.put("location", "y");
+        data.put("agreeMap", agreeMap);
 
         Map<String, String> agree = (Map<String, String>)data.get("agreeList");
         System.out.println("agree : " + agree);
@@ -41,7 +41,7 @@ public class SecretAesTests {
 
     @Test
     public void decText() throws Exception {
-        String decText = "A_N_-CJY-apgLrV5P5SgOZqXN6g-7_7xQ-NlTelWwlglsfrA2Q1_z911AVnoEnWWqnM5zJeQIMrDBa3rM2M3c4wCakhHHqA5jPZzDt9mOEg";
+        String decText = "A_N_-CJY-apgLrV5P5SgOexth4uLgYqBMdDWiHhbtNvAw-4-L2p1mfud-W6mJ7Ytq0TDItoeFYmF5UqFFWCbJm49mu4n3qS6Ktvi34q4kXA";
         System.out.println("decrypt : " + SecretAes.decrypt(decText));
     }
 }

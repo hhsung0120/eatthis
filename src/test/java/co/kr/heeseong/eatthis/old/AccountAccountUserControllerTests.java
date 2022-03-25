@@ -23,13 +23,13 @@ public class AccountAccountUserControllerTests {
 
     @BeforeAll
     static void createToken() {
-        AccountUser accountUser = AccountUser.builder()
-                .idx(1)
-                .id("hhsung0120@naver.com")
-                .password("1234")
-                .nickName("nickName")
-                .build();
-        token = Jwt.createToken(accountUser);
+//        AccountUser accountUser = AccountUser.builder()
+//                .idx(1)
+//                .id("hhsung0120@naver.com")
+//                .password("1234")
+//                .nickName("nickName")
+//                .build();
+//        token = Jwt.createToken(accountUser);
     }
 
 //    @Test

@@ -2,6 +2,7 @@ package co.kr.heeseong.eatthis.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -150,6 +151,7 @@ public class ObjectConverter {
 
     static public <T> T mapToObject(Object obj, Class<T> outPut) {
         ObjectMapper mapper = new ObjectMapper();
+       // mapper.configure(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         return mapper.convertValue(obj, outPut);
     }
 

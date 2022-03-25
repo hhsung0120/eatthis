@@ -36,21 +36,31 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
     @Enumerated(EnumType.STRING)
     private UserStatusType userStatusType;
 
-    private String privacyAgree;
-
     private String termsAgree;
 
+    private String privacyAgree;
+
     private String locationAgree;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "seq")
+    private UsersEntity usersEntity;
 
     public UserDetailEntity() {
     }
 
     public UserDetailEntity(Map<String, String> agreeMap) {
+        super("system");
         this.lunchAlarmUseYn = "y";
         this.lunchAlarmTime = LocalTime.of(11, 30);
         this.dinnerAlarmUseYn = "y";
-        this.lunchAlarmTime = LocalTime.of(11, 30);
-
+        this.dinnerAlarmTime = LocalTime.of(11, 30);
+        this.eventAlarmUseYn = "y";
+        this.serviceAlarmUseYn = "y";
+        this.userStatusType = UserStatusType.SIGNING;
+        this.termsAgree = agreeMap.get("terms");
+        this.privacyAgree = agreeMap.get("privacy");
+        this.locationAgree = agreeMap.get("location");
     }
 
 //    public void update(String profileImagePath, String nickName, String birthday, GenderType gender) {

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Map;
+
 @Getter
 @ToString
 public class AccountUser {
@@ -20,7 +22,6 @@ public class AccountUser {
     private String birthday;
     private String profileImagePath;
     private SignUpType signUpType;
-
     private String lunchAlarm;
     private String dinnerAlarm;
     private String lunchAlarmHour;
@@ -29,11 +30,7 @@ public class AccountUser {
     private String dinnerAlarmMinute;
     private String eventAlarm;
     private String serviceAlarm;
-
-    private String termsAgree;
-    private String privacyAgree;
-    private String locationAgree;
-
+    private Map<String, String> agreeMap;
 
     public AccountUser() {
     }
@@ -42,6 +39,7 @@ public class AccountUser {
         return UsersEntity.byInsertForUsersEntity()
                 .userId(userId)
                 .password(password)
+                .agreeMap(agreeMap)
                 .build();
     }
 
@@ -69,14 +67,13 @@ public class AccountUser {
 //        this.profileImagePath = userEntity.getUserDetailEntity().getProfileImagePath();
 //    }
 
-    @Builder(builderClassName = "signUpOneStepInfo", builderMethodName = "signUpOneStepInfoBuilder")
-    public AccountUser(String userId, String password, String checkPassword, String termsAgree, String privacyAgree, String locationAgree) {
-        this.userId = userId;
-        this.password = password;
-        this.checkPassword = checkPassword;
-        this.termsAgree = termsAgree;
-        this.privacyAgree = privacyAgree;
-        this.locationAgree = locationAgree;
-
-    }
+//    @Builder(builderClassName = "signUpOneStepInfo", builderMethodName = "signUpOneStepInfoBuilder")
+//    public AccountUser(String userId, String password, String checkPassword, String termsAgree, String privacyAgree, String locationAgree) {
+//        this.userId = userId;
+//        this.password = password;
+//        this.checkPassword = checkPassword;
+//        this.termsAgree = termsAgree;
+//        this.privacyAgree = privacyAgree;
+//        this.locationAgree = locationAgree;
+//    }
 }

@@ -29,4 +29,11 @@ public class TimeAndUserIdEntity {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime modifiedDatetime;
+
+    public TimeAndUserIdEntity() {
+    }
+
+    public TimeAndUserIdEntity(String createdId) {
+        this.createdId = createdId;
+    }
 }
