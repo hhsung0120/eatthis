@@ -18,6 +18,7 @@ import java.util.Map;
 public class UsersEntity extends TimeAndUserIdEntity {
 
     @Id
+    @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
@@ -37,6 +38,10 @@ public class UsersEntity extends TimeAndUserIdEntity {
     @Enumerated(EnumType.STRING)
     private SignUpType signUpType;
 
+    @MapsId
+    @OneToOne(mappedBy = "usersEntity", cascade = CascadeType.ALL)
+    private UserDetailEntity userDetailEntity;
+
     public UsersEntity() {
     }
 
@@ -46,6 +51,6 @@ public class UsersEntity extends TimeAndUserIdEntity {
         this.userId = userId;
         this.password = password;
         this.signUpType = SignUpType.DEFAULT;
-        new UserDetailEntity(agreeMap);
+        this.userDetailEntity = new UserDetailEntity(agreeMap);
     }
 }

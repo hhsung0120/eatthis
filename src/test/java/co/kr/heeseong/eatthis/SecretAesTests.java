@@ -41,7 +41,7 @@ public class SecretAesTests {
 
     @Test
     public void decText() throws Exception {
-        String decText = "A_N_-CJY-apgLrV5P5SgOexth4uLgYqBMdDWiHhbtNvAw-4-L2p1mfud-W6mJ7Ytq0TDItoeFYmF5UqFFWCbJm49mu4n3qS6Ktvi34q4kXA";
+        String decText = "A_N_-CJY-apgLrV5P5SgOfVyS7RPz__Eu_LPtfDvbPpTV5-mJFFCFnKcjhxZbfTBCsexiTlzmb9fksDPUr3WjpG0F5Tkn3QyeT1AC0IjOOgCJOJ2LWrRrpZOpVH34TYP5c8gMFnRPW35gECiQSGkCZl_k5JsZLq8w1b4tdLVMGk2KfKlv17yv0V267UWsjmdqlX6RoyRFgkmftOjFMDYeRICp_5LrGUlDjmIvY47fY6M1ijzej1Ust2yzKeqWWg-i4SVr5u-P_yq9GAnVh4-fA";
         System.out.println("decrypt : " + SecretAes.decrypt(decText));
     }
 }

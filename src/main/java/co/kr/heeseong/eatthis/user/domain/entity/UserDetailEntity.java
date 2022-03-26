@@ -42,7 +42,7 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
 
     private String locationAgree;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "seq")
     private UsersEntity usersEntity;
 

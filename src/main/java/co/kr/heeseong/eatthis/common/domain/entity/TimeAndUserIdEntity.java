@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class TimeAndUserIdEntity {
 
-    @Column(updatable = false, insertable = false)
+    @Column(updatable = false)
     private String createdId;
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDatetime;
 
-    @Column(updatable = false, insertable = false)
+    @Column(insertable = false)
     private String modifiedId;
 
     @LastModifiedDate
