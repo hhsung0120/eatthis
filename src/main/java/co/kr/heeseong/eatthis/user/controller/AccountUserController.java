@@ -32,26 +32,27 @@ public class AccountUserController {
     public ResponseEntity<ResponseData> signUp(@RequestBody RequestData requestData) throws Exception {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
-            userService.insertUser(accountUser);
+            Long userSeq = userService.insertUser(accountUser);
+            return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));
         }
+    }
 
+    @PutMapping("/signUp")
+    public ResponseEntity<ResponseTTTData> signUpDetail(@RequestBody RequestData requestData) {
         try {
-            //data.put("token", Jwt.createToken(AccountUser.builder().idx(Long.parseLong(data.get("userIdx").toString())).build()));
+            Map<String, Object> data = new HashMap<>();
+            data.put("userIdx", "userService.updateUser(accountUser)");
+
             ResponseTTTData responseData = new ResponseTTTData(
                     StatusCode.OK.getValue()
                     , StatusCode.OK.toString()
-                    , "data");
-            //return ResponseEntity.ok(responseData);
-        } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
-            //return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+                    , data);
+            return ResponseEntity.ok(responseData);
         } catch (Exception e) {
-            e.printStackTrace();
-            //return ResponseEntity.ok(new ResponseTTTData(ErrorCodeType.ETC_ERROR.getValue()));
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         }
-        return null;
     }
 
     @PostMapping("/login")
@@ -78,23 +79,6 @@ public class AccountUserController {
         try {
             Map<String, Object> data = new HashMap<>();
             data.put("user", "userService.getUsers()");
-
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , data);
-            return ResponseEntity.ok(responseData);
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-        }
-    }
-
-
-    @PutMapping("/signUpDetail")
-    public ResponseEntity<ResponseTTTData> signUpDetail(@RequestBody AccountUser accountUser) {
-        try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", "userService.updateUser(accountUser)");
 
             ResponseTTTData responseData = new ResponseTTTData(
                     StatusCode.OK.getValue()

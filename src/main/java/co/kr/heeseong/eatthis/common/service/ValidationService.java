@@ -20,7 +20,7 @@ public class ValidationService {
         try {
             jsonText = SecretAes.decrypt(data.getParameter());
         } catch (Exception e) {
-            LogUtils.errorLog("decrypt exception", data.getParameter(), e);
+            LogUtils.errorLog("decrypt exception", "data", data.getParameter(), e);
             throw new IllegalArgumentException("decrypt exception");
         }
 
@@ -28,7 +28,7 @@ public class ValidationService {
             Map<String, Object> jsonMap = ObjectConverter.jsonToMap(jsonText);
             return (T) ObjectConverter.mapToObject(jsonMap, returnTypeClass);
         } catch (Exception e) {
-            LogUtils.errorLog("ObjectConverter exception", data.getParameter(), e);
+            LogUtils.errorLog("ObjectConverter exception", "data", data.getParameter(), e);
             throw new IllegalArgumentException("ObjectConverter exception");
         }
     }

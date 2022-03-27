@@ -2,6 +2,8 @@ package co.kr.heeseong.eatthis.user.domain.model;
 
 import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.Enum.SignUpType;
+import co.kr.heeseong.eatthis.common.util.SecretSha;
+import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,10 +37,17 @@ public class AccountUser {
     public AccountUser() {
     }
 
-    public UsersEntity toEntity() {
+    public UsersEntity toUsersEntity() {
         return UsersEntity.byInsertForUsersEntity()
                 .userId(userId)
-                .password(password)
+                .password(SecretSha.encryptPassword(password))
+                .agreeMap(agreeMap)
+                .build();
+    }
+
+    public UserDetailEntity toUserDetailEntity(Long userSeq) {
+        return UserDetailEntity.byInsertForUserDetailEntity()
+                .userSeq(userSeq)
                 .agreeMap(agreeMap)
                 .build();
     }

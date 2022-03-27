@@ -22,9 +22,16 @@ spring:
 
 logging:
   level:
-    org.springframework.web: info
+    root : info
+    org.springframework.web: error
     co.kr.heeseong: info
     org.hibernate.type: trace
     org.hibernate.SQL: trace
+  file:
+    name: D:${file.separator}logs${file.separator}eatthis${file.separator}eatthis.log
+  logback:
+    rollingpolicy:
+      max-history: 1
+      max-file-size: 10MB
 
 default-upload-path: D:${file.separator}upload${file.separator}eatthis${file.separator}

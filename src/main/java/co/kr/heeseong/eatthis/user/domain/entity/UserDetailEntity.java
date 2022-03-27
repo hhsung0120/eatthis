@@ -3,13 +3,16 @@ package co.kr.heeseong.eatthis.user.domain.entity;
 
 import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Map;
 
 
+@ToString
 @Getter
 @Entity
 @Table(name = "user_detail")
@@ -49,8 +52,10 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
     public UserDetailEntity() {
     }
 
-    public UserDetailEntity(Map<String, String> agreeMap) {
+    @Builder(builderClassName = "byInsertForUserDetailEntity", builderMethodName = "byInsertForUserDetailEntity")
+    public UserDetailEntity(Long userSeq, Map<String, String> agreeMap) {
         super("system");
+        this.userSeq = userSeq;
         this.lunchAlarmUseYn = "y";
         this.lunchAlarmTime = LocalTime.of(11, 30);
         this.dinnerAlarmUseYn = "y";

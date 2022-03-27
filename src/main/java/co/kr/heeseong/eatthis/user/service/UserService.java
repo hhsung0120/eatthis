@@ -3,6 +3,7 @@ package co.kr.heeseong.eatthis.user.service;
 import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
+import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
@@ -28,18 +29,31 @@ public class UserService {
     final UserSecessionRepository userScessionRepository;
     final HttpServletRequest request;
 
+    @Transactional
     public Long insertUser(AccountUser accountUser) throws Exception {
         log.info("accountUser : {}", accountUser);
 
         accountUserDataValidation(accountUser);
 
+        Long userSeq;
         try {
-            return userRepository.save(accountUser.toEntity()).getSeq();
+            userSeq = userRepository.save(accountUser.toUsersEntity()).getSeq();
         } catch (Exception e) {
-            e.printStackTrace();
-            log.info("insertUser Exception : {}", e.getMessage());
+            LogUtils.errorLog("users save exception", "accountUser", accountUser.toUsersEntity().toString(), e);
+            throw new IllegalArgumentException("users save exception");
         }
-        return 0L;
+
+        UserDetailEntity userDetailEntity = accountUser.toUserDetailEntity(userSeq);
+        try {
+            if (userDetailEntity.getUserSeq() > 0) {
+                return userDetailRepository.save(userDetailEntity).getUserSeq();
+            }
+        } catch (Exception e) {
+            LogUtils.errorLog("user detail save exception", "userDetailEntity", userDetailEntity, e);
+            throw new IllegalArgumentException("user detail save exception");
+        }
+
+        throw new IllegalArgumentException("insertUser exception");
     }
 
     private void accountUserDataValidation(AccountUser accountUser) throws Exception {
@@ -47,17 +61,17 @@ public class UserService {
 
         //this.checkUserByEmail(accountUser.getUserId());
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", accountUser.getAgreeMap().get("terms"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", "terms", accountUser.getAgreeMap().get("terms"));
             throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getAgreeMap().get("terms"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("privacy"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", accountUser.getAgreeMap().get("privacy"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", "privacy", accountUser.getAgreeMap().get("privacy"));
             throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getAgreeMap().get("privacy"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("location"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", accountUser.getAgreeMap().get("location"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", "location", accountUser.getAgreeMap().get("location"));
             throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getAgreeMap().get("location"));
         }
 
