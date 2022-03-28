@@ -32,8 +32,12 @@ public class LogUtils {
         errorLog(description, message1, requestData1, null, null, null);
     }
 
+    public static void errorLog(String description, Exception e) {
+        errorLog(description, null, null, null, null, e);
+    }
+
     public static void errorLog(String description) {
-        errorLog(description, null, null);
+        errorLog(description, null, null, null, null, null);
     }
 
 }

@@ -6,14 +6,13 @@ import co.kr.heeseong.eatthis.common.Enum.SignUpType;
 import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.Value;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
 
 
-@ToString
 @Getter
 @Entity
 @Table(name = "users")
@@ -47,10 +46,25 @@ public class UsersEntity extends TimeAndUserIdEntity {
     }
 
     @Builder(builderClassName = "byInsertForUsersEntity", builderMethodName = "byInsertForUsersEntity")
-    public UsersEntity(String userId, String password, Map<String, String> agreeMap) {
+    public UsersEntity(String userId, String password) {
         super("system");
         this.userId = userId;
         this.password = password;
         this.signUpType = SignUpType.DEFAULT;
+    }
+
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "seq=" + seq +
+                ", userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", profileImagePath='" + profileImagePath + '\'' +
+                ", signUpType=" + signUpType +
+                ", userDetailEntity=" + userDetailEntity +
+                '}';
     }
 }

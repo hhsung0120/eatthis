@@ -5,14 +5,11 @@ import co.kr.heeseong.eatthis.common.Enum.SignUpType;
 import co.kr.heeseong.eatthis.common.util.SecretSha;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Map;
 
 @Getter
-@ToString
 public class AccountUser {
 
     private Long seq;
@@ -41,7 +38,6 @@ public class AccountUser {
         return UsersEntity.byInsertForUsersEntity()
                 .userId(userId)
                 .password(SecretSha.encryptPassword(password))
-                .agreeMap(agreeMap)
                 .build();
     }
 
@@ -85,4 +81,27 @@ public class AccountUser {
 //        this.privacyAgree = privacyAgree;
 //        this.locationAgree = locationAgree;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "AccountUser{" +
+                "seq=" + seq +
+                ", userId='" + userId + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", gender=" + gender +
+                ", birthday='" + birthday + '\'' +
+                ", profileImagePath='" + profileImagePath + '\'' +
+                ", signUpType=" + signUpType +
+                ", lunchAlarm='" + lunchAlarm + '\'' +
+                ", dinnerAlarm='" + dinnerAlarm + '\'' +
+                ", lunchAlarmHour='" + lunchAlarmHour + '\'' +
+                ", lunchAlarmMinute='" + lunchAlarmMinute + '\'' +
+                ", dinnerAlarmHour='" + dinnerAlarmHour + '\'' +
+                ", dinnerAlarmMinute='" + dinnerAlarmMinute + '\'' +
+                ", eventAlarm='" + eventAlarm + '\'' +
+                ", serviceAlarm='" + serviceAlarm + '\'' +
+                ", agreeMap=" + agreeMap +
+                '}';
+    }
 }

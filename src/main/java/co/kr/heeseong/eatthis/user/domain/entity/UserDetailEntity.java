@@ -5,14 +5,12 @@ import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Map;
 
 
-@ToString
 @Getter
 @Entity
 @Table(name = "user_detail")
@@ -46,7 +44,7 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
     private String locationAgree;
 
     @OneToOne
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "userSeq", insertable = false, updatable = false)
     private UsersEntity usersEntity;
 
     public UserDetailEntity() {
@@ -68,7 +66,25 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
         this.locationAgree = agreeMap.get("location");
     }
 
-//    public void update(String profileImagePath, String nickName, String birthday, GenderType gender) {
+    @Override
+    public String toString() {
+        return "UserDetailEntity{" +
+                "seq=" + seq +
+                ", userSeq=" + userSeq +
+                ", lunchAlarmUseYn='" + lunchAlarmUseYn + '\'' +
+                ", lunchAlarmTime=" + lunchAlarmTime +
+                ", dinnerAlarmUseYn='" + dinnerAlarmUseYn + '\'' +
+                ", dinnerAlarmTime=" + dinnerAlarmTime +
+                ", eventAlarmUseYn='" + eventAlarmUseYn + '\'' +
+                ", serviceAlarmUseYn='" + serviceAlarmUseYn + '\'' +
+                ", userStatusType=" + userStatusType +
+                ", termsAgree='" + termsAgree + '\'' +
+                ", privacyAgree='" + privacyAgree + '\'' +
+                ", locationAgree='" + locationAgree + '\'' +
+                '}';
+    }
+
+    //    public void update(String profileImagePath, String nickName, String birthday, GenderType gender) {
 //        this.profileImagePath = profileImagePath;
 //        this.nickName = nickName;
 //        this.gender = gender;

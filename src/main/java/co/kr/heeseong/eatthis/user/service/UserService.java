@@ -4,6 +4,7 @@ import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
@@ -60,22 +61,30 @@ public class UserService {
         StringUtils.isEmail(accountUser.getUserId());
 
         //this.checkUserByEmail(accountUser.getUserId());
+
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " terms agree", "terms", accountUser.getAgreeMap().get("terms"));
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getAgreeMap().get("terms"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + "terms agree", "terms", accountUser.getAgreeMap().get("terms"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + "terms agree : " + accountUser.getAgreeMap().get("terms"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("privacy"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree", "privacy", accountUser.getAgreeMap().get("privacy"));
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getAgreeMap().get("privacy"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + "privacy agree", "privacy", accountUser.getAgreeMap().get("privacy"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + "privacy agree : " + accountUser.getAgreeMap().get("privacy"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("location"))) {
-            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + " location agree", "location", accountUser.getAgreeMap().get("location"));
-            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getAgreeMap().get("location"));
+            LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + "location agree", "location", accountUser.getAgreeMap().get("location"));
+            throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + "location agree : " + accountUser.getAgreeMap().get("location"));
         }
 
         //TODO : 비밀번호 영문/숫자 조합 8자리 이상, 20자리 이하 (기획에 없음 말해야함)
+
+        if(!accountUser.getPassword().equals(accountUser.getCheckPassword())){
+            LogUtils.errorLog(StringUtils.PASSWORD_MISMATCH);
+            throw new IllegalArgumentException(StringUtils.PASSWORD_MISMATCH);
+        }
+
+
     }
 
 //    /**

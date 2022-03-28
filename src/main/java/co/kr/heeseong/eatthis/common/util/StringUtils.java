@@ -11,9 +11,12 @@ public class StringUtils {
     static final String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     static final Pattern pattern = Pattern.compile(regx);
 
-    public static final String MUST_NOT_BE_NULL = "must not be null";
-    public static final String NOT_A_VALID_PARAMETER = "not a valid parameter";
-    public static final String NOT_A_VALID = "not a valid";
+    public static final String MUST_NOT_BE_NULL = "must not be null ";
+    public static final String NOT_A_VALID_PARAMETER = "not a valid parameter ";
+    public static final String NOT_A_VALID = "not a valid ";
+    public static final String PASSWORD_MISMATCH = "password mismatch";
+
+
 
     public static boolean isNotBlank(String str) {
         return (str != null && !str.isEmpty() && containsText(str));

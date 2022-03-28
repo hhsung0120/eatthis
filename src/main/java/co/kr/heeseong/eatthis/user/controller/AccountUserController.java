@@ -7,6 +7,7 @@ import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.heeseong.eatthis.common.service.ValidationService;
 import co.kr.heeseong.eatthis.common.util.Jwt;
+import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.service.UserService;
@@ -35,6 +36,7 @@ public class AccountUserController {
             Long userSeq = userService.insertUser(accountUser);
             return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
         } catch (Exception e) {
+            LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
