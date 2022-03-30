@@ -1,6 +1,21 @@
+drop table alarms;
+drop table user_secession;
+drop table secession_reason;
+drop table favorites_store;
+drop table user_detail;
+drop table questions;
+drop table faqs;
+drop table notices;
+drop table users;
+drop table categories;
+
+
 -- 회원
 ALTER TABLE users
 DROP PRIMARY KEY; -- 회원 기본키
+
+-- 회원 유니크 인덱스
+DROP INDEX UIX_users ON users;
 
 -- 회원
 DROP TABLE IF EXISTS users RESTRICT;
@@ -28,6 +43,12 @@ ALTER TABLE users
         PRIMARY KEY (
                      seq -- 시퀀스
             );
+
+-- 회원 유니크 인덱스
+CREATE UNIQUE INDEX UIX_users
+    ON users ( -- 회원
+              user_id ASC -- 유저아이디
+        );
 
 ALTER TABLE users
     MODIFY COLUMN seq BIGINT NOT NULL AUTO_INCREMENT COMMENT '시퀀스';

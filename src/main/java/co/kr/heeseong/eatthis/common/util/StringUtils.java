@@ -15,8 +15,8 @@ public class StringUtils {
     public static final String NOT_A_VALID_PARAMETER = "not a valid parameter ";
     public static final String NOT_A_VALID = "not a valid ";
     public static final String PASSWORD_MISMATCH = "password mismatch";
-
-
+    public static final String PASSWORD_SHORT = "password less than 8 digits";
+    public static final String PASSWORD_LONG = "password more than 20 digits";
 
     public static boolean isNotBlank(String str) {
         return (str != null && !str.isEmpty() && containsText(str));

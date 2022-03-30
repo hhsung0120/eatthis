@@ -36,7 +36,7 @@ public class AccountUserController {
             Long userSeq = userService.insertUser(accountUser);
             return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
         } catch (Exception e) {
-            LogUtils.errorLog("signUp exception", e);
+            //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
         }
     }

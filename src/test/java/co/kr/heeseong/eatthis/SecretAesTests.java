@@ -17,8 +17,8 @@ public class SecretAesTests {
     public void encText() throws Exception {
         Map<String, Object> data = new HashMap<>();
         data.put("userId", "hhsung0120@naver.com");
-        data.put("password", "1234");
-        data.put("checkPassword", "12345");
+        data.put("password", "12345678");
+        data.put("checkPassword", "12345678");
 
         Map<String, String> agreeMap = new HashMap<>();
         agreeMap.put("terms", "y");
@@ -42,7 +42,7 @@ public class SecretAesTests {
 
     @Test
     public void decText() throws Exception {
-        String decText = "ul-khGkBWJPku5AC7wT8bZwG4fyhGc5D_0NCXLOflnCelaq5GxtktElhc_bOW4RkxEAnq59vJ2ZxvjYIWfuDkw";
+        String decText = "A_N_-CJY-apgLrV5P5SgOSQie1NCpR2sfLEyvazw1j3wGWJmwdcpR5_T1SVKbD6FYrD4FVIyyR1wVPIUimIwka6Mby5diKSLiohjPhYO1tsTxmU0lfZNRkQrdBSAXsoP";
         System.out.println("decrypt : " + SecretAes.decrypt(decText));
     }
 

@@ -1,6 +1,5 @@
 package co.kr.heeseong.eatthis.user.service;
 
-import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -39,6 +37,9 @@ public class UserService {
         Long userSeq;
         try {
             userSeq = userRepository.save(accountUser.toUsersEntity()).getSeq();
+        } catch (DataIntegrityViolationException e) {
+            LogUtils.errorLog("usersId duplicate exception", "accountUser", accountUser.toUsersEntity().toString(), e);
+            throw new IllegalArgumentException("usersId duplicate");
         } catch (Exception e) {
             LogUtils.errorLog("users save exception", "accountUser", accountUser.toUsersEntity().toString(), e);
             throw new IllegalArgumentException("users save exception");
@@ -60,7 +61,7 @@ public class UserService {
     private void accountUserDataValidation(AccountUser accountUser) throws Exception {
         StringUtils.isEmail(accountUser.getUserId());
 
-        //this.checkUserByEmail(accountUser.getUserId());
+        this.existingUserId(accountUser.getUserId());
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
             LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + "terms agree", "terms", accountUser.getAgreeMap().get("terms"));
@@ -77,14 +78,22 @@ public class UserService {
             throw new IllegalArgumentException(StringUtils.NOT_A_VALID_PARAMETER + "location agree : " + accountUser.getAgreeMap().get("location"));
         }
 
-        //TODO : 비밀번호 영문/숫자 조합 8자리 이상, 20자리 이하 (기획에 없음 말해야함)
+        if (accountUser.getPassword().length() < 8) {
+            LogUtils.errorLog(StringUtils.PASSWORD_SHORT);
+            throw new IllegalArgumentException(StringUtils.PASSWORD_SHORT);
+        }
 
-        if(!accountUser.getPassword().equals(accountUser.getCheckPassword())){
+        if (accountUser.getPassword().length() > 20) {
+            LogUtils.errorLog(StringUtils.PASSWORD_LONG);
+            throw new IllegalArgumentException(StringUtils.PASSWORD_LONG);
+        }
+
+        //TODO : 비밀번호 조합 검사
+
+        if (!accountUser.getPassword().equals(accountUser.getCheckPassword())) {
             LogUtils.errorLog(StringUtils.PASSWORD_MISMATCH);
             throw new IllegalArgumentException(StringUtils.PASSWORD_MISMATCH);
         }
-
-
     }
 
 //    /**
@@ -239,13 +248,11 @@ public class UserService {
 //        return userRepository.findById(userIdx).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
 //    }
 //
-    public void checkUserByEmail(String email) {
-//        UsersEntity userEntity = userRepository.findByEmailId(email);
-//        if (userEntity != null) {
-//            throw ;
-//        }
-        Optional.ofNullable(userRepository.findByEmailId(email))
-                .orElseThrow(() -> new DataIntegrityViolationException(ErrorCodeType.USER_DUPLICATE.getValue() + " -> " + email));
+    public void existingUserId(String userId) {
+        if (userRepository.findByUserId(userId) != null) {
+            LogUtils.errorLog("existing user id", "userId", userId);
+            throw new IllegalArgumentException("existing user id : " + userId);
+        }
     }
 //
 //    public AccountUser getAccountUser() {
