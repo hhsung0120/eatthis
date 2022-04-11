@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis;
 
+import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.util.SecretAes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
@@ -14,7 +15,7 @@ public class SecretAesTests {
 
 
     @Test
-    public void encText() throws Exception {
+    public void 회원가입() throws Exception {
         Map<String, Object> data = new HashMap<>();
         data.put("userId", "hhsung0120@naver.com");
         data.put("password", "12345678");
@@ -39,6 +40,26 @@ public class SecretAesTests {
         System.out.println("encText : " + encText);
         System.out.println("decrypt : " + SecretAes.decrypt(encText));
     }
+
+    @Test
+    public void 회원가입_상세() throws Exception {
+        Map<String, Object> data = new HashMap<>();
+        data.put("nickName", "nickName");
+        data.put("gender", GenderType.MALE);
+        data.put("birthday", "1992-01-20");
+        data.put("userSeq", "6");
+
+        System.out.println("Map : " + data);
+
+        ObjectMapper obj = new ObjectMapper();
+        String json = obj.writeValueAsString(data);
+        System.out.println("json obj : " + json);
+
+        String encText = SecretAes.encrypt(json);
+        System.out.println("encText : " + encText);
+        System.out.println("decrypt : " + SecretAes.decrypt(encText));
+    }
+
 
     @Test
     public void decText() throws Exception {

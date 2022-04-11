@@ -7,14 +7,13 @@ import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.heeseong.eatthis.common.service.ValidationService;
 import co.kr.heeseong.eatthis.common.util.Jwt;
-import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.model.Secession;
 import co.kr.heeseong.eatthis.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,27 +33,37 @@ public class AccountUserController {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
-            return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
+            return ResponseEntity.ok(new ResponseData("userSeq", userSeq, Jwt.createToken(accountUser)));
         } catch (Exception e) {
             //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
 
-    @PutMapping("/signUp")
-    public ResponseEntity<ResponseTTTData> signUpDetail(@RequestBody RequestData requestData) {
+    @PutMapping("/signUpDetail")
+    public ResponseEntity<ResponseData> signUpDetail(@RequestBody RequestData requestData) throws Exception {
         try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("userIdx", "userService.updateUser(accountUser)");
-
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , data);
-            return ResponseEntity.ok(responseData);
+            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
+            Long userSeq = userService.insertUser(accountUser);
+            return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+            //LogUtils.errorLog("signUp exception", e);
+            return ResponseEntity.ok(new ResponseData(e));
         }
+
+
+//        try {
+//            Map<String, Object> data = new HashMap<>();
+//            data.put("userIdx", "userService.updateUser(accountUser)");
+//
+//            ResponseTTTData responseData = new ResponseTTTData(
+//                    StatusCode.OK.getValue()
+//                    , StatusCode.OK.toString()
+//                    , data);
+//            //return ResponseEntity.ok(responseData);
+//        } catch (Exception e) {
+//            //return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+//        }
     }
 
     @PostMapping("/login")

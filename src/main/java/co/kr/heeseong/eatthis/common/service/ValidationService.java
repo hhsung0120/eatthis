@@ -26,7 +26,7 @@ public class ValidationService {
 
         try {
             Map<String, Object> jsonMap = ObjectConverter.jsonToMap(jsonText);
-            return (T) ObjectConverter.mapToObject(jsonMap, returnTypeClass);
+            return ObjectConverter.mapToObject(jsonMap, returnTypeClass);
         } catch (Exception e) {
             LogUtils.errorLog("ObjectConverter exception", "data", data.getParameter(), e);
             throw new IllegalArgumentException("ObjectConverter exception");

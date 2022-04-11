@@ -1,18 +1,18 @@
 package co.kr.heeseong.eatthis.common.controller;
 
+import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.common.domain.model.Test;
 import co.kr.heeseong.eatthis.common.service.TestService;
-import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
-import co.kr.heeseong.eatthis.common.util.Jwt;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 
-@RestController
+@Controller
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
@@ -69,6 +69,15 @@ public class TestController {
 //            e.printStackTrace();
 //        }
         return "d";
+    }
+
+    @GetMapping("/json")
+    public ResponseEntity<ResponseData> test() throws Exception {
+        try {
+            return ResponseEntity.ok(new ResponseData("userSeq", 32));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
     }
 
 

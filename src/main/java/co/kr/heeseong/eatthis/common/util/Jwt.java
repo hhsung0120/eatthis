@@ -38,13 +38,12 @@ public class Jwt {
         Date expireDate = new Date(); // 토큰 만료 시간
         expireDate.setTime(expireDate.getTime() + expireTime);
 
-        log.info("토큰 생성!!!!!!");
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(payload)
                 .setSubject("accountUser")
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
+                .signWith(SignatureAlgorithm.HS512, secretKey.getBytes())
                 .compact();
     }
 

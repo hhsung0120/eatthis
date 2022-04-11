@@ -1,9 +1,9 @@
 package co.kr.heeseong.eatthis.user.service;
 
+import co.kr.heeseong.eatthis.common.util.Jwt;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
-import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -28,6 +30,15 @@ public class UserService {
     final UserSecessionRepository userScessionRepository;
     final HttpServletRequest request;
 
+    public Map<String, Object> saveUser(AccountUser accountUser) throws Exception{
+        Map<String, Object> res = new HashMap<>();
+        Long userSeq = this.insertUser(accountUser);
+
+        res.put("token", Jwt.createToken(accountUser));
+        res.put("userSeq", userSeq);
+        return res;
+    }
+
     @Transactional
     public Long insertUser(AccountUser accountUser) throws Exception {
         log.info("accountUser : {}", accountUser);
@@ -36,6 +47,7 @@ public class UserService {
 
         Long userSeq;
         try {
+            accountUser.setUserid(accountUser.getUserId());
             userSeq = userRepository.save(accountUser.toUsersEntity()).getSeq();
         } catch (DataIntegrityViolationException e) {
             LogUtils.errorLog("usersId duplicate exception", "accountUser", accountUser.toUsersEntity().toString(), e);
@@ -61,7 +73,7 @@ public class UserService {
     private void accountUserDataValidation(AccountUser accountUser) throws Exception {
         StringUtils.isEmail(accountUser.getUserId());
 
-        this.existingUserId(accountUser.getUserId());
+        //this.existingUserId(accountUser.getUserId());
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
             LogUtils.errorLog(StringUtils.NOT_A_VALID_PARAMETER + "terms agree", "terms", accountUser.getAgreeMap().get("terms"));
@@ -254,6 +266,7 @@ public class UserService {
             throw new IllegalArgumentException("existing user id : " + userId);
         }
     }
+
 //
 //    public AccountUser getAccountUser() {
 //        return (AccountUser) request.getAttribute("accountUser");

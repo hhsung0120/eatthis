@@ -34,6 +34,11 @@ public class AccountUser {
     public AccountUser() {
     }
 
+    public void setUserid(String userId) {
+        //개발 완료 후 지우기
+        this.userId = userId + ((int) (Math.random() * 100));
+    }
+
     public UsersEntity toUsersEntity() {
         return UsersEntity.byInsertForUsersEntity()
                 .userId(userId)
@@ -47,7 +52,6 @@ public class AccountUser {
                 .agreeMap(agreeMap)
                 .build();
     }
-
 //    public UserDetailEntity toDetailEntity(long idx) {
 //        return UserDetailEntity.builder()
 //                .idx(idx)
