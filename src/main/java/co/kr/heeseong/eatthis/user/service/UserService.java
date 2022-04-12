@@ -1,9 +1,9 @@
 package co.kr.heeseong.eatthis.user.service;
 
-import co.kr.heeseong.eatthis.common.util.Jwt;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
+import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import co.kr.heeseong.eatthis.user.domain.repository.SecessionRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserDetailRepository;
@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,18 +25,11 @@ public class UserService {
 
     final UserRepository userRepository;
     final UserDetailRepository userDetailRepository;
+
     final SecessionRepository secessionRepository;
     final UserSecessionRepository userScessionRepository;
+
     final HttpServletRequest request;
-
-    public Map<String, Object> saveUser(AccountUser accountUser) throws Exception{
-        Map<String, Object> res = new HashMap<>();
-        Long userSeq = this.insertUser(accountUser);
-
-        res.put("token", Jwt.createToken(accountUser));
-        res.put("userSeq", userSeq);
-        return res;
-    }
 
     @Transactional
     public Long insertUser(AccountUser accountUser) throws Exception {
@@ -68,6 +60,29 @@ public class UserService {
         }
 
         throw new IllegalArgumentException("insertUser exception");
+    }
+
+    @Transactional
+    public void updateUser(AccountUser accountUser) {
+        isVaildUserCheck(accountUser);
+    }
+
+    private void isVaildUserCheck(AccountUser accountUser) {
+        userRepository.findById(accountUser.getUserSeq()).ifPresentOrElse(
+                selectUser -> {
+                    AccountUser sessionUser = getAccountUser();
+
+                   // log.info("request user : {}", accountUser);
+                    log.info("session user : {}", sessionUser);
+                    log.info("select user : {}", selectUser);
+
+                  //  if(!accountUser.getUserSeq().equals(sessionUser.getUserSeq())) System.out.println("시퀀스 다름");
+                    if(!sessionUser.getUserId().equals(selectUser.getUserId())) System.out.println("아이디 다름");
+                },
+                () -> {
+                    System.out.println("존재하지 않음");
+                }
+        );
     }
 
     private void accountUserDataValidation(AccountUser accountUser) throws Exception {
@@ -106,6 +121,10 @@ public class UserService {
             LogUtils.errorLog(StringUtils.PASSWORD_MISMATCH);
             throw new IllegalArgumentException(StringUtils.PASSWORD_MISMATCH);
         }
+    }
+
+    public AccountUser getAccountUser() {
+        return (AccountUser) request.getAttribute("accountUser");
     }
 
 //    /**
@@ -267,10 +286,6 @@ public class UserService {
         }
     }
 
-//
-//    public AccountUser getAccountUser() {
-//        return (AccountUser) request.getAttribute("accountUser");
-//    }
 //
 //    public Long getAccountUserIdx() {
 //        return Optional

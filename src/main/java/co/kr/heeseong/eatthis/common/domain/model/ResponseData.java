@@ -1,7 +1,7 @@
 package co.kr.heeseong.eatthis.common.domain.model;
 
-import co.kr.heeseong.eatthis.common.util.ObjectConverter;
-import co.kr.heeseong.eatthis.common.util.SecretAes;
+import co.kr.heeseong.eatthis.common.util.Jwt;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import lombok.Getter;
 
 import java.util.LinkedHashMap;
@@ -12,47 +12,41 @@ public class ResponseData {
 
     private Object parameter;
 
-    public ResponseData() {
+    public ResponseData() throws Exception {
+        setResponseData(200, "", null);
     }
 
     public ResponseData(Exception e) throws Exception {
-        Map<String, Object> responseData = new LinkedHashMap<>();
-        responseData.put("statusCode", 500);
-        responseData.put("message", e.getMessage());
-        responseData.put("data", "");
-        setResponseDataEncrypt(responseData);
+        setResponseData(500, "", e);
     }
 
     public ResponseData(Object data) throws Exception {
-        Map<String, Object> responseData = new LinkedHashMap<>();
-        responseData.put("statusCode", 200);
-        responseData.put("message", "성공");
-        responseData.put("data", data);
-        setResponseDataEncrypt(responseData);
+        setResponseData(200, data, null);
     }
 
     public ResponseData(String key, Object value) throws Exception {
-        Map<String, Object> responseData = new LinkedHashMap<>();
-        responseData.put("statusCode", 200);
-        responseData.put("message", "성공");
-
         Map<String, Object> data = new LinkedHashMap<>();
         data.put(key, value);
-        responseData.put("data", data);
 
-        setResponseDataEncrypt(responseData);
+        setResponseData(200, data, null);
     }
 
-    public ResponseData(String key, Object value, String token) throws Exception{
-        Map<String, Object> responseData = new LinkedHashMap<>();
-        responseData.put("statusCode", 200);
-        responseData.put("message", "성공");
-
+    public ResponseData(String key, Object value, AccountUser accountUser) throws Exception {
         Map<String, Object> data = new LinkedHashMap<>();
-        data.put(key, value);
-        data.put("token", token);
 
+        accountUser.setUserSeq((Long)value);
+        data.put(key, value);
+        data.put("token", Jwt.createToken(accountUser));
+
+        setResponseData(200, data, null);
+    }
+
+    public void setResponseData(int statusCode, Object data, Exception e) throws Exception {
+        Map<String, Object> responseData = new LinkedHashMap<>();
+        responseData.put("statusCode", statusCode);
+        responseData.put("message", e != null ? e.getMessage() : "성공");
         responseData.put("data", data);
+
         setResponseDataEncrypt(responseData);
     }
 

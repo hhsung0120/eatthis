@@ -13,7 +13,6 @@ import co.kr.heeseong.eatthis.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,7 +32,7 @@ public class AccountUserController {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
-            return ResponseEntity.ok(new ResponseData("userSeq", userSeq, Jwt.createToken(accountUser)));
+            return ResponseEntity.ok(new ResponseData("userSeq", userSeq, accountUser));
         } catch (Exception e) {
             //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
@@ -44,8 +43,8 @@ public class AccountUserController {
     public ResponseEntity<ResponseData> signUpDetail(@RequestBody RequestData requestData) throws Exception {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
-            Long userSeq = userService.insertUser(accountUser);
-            return ResponseEntity.ok(new ResponseData("userSeq", userSeq));
+            userService.updateUser(accountUser);
+            return ResponseEntity.ok(new ResponseData("userSeq", "userSeq"));
         } catch (Exception e) {
             //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));

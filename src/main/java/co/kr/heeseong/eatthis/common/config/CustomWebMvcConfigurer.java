@@ -27,9 +27,9 @@ public class CustomWebMvcConfigurer extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenCheckInterceptor())
                 .excludePathPatterns("/users/signUp")
-                //.excludePathPatterns("/users/signUpDetail")
                 .excludePathPatterns("/users/login")
                 .excludePathPatterns("/users/invalidToken")
+                //.excludePathPatterns("/users/signUpDetail") //TODO 개발 끝나고 주석
                 .excludePathPatterns("/docs/**")
                 .excludePathPatterns("/api/**")
                 .excludePathPatterns("/test/**")

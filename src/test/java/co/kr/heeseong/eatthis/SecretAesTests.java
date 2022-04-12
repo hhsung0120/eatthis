@@ -47,7 +47,7 @@ public class SecretAesTests {
         data.put("nickName", "nickName");
         data.put("gender", GenderType.MALE);
         data.put("birthday", "1992-01-20");
-        data.put("userSeq", "6");
+        data.put("userSeq", "27");
 
         System.out.println("Map : " + data);
 

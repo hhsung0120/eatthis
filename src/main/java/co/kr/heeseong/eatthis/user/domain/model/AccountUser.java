@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 public class AccountUser {
 
-    private Long seq;
+    private Long userSeq;
     private String userId;
     private String password;
     private String checkPassword;
@@ -34,9 +34,17 @@ public class AccountUser {
     public AccountUser() {
     }
 
+    public AccountUser(Long test) {
+        this.userSeq = test;
+    }
+
+    //TODO 개발 완료 후 지우기
     public void setUserid(String userId) {
-        //개발 완료 후 지우기
         this.userId = userId + ((int) (Math.random() * 100));
+    }
+
+    public void setUserSeq(Long userSeq){
+        this.userSeq = userSeq;
     }
 
     public UsersEntity toUsersEntity() {
@@ -90,7 +98,7 @@ public class AccountUser {
     @Override
     public String toString() {
         return "AccountUser{" +
-                "seq=" + seq +
+                "userSeq=" + userSeq +
                 ", userId='" + userId + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", gender=" + gender +
