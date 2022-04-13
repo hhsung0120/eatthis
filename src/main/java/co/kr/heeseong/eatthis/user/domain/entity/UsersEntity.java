@@ -3,14 +3,15 @@ package co.kr.heeseong.eatthis.user.domain.entity;
 
 import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.Enum.SignUpType;
+import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.common.domain.entity.TimeAndUserIdEntity;
+import co.kr.heeseong.eatthis.user.domain.model.AccountUser;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Value;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
 
 
 @Getter
@@ -53,18 +54,16 @@ public class UsersEntity extends TimeAndUserIdEntity {
         this.signUpType = SignUpType.DEFAULT;
     }
 
+    public void updateUserInfo(AccountUser user) {
+        this.nickName = user.getNickName();
+        this.gender = user.getGender();
+        this.birthday = LocalDate.parse(user.getBirthday(), DateTimeFormatter.ISO_DATE);
+        this.userDetailEntity.updateUserStatusType(UserStatusType.NORMAL);
+        setModifiedId("system");
+    }
+
     @Override
     public String toString() {
-        return "UsersEntity{" +
-                "seq=" + seq +
-                ", userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", gender=" + gender +
-                ", birthday=" + birthday +
-                ", profileImagePath='" + profileImagePath + '\'' +
-                ", signUpType=" + signUpType +
-                ", userDetailEntity=" + userDetailEntity +
-                '}';
+        return "UsersEntity{" + "seq=" + seq + ", userId='" + userId + '\'' + ", password='" + password + '\'' + ", nickName='" + nickName + '\'' + ", gender=" + gender + ", birthday=" + birthday + ", profileImagePath='" + profileImagePath + '\'' + ", signUpType=" + signUpType + ", userDetailEntity=" + userDetailEntity + '}';
     }
 }

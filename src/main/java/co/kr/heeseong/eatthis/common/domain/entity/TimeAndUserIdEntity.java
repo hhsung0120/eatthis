@@ -36,4 +36,8 @@ public class TimeAndUserIdEntity {
     public TimeAndUserIdEntity(String createdId) {
         this.createdId = createdId;
     }
+
+    public void setModifiedId(String modifiedId){
+        this.modifiedId = modifiedId;
+    }
 }

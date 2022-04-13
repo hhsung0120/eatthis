@@ -43,7 +43,8 @@ public class AccountUser {
         this.userId = userId + ((int) (Math.random() * 100));
     }
 
-    public void setUserSeq(Long userSeq){
+    //TODO 개발 완료 후 지우기
+    public void setUserSeq(Long userSeq) {
         this.userSeq = userSeq;
     }
 

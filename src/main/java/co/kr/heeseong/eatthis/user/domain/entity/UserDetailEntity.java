@@ -66,6 +66,11 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
         this.locationAgree = agreeMap.get("location");
     }
 
+    public void updateUserStatusType(UserStatusType userStatusType){
+        this.userStatusType = userStatusType;
+        setModifiedId("system");
+    }
+
     @Override
     public String toString() {
         return "UserDetailEntity{" +

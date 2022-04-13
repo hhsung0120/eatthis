@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -64,23 +63,34 @@ public class UserService {
 
     @Transactional
     public void updateUser(AccountUser accountUser) {
-        isVaildUserCheck(accountUser);
+        isVaildUserAndTokenCheck(accountUser);
+
+        UsersEntity usersEntity = userRepository.findById(accountUser.getUserSeq()).get();
+        usersEntity.updateUserInfo(accountUser);
     }
 
-    private void isVaildUserCheck(AccountUser accountUser) {
+    private void isVaildUserAndTokenCheck(AccountUser accountUser) {
         userRepository.findById(accountUser.getUserSeq()).ifPresentOrElse(
                 selectUser -> {
                     AccountUser sessionUser = getAccountUser();
 
-                   // log.info("request user : {}", accountUser);
-                    log.info("session user : {}", sessionUser);
-                    log.info("select user : {}", selectUser);
+                    if (!accountUser.getUserSeq().equals(sessionUser.getUserSeq())) {
+                        log.error("request != session");
+                        log.error("request user : {}", accountUser);
+                        log.error("session user : {}", sessionUser);
+                        throw new IllegalArgumentException("not a valid request");
+                    }
 
-                  //  if(!accountUser.getUserSeq().equals(sessionUser.getUserSeq())) System.out.println("시퀀스 다름");
-                    if(!sessionUser.getUserId().equals(selectUser.getUserId())) System.out.println("아이디 다름");
+                    if (!sessionUser.getUserId().equals(selectUser.getUserId())) {
+                        log.error("session != select");
+                        log.error("session user : {}", sessionUser);
+                        log.error("select user : {}", selectUser);
+                        throw new IllegalArgumentException("not a valid request");
+                    }
                 },
                 () -> {
-                    System.out.println("존재하지 않음");
+                    log.error("non-existent user userSeq : {}", accountUser.getUserSeq());
+                    throw new IllegalArgumentException("non-existent user");
                 }
         );
     }
