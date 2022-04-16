@@ -44,25 +44,10 @@ public class AccountUserController {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             userService.updateUser(accountUser);
-            return ResponseEntity.ok(new ResponseData("userSeq", "userSeq"));
+            return ResponseEntity.ok(new ResponseData("userSeq", accountUser.getUserSeq()));
         } catch (Exception e) {
-            //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
         }
-
-
-//        try {
-//            Map<String, Object> data = new HashMap<>();
-//            data.put("userIdx", "userService.updateUser(accountUser)");
-//
-//            ResponseTTTData responseData = new ResponseTTTData(
-//                    StatusCode.OK.getValue()
-//                    , StatusCode.OK.toString()
-//                    , data);
-//            //return ResponseEntity.ok(responseData);
-//        } catch (Exception e) {
-//            //return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-//        }
     }
 
     @PostMapping("/login")

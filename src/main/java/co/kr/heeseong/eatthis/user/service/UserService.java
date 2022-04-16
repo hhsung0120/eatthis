@@ -1,5 +1,6 @@
 package co.kr.heeseong.eatthis.user.service;
 
+import co.kr.heeseong.eatthis.common.Enum.UserStatusType;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
@@ -86,6 +87,11 @@ public class UserService {
                         log.error("session user : {}", sessionUser);
                         log.error("select user : {}", selectUser);
                         throw new IllegalArgumentException("not a valid request");
+                    }
+
+                    if(!selectUser.getUserDetailEntity().getUserStatusType().equals(UserStatusType.SIGNING)){
+                        log.error("you are already a registered user");
+                        throw new IllegalArgumentException("already a registered user");
                     }
                 },
                 () -> {
