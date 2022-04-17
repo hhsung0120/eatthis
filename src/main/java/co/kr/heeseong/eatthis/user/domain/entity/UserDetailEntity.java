@@ -50,7 +50,7 @@ public class UserDetailEntity extends TimeAndUserIdEntity {
     public UserDetailEntity() {
     }
 
-    @Builder(builderClassName = "byInsertForUserDetailEntity", builderMethodName = "byInsertForUserDetailEntity")
+    @Builder(builderClassName = "insertForUserDetailEntity", builderMethodName = "insertForUserDetailEntity")
     public UserDetailEntity(Long userSeq, Map<String, String> agreeMap) {
         super("system");
         this.userSeq = userSeq;

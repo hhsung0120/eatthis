@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.store.service;
 
-import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.common.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.common.Enum.TableCodeType;
 import co.kr.heeseong.eatthis.common.domain.model.CommonFile;
 import co.kr.heeseong.eatthis.common.domain.repository.FileRepository;
@@ -61,8 +61,8 @@ public class StoreService {
     }
 
     private long insertReview(Review review) {
-        userDetailRepository.findById(0L).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + review.getIdx()));
-        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCodeType.STORE_NOT_FOUND.getValue() + " -> " + review.getStoreIdx()));
+        userDetailRepository.findById(0L).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessageEn() + " -> " + review.getIdx()));
+        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCode.STORE_NOT_FOUND.getMessageEn() + " -> " + review.getStoreIdx()));
 
         System.out.println(review.toString());
         //없는 메뉴도 검사할것
@@ -82,7 +82,7 @@ public class StoreService {
                         fileRepository.save(commonFile.toEntity());
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException(ErrorCodeType.FILE_UPLOAD_ERROR.getValue());
+                    throw new RuntimeException(ErrorCode.FILE_UPLOAD_ERROR.getMessageEn());
                 }
             });
         }
@@ -100,7 +100,7 @@ public class StoreService {
      * @return
      */
     public List<Review> getReviewList(long userIdx) {
-        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.USER_NOT_FOUND.getValue() + " -> " + userIdx));
+        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageEn() + " -> " + userIdx));
         return reviewMapper.selectReviewList(userIdx);
     }
 }

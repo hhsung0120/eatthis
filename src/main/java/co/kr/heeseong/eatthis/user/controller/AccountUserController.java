@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.user.controller;
 
-import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.common.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
 import co.kr.heeseong.eatthis.common.domain.model.RequestData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
@@ -34,7 +34,6 @@ public class AccountUserController {
             Long userSeq = userService.insertUser(accountUser);
             return ResponseEntity.ok(new ResponseData("userSeq", userSeq, accountUser));
         } catch (Exception e) {
-            //LogUtils.errorLog("signUp exception", e);
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
@@ -171,9 +170,9 @@ public class AccountUserController {
             return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCodeType.INVALID_ARGUMENT.getValue() + "-> " + e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.INVALID_ARGUMENT.getMessageEn() + "-> " + e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCodeType.ETC_ERROR.getValue() + "-> " + e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.ETC_ERROR.getMessageEn() + "-> " + e.getMessage()));
         }
     }
 
@@ -181,7 +180,7 @@ public class AccountUserController {
     public ResponseEntity<ResponseTTTData> invalidToken() {
         ResponseTTTData responseData = new ResponseTTTData(
                 StatusCode.SERVER_ERROR.getValue()
-                , ErrorCodeType.INVALID_TOKEN.getValue()
+                , ErrorCode.INVALID_TOKEN.getMessageEn()
         );
 
         return ResponseEntity.ok(responseData);

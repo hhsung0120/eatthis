@@ -49,14 +49,14 @@ public class AccountUser {
     }
 
     public UsersEntity toUsersEntity() {
-        return UsersEntity.byInsertForUsersEntity()
+        return UsersEntity.insertForUsersEntity()
                 .userId(userId)
                 .password(SecretSha.encryptPassword(password))
                 .build();
     }
 
     public UserDetailEntity toUserDetailEntity(Long userSeq) {
-        return UserDetailEntity.byInsertForUserDetailEntity()
+        return UserDetailEntity.insertForUserDetailEntity()
                 .userSeq(userSeq)
                 .agreeMap(agreeMap)
                 .build();

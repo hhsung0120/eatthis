@@ -1,6 +1,6 @@
 package co.kr.heeseong.eatthis.questions.service;
 
-import co.kr.heeseong.eatthis.common.Enum.ErrorCodeType;
+import co.kr.heeseong.eatthis.common.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.questions.domain.entity.QuestionsEntity;
 import co.kr.heeseong.eatthis.questions.domain.model.Questions;
 import co.kr.heeseong.eatthis.questions.domain.repository.QuestionsRepository;
@@ -59,14 +59,14 @@ public class QuestionsService {
             questions.setUserIdx(0L);
             questionsRepository.save(questions.toEntity());
         } catch (Exception e) {
-            throw new IllegalArgumentException(ErrorCodeType.INVALID_ARGUMENT.getValue());
+            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue());
         }
 
     }
 
     public Questions getQuestionsDetail(Long questionsIdx) {
         QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorCodeType.POST_NOT_FOUND.getValue()));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getValue()));
 
         return questionsEntity.toValueObject("");
     }

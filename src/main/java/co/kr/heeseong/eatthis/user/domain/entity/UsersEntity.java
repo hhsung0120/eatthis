@@ -46,7 +46,7 @@ public class UsersEntity extends TimeAndUserIdEntity {
     public UsersEntity() {
     }
 
-    @Builder(builderClassName = "byInsertForUsersEntity", builderMethodName = "byInsertForUsersEntity")
+    @Builder(builderClassName = "insertForUsersEntity", builderMethodName = "insertForUsersEntity")
     public UsersEntity(String userId, String password) {
         super("system");
         this.userId = userId;
