@@ -59,15 +59,16 @@ public class QuestionsService {
             questions.setUserIdx(0L);
             questionsRepository.save(questions.toEntity());
         } catch (Exception e) {
-            throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue());
+            //throw new IllegalArgumentException(ErrorCode.INVALID_ARGUMENT.getValue());
         }
 
     }
 
     public Questions getQuestionsDetail(Long questionsIdx) {
-        QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getValue()));
+//        QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
+//                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getValue()));
 
-        return questionsEntity.toValueObject("");
+//        return questionsEntity.toValueObject("");
+        return new Questions();
     }
 }

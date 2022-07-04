@@ -2,7 +2,8 @@ package co.kr.heeseong.eatthis.common.interceptor;
 
 import co.kr.heeseong.eatthis.common.util.Jwt;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.servlet.AsyncHandlerInterceptor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
 @Log4j2
-public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
+public class TokenCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,12 +29,12 @@ public class TokenCheckInterceptor implements AsyncHandlerInterceptor {
 
         try {
             if (token == null || "".equals(token)) {
-                response.sendRedirect("/users/invalidToken");
+                response.sendRedirect("/users/invalid-token");
                 return false;
             }
             request.setAttribute("accountUser", Jwt.verification(token));
         } catch (Exception e) {
-            response.sendRedirect("/users/invalidToken");
+            response.sendRedirect("/users/invalid-token");
             return false;
         }
 

@@ -5,12 +5,10 @@ import co.kr.heeseong.eatthis.common.util.SecretAes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootTest
 public class SecretAesTests {
 
 
@@ -27,7 +25,7 @@ public class SecretAesTests {
         agreeMap.put("location", "y");
         data.put("agreeMap", agreeMap);
 
-        Map<String, String> agree = (Map<String, String>)data.get("agreeList");
+        Map<String, String> agree = (Map<String, String>) data.get("agreeList");
         System.out.println("agree : " + agree);
 
         System.out.println("Map : " + data);

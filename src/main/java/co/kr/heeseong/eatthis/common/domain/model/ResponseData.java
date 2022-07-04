@@ -10,38 +10,40 @@ import java.util.Map;
 @Getter
 public class ResponseData {
 
-    private Object parameter;
+    private int statusCode;
+    private String message;
+    private Object data;
 
-    public ResponseData() throws Exception {
+    public ResponseData() {
         setResponseData(200, "", null);
     }
 
-    public ResponseData(Exception e) throws Exception {
+    public ResponseData(Exception e) {
         setResponseData(500, "", e);
     }
 
-    public ResponseData(Object data) throws Exception {
+    public ResponseData(Object data) {
         setResponseData(200, data, null);
     }
 
-    public ResponseData(String key, Object value) throws Exception {
+    public ResponseData(String key, Object value) {
         Map<String, Object> data = new LinkedHashMap<>();
         data.put(key, value);
 
         setResponseData(200, data, null);
     }
 
-    public ResponseData(String key, Object value, AccountUser accountUser) throws Exception {
+    public ResponseData(String key, Object value, AccountUser accountUser) {
         Map<String, Object> data = new LinkedHashMap<>();
 
-        accountUser.setUserSeq((Long)value);
+        accountUser.setUserSeq((Long) value);
         data.put(key, value);
         data.put("token", Jwt.createToken(accountUser));
 
         setResponseData(200, data, null);
     }
 
-    public void setResponseData(int statusCode, Object data, Exception e) throws Exception {
+    public void setResponseData(int statusCode, Object data, Exception e) {
         Map<String, Object> responseData = new LinkedHashMap<>();
         responseData.put("statusCode", statusCode);
         responseData.put("message", e != null ? e.getMessage() : "성공");
@@ -50,9 +52,12 @@ public class ResponseData {
         setResponseDataEncrypt(responseData);
     }
 
-    public void setResponseDataEncrypt(Map<String, Object> responseData) throws Exception {
+    public void setResponseDataEncrypt(Map<String, Object> responseData) {
         //this.parameter = SecretAes.encrypt(ObjectConverter.mapToJson(responseData));
-        this.parameter = responseData;
+        //this.parameter = responseData;
+        statusCode = Integer.parseInt(responseData.get("statusCode").toString());
+        message = responseData.get("message").toString();
+        data = responseData.get("data");
     }
 
 }

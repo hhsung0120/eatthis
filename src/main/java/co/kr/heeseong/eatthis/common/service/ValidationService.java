@@ -1,9 +1,7 @@
 package co.kr.heeseong.eatthis.common.service;
 
-import co.kr.heeseong.eatthis.common.domain.model.RequestData;
 import co.kr.heeseong.eatthis.common.util.LogUtils;
 import co.kr.heeseong.eatthis.common.util.ObjectConverter;
-import co.kr.heeseong.eatthis.common.util.SecretAes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +11,22 @@ import java.util.Map;
 @Service
 public class ValidationService {
 
-    public <T> T validation(RequestData data, Class<T> returnTypeClass) {
-        log.info("request parameter : {}", data.getParameter());
+    public <T> T validation(Map<String, Object> data, Class<T> returnTypeClass) {
+        log.info("request parameter : {}", data.toString());
 
-        String jsonText;
-        try {
-            jsonText = SecretAes.decrypt(data.getParameter());
-        } catch (Exception e) {
-            LogUtils.errorLog("decrypt exception", "data", data.getParameter(), e);
-            throw new IllegalArgumentException("decrypt exception");
-        }
+//        String jsonText;
+//        try {
+//            jsonText = SecretAes.decrypt(data.getParameter());
+//        } catch (Exception e) {
+//            LogUtils.errorLog("decrypt exception", "data", data.getParameter(), e);
+//            throw new IllegalArgumentException("decrypt exception");
+//        }
 
         try {
-            Map<String, Object> jsonMap = ObjectConverter.jsonToMap(jsonText);
+            Map<String, Object> jsonMap = ObjectConverter.objectToMap(data);
             return ObjectConverter.mapToObject(jsonMap, returnTypeClass);
         } catch (Exception e) {
-            LogUtils.errorLog("ObjectConverter exception", "data", data.getParameter(), e);
+            LogUtils.errorLog("ObjectConverter exception", "data", data.toString(), e);
             throw new IllegalArgumentException("ObjectConverter exception");
         }
     }

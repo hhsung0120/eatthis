@@ -108,18 +108,18 @@ public class UserService {
         //this.existingUserId(accountUser.getUserId());
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
-            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + "terms agree", "terms", accountUser.getAgreeMap().get("terms"));
-            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + "terms agree : " + accountUser.getAgreeMap().get("terms"));
+            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + " terms agree", "terms", accountUser.getAgreeMap().get("terms"));
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + " terms agree : " + accountUser.getAgreeMap().get("terms"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("privacy"))) {
-            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + "privacy agree", "privacy", accountUser.getAgreeMap().get("privacy"));
-            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + "privacy agree : " + accountUser.getAgreeMap().get("privacy"));
+            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + " privacy agree", "privacy", accountUser.getAgreeMap().get("privacy"));
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + " privacy agree : " + accountUser.getAgreeMap().get("privacy"));
         }
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("location"))) {
-            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + "location agree", "location", accountUser.getAgreeMap().get("location"));
-            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + "location agree : " + accountUser.getAgreeMap().get("location"));
+            LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + " location agree", "location", accountUser.getAgreeMap().get("location"));
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getAgreeMap().get("location"));
         }
 
         if (accountUser.getPassword().length() < 8) {

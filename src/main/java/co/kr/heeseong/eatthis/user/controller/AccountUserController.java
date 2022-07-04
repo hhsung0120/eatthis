@@ -2,7 +2,6 @@ package co.kr.heeseong.eatthis.user.controller;
 
 import co.kr.heeseong.eatthis.common.Enum.ErrorCode;
 import co.kr.heeseong.eatthis.common.Enum.StatusCode;
-import co.kr.heeseong.eatthis.common.domain.model.RequestData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseData;
 import co.kr.heeseong.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.heeseong.eatthis.common.service.ValidationService;
@@ -24,11 +23,11 @@ import java.util.Map;
 @RequestMapping("/users")
 public class AccountUserController {
 
-    final ValidationService validationService;
-    final UserService userService;
+    private final ValidationService validationService;
+    private final UserService userService;
 
-    @PostMapping("/signUp")
-    public ResponseEntity<ResponseData> signUp(@RequestBody RequestData requestData) throws Exception {
+    @PostMapping("/sign-up")
+    public ResponseEntity<ResponseData> signUp(@RequestBody Map<String, Object> requestData) throws Exception {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
@@ -38,8 +37,8 @@ public class AccountUserController {
         }
     }
 
-    @PutMapping("/signUpDetail")
-    public ResponseEntity<ResponseData> signUpDetail(@RequestBody RequestData requestData) throws Exception {
+    @PutMapping("/sign-up-detail")
+    public ResponseEntity<ResponseData> signUpDetail(@RequestBody Map<String, Object> requestData) throws Exception {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             userService.updateUser(accountUser);
@@ -176,8 +175,9 @@ public class AccountUserController {
         }
     }
 
-    @GetMapping("/invalidToken")
+    @GetMapping("/invalid-token")
     public ResponseEntity<ResponseTTTData> invalidToken() {
+        log.info("타긴 타냐");
         ResponseTTTData responseData = new ResponseTTTData(
                 StatusCode.SERVER_ERROR.getValue()
                 , ErrorCode.INVALID_TOKEN.getMessageEn()
