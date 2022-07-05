@@ -3,16 +3,24 @@ package co.kr.heeseong.eatthis.common.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 루트로 들어올 경우 리다이렉트 todo : 설정으로 뺄거임
- */
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
     @GetMapping("")
-    public String index() {
-        return "redirect:/api/description";
+    public String main() {
+        return "redirect:index";
+    }
+
+    @GetMapping("/index")
+    public Map<String, String> index() {
+        Map<String, String> result = new HashMap<>();
+        result.put("message", "main");
+        return result;
     }
 }

@@ -27,7 +27,7 @@ public class AccountUserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<ResponseData> signUp(@RequestBody Map<String, Object> requestData) throws Exception {
+    public ResponseEntity<ResponseData> signUp(@RequestBody Map<String, Object> requestData) {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
@@ -37,8 +37,19 @@ public class AccountUserController {
         }
     }
 
+    @GetMapping("/nick-name/check")
+    public ResponseEntity<ResponseData> nickNameCheck(@RequestBody Map<String, Object> requestData) {
+        try {
+            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
+            boolean result = userService.checkNickName(accountUser);
+            return ResponseEntity.ok(new ResponseData("result", result, accountUser));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
+    }
+
     @PutMapping("/sign-up-detail")
-    public ResponseEntity<ResponseData> signUpDetail(@RequestBody Map<String, Object> requestData) throws Exception {
+    public ResponseEntity<ResponseData> signUpDetail(@RequestBody Map<String, Object> requestData) {
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             userService.updateUser(accountUser);
@@ -177,7 +188,6 @@ public class AccountUserController {
 
     @GetMapping("/invalid-token")
     public ResponseEntity<ResponseTTTData> invalidToken() {
-        log.info("타긴 타냐");
         ResponseTTTData responseData = new ResponseTTTData(
                 StatusCode.SERVER_ERROR.getValue()
                 , ErrorCode.INVALID_TOKEN.getMessageEn()

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -90,7 +91,7 @@ public class UserService {
                         throw new IllegalArgumentException("not a valid request");
                     }
 
-                    if(!selectUser.getUserDetailEntity().getUserStatusType().equals(UserStatusType.SIGNING)){
+                    if (!selectUser.getUserDetailEntity().getUserStatusType().equals(UserStatusType.SIGNING)) {
                         log.error("you are already a registered user");
                         throw new IllegalArgumentException("already a registered user");
                     }
@@ -133,7 +134,6 @@ public class UserService {
         }
 
         //TODO : 비밀번호 조합 검사
-
         if (!accountUser.getPassword().equals(accountUser.getCheckPassword())) {
             LogUtils.errorLog(ErrorCode.PASSWORD_MISMATCH.getMessageEn());
             throw new IllegalArgumentException(ErrorCode.PASSWORD_MISMATCH.getMessageEn());
@@ -144,6 +144,17 @@ public class UserService {
         return (AccountUser) request.getAttribute("accountUser");
     }
 
+    public boolean checkNickName(AccountUser accountUser) {
+        String nickName = accountUser.getNickName();
+
+        //TODO : 나중에 닉네임 벨리데이션 만들어야함
+        if (nickName == null || "".equals(nickName) || nickName.length() > 10) {
+            log.info("invalid nick name : {}", nickName);
+            throw new IllegalArgumentException("invalid nick name : [" + nickName + "]");
+        }
+
+        return userRepository.findByNickName(nickName) == null;
+    }
 //    /**
 //     * 사용자 정보 호출
 //     *
@@ -302,6 +313,7 @@ public class UserService {
             throw new IllegalArgumentException("existing user id : " + userId);
         }
     }
+
 
 //
 //    public Long getAccountUserIdx() {
