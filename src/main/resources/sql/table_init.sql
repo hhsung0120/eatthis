@@ -50,7 +50,8 @@ ALTER TABLE users
 -- 회원 유니크 인덱스
 CREATE UNIQUE INDEX UIX_users
     ON users ( -- 회원
-              user_id ASC -- 유저아이디
+              user_id ASC,      -- 유저아이디
+              sign_up_type ASC  -- 회원가입 구분
         );
 
 -- 회원 유니크 인덱스2
