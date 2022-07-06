@@ -47,11 +47,16 @@ public class UsersEntity extends TimeAndUserIdEntity {
     }
 
     @Builder(builderClassName = "insertForUsersEntity", builderMethodName = "insertForUsersEntity")
-    public UsersEntity(String userId, String password) {
+    public UsersEntity(String userId, String password, String nickName, GenderType gender, LocalDate birthday
+                    , String profileImagePath, SignUpType signUpType) {
         super("system");
         this.userId = userId;
         this.password = password;
-        this.signUpType = SignUpType.DEFAULT;
+        this.nickName = nickName;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.profileImagePath = profileImagePath;
+        this.signUpType = signUpType;
     }
 
     public void updateUserInfo(AccountUser user) {

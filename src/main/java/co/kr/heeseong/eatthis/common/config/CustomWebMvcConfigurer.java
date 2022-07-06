@@ -30,9 +30,10 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/", "/index")
                 .excludePathPatterns("/users/sign-up")
                 .excludePathPatterns("/users/nick-name/check")
+                .excludePathPatterns("/users/login")
                 //.excludePathPatterns("/users/signUpDetail") //TODO 개발 끝나고 주석풀지 고민
                 .excludePathPatterns("/users/invalid-token")
-                .excludePathPatterns("/users/login")
+
         ;
 
     }

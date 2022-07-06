@@ -36,7 +36,6 @@ public class ResponseData {
     public ResponseData(String key, Object value, AccountUser accountUser) {
         Map<String, Object> data = new LinkedHashMap<>();
 
-        accountUser.setUserSeq((Long) value);
         data.put(key, value);
         data.put("token", Jwt.createToken(accountUser));
 

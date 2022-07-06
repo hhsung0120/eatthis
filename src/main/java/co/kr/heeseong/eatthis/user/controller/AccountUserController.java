@@ -28,6 +28,8 @@ public class AccountUserController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<ResponseData> signUp(@RequestBody Map<String, Object> requestData) {
+        log.info("/sign-up request parameter : {}", requestData.toString());
+
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
@@ -39,42 +41,30 @@ public class AccountUserController {
 
     @GetMapping("/nick-name/check")
     public ResponseEntity<ResponseData> nickNameCheck(@RequestBody Map<String, Object> requestData) {
+        log.info("/nick-name/check request parameter : {}", requestData.toString());
+
         try {
             AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             boolean result = userService.checkNickName(accountUser);
-            return ResponseEntity.ok(new ResponseData("result", result, accountUser));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseData(e));
-        }
-    }
-
-    @PutMapping("/sign-up-detail")
-    public ResponseEntity<ResponseData> signUpDetail(@RequestBody Map<String, Object> requestData) {
-        try {
-            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
-            userService.updateUser(accountUser);
-            return ResponseEntity.ok(new ResponseData("userSeq", accountUser.getUserSeq()));
+            return ResponseEntity.ok(new ResponseData("result", result));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseTTTData> login(@RequestBody AccountUser accountUser) {
-        log.info("AccountUser Info : {}", "accountUser.getId()");
-        try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("user", "userService.loginProcess(accountUser)");
-            data.put("token", Jwt.createToken((AccountUser) data.get("user")));
+    public ResponseEntity<ResponseData> login(@RequestBody Map<String, Object> requestData) {
+        log.info("/login request parameter : {}", requestData.toString());
 
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , data);
-            return ResponseEntity.ok(responseData);
+        try {
+            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("user", userService.loginProcess(accountUser));
+            data.put("token", Jwt.createToken((AccountUser) data.get("user")));
+            return ResponseEntity.ok(new ResponseData("data", data));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e));
         }
     }
 

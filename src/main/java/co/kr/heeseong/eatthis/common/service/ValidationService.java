@@ -12,8 +12,6 @@ import java.util.Map;
 public class ValidationService {
 
     public <T> T validation(Map<String, Object> data, Class<T> returnTypeClass) {
-        log.info("request parameter : {}", data.toString());
-
 //        String jsonText;
 //        try {
 //            jsonText = SecretAes.decrypt(data.getParameter());

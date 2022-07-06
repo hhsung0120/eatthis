@@ -13,7 +13,6 @@ import co.kr.heeseong.eatthis.user.domain.repository.UserRepository;
 import co.kr.heeseong.eatthis.user.domain.repository.UserSecessionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,17 +34,11 @@ public class UserService {
 
     @Transactional
     public Long insertUser(AccountUser accountUser) throws Exception {
-        log.info("accountUser : {}", accountUser);
-
         accountUserDataValidation(accountUser);
 
         Long userSeq;
         try {
-            accountUser.setUserid(accountUser.getUserId());
             userSeq = userRepository.save(accountUser.toUsersEntity()).getSeq();
-        } catch (DataIntegrityViolationException e) {
-            LogUtils.errorLog("usersId duplicate exception", "accountUser", accountUser.toUsersEntity().toString(), e);
-            throw new IllegalArgumentException("usersId duplicate");
         } catch (Exception e) {
             LogUtils.errorLog("users save exception", "accountUser", accountUser.toUsersEntity().toString(), e);
             throw new IllegalArgumentException("users save exception");
@@ -106,6 +99,7 @@ public class UserService {
     private void accountUserDataValidation(AccountUser accountUser) throws Exception {
         StringUtils.isEmail(accountUser.getUserId());
 
+        //TODO 가입 타입도 검사
         //this.existingUserId(accountUser.getUserId());
 
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("terms"))) {
@@ -121,22 +115,6 @@ public class UserService {
         if (!"y".equalsIgnoreCase(accountUser.getAgreeMap().get("location"))) {
             LogUtils.errorLog(ErrorCode.NOT_A_VALID_PARAMETER + " location agree", "location", accountUser.getAgreeMap().get("location"));
             throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_PARAMETER + " location agree : " + accountUser.getAgreeMap().get("location"));
-        }
-
-        if (accountUser.getPassword().length() < 8) {
-            LogUtils.errorLog(ErrorCode.PASSWORD_SHORT.getMessageEn());
-            throw new IllegalArgumentException(ErrorCode.PASSWORD_SHORT.getMessageEn());
-        }
-
-        if (accountUser.getPassword().length() > 20) {
-            LogUtils.errorLog(ErrorCode.PASSWORD_LONG.getMessageEn());
-            throw new IllegalArgumentException(ErrorCode.PASSWORD_LONG.getMessageEn());
-        }
-
-        //TODO : 비밀번호 조합 검사
-        if (!accountUser.getPassword().equals(accountUser.getCheckPassword())) {
-            LogUtils.errorLog(ErrorCode.PASSWORD_MISMATCH.getMessageEn());
-            throw new IllegalArgumentException(ErrorCode.PASSWORD_MISMATCH.getMessageEn());
         }
     }
 
@@ -155,6 +133,22 @@ public class UserService {
 
         return userRepository.findByNickName(nickName) == null;
     }
+
+    public AccountUser loginProcess(AccountUser accountUser) {
+        try {
+            StringUtils.isEmail(accountUser.getUserId());
+        } catch (Exception e) {
+            log.error(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageEn() + " {}", accountUser.getUserId());
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageEn());
+        }
+
+        UsersEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(accountUser.getUserId())).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageEn()));
+        //Optional.ofNullable(userRepository.findByIdAndPassword(accountUser.getId(), accountUser.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
+        //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
+        return new AccountUser(userEntity);
+    }
+
+
 //    /**
 //     * 사용자 정보 호출
 //     *
@@ -174,13 +168,8 @@ public class UserService {
 //        return userDetailEntity.getIdx();
 //    }
 //
-//    public AccountUser loginProcess(AccountUser accountUser) {
-//        UsersEntity userEntity = Optional.ofNullable(userRepository.findByEmailId(accountUser.getId())).orElseThrow(() -> new RuntimeException(ErrorCodeType.USER_NOT_FOUND.getValue()));
-//        Optional.ofNullable(userRepository.findByIdAndPassword(accountUser.getId(), accountUser.getPassword())).orElseThrow(() -> new RuntimeException(ErrorCodeType.INVALID_PASSWORD.getValue()));
-//        //로그인에 성공하면 메인메뉴 데이터 넘겨줘야함
-//        return new AccountUser(userEntity);
-//    }
-//
+
+    //
 //    /**
 //     * 점심 알람 업데이트
 //     *

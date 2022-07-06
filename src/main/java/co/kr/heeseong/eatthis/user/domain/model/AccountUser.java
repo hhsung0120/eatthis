@@ -3,10 +3,12 @@ package co.kr.heeseong.eatthis.user.domain.model;
 import co.kr.heeseong.eatthis.common.Enum.GenderType;
 import co.kr.heeseong.eatthis.common.Enum.SignUpType;
 import co.kr.heeseong.eatthis.common.util.SecretSha;
+import co.kr.heeseong.eatthis.common.util.StringUtils;
 import co.kr.heeseong.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.heeseong.eatthis.user.domain.entity.UsersEntity;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Getter
@@ -38,20 +40,15 @@ public class AccountUser {
         this.userSeq = test;
     }
 
-    //TODO 개발 완료 후 지우기
-    public void setUserid(String userId) {
-        this.userId = userId + ((int) (Math.random() * 100));
-    }
-
-    //TODO 개발 완료 후 지우기
-    public void setUserSeq(Long userSeq) {
-        this.userSeq = userSeq;
-    }
-
     public UsersEntity toUsersEntity() {
         return UsersEntity.insertForUsersEntity()
                 .userId(userId)
-                .password(SecretSha.encryptPassword(password))
+                .password(SecretSha.encryptPassword(""))
+                .nickName(nickName)
+                .gender(gender)
+                .birthday(LocalDate.parse(birthday))
+                .profileImagePath(profileImagePath)
+                .signUpType(signUpType)
                 .build();
     }
 
@@ -67,23 +64,23 @@ public class AccountUser {
 //                .build();
 //    }
 
-//    public AccountUser (UsersEntity userEntity) {
-//        this.idx = userEntity.getIdx();
-//        this.id = userEntity.getId();
-//        this.nickName = userEntity.getUserDetailEntity().getNickName();
-//        this.password = "";
-//        this.gender = userEntity.getUserDetailEntity().getGender();
-//        this.birthday = userEntity.getUserDetailEntity().getBirthday();
-//        this.lunchAlarm = userEntity.getUserDetailEntity().getLunchAlarm();
-//        this.lunchAlarmHour = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0, 2);
-//        this.lunchAlarmMinute = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3, 5);
-//        this.dinnerAlarm = userEntity.getUserDetailEntity().getDinnerAlarm();
-//        this.dinnerAlarmHour = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0, 2);
-//        this.dinnerAlarmMinute = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3, 5);
-//        this.eventAlarm = userEntity.getUserDetailEntity().getEventAlarm();
-//        this.serviceAlarm = userEntity.getUserDetailEntity().getServiceAlarm();
-//        this.profileImagePath = userEntity.getUserDetailEntity().getProfileImagePath();
-//    }
+    public AccountUser(UsersEntity userEntity) {
+        this.userSeq = userEntity.getSeq();
+        this.userId = userEntity.getUserId();
+        this.nickName = userEntity.getNickName();
+        this.password = "";
+        this.gender = userEntity.getGender();
+        this.birthday = StringUtils.localDateToString(userEntity.getBirthday());
+        this.lunchAlarm = userEntity.getUserDetailEntity().getLunchAlarmUseYn();
+        this.lunchAlarmHour = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(0, 2);
+        this.lunchAlarmMinute = userEntity.getUserDetailEntity().getLunchAlarmTime().toString().substring(3, 5);
+        this.dinnerAlarm = userEntity.getUserDetailEntity().getDinnerAlarmUseYn();
+        this.dinnerAlarmHour = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(0, 2);
+        this.dinnerAlarmMinute = userEntity.getUserDetailEntity().getDinnerAlarmTime().toString().substring(3, 5);
+        this.eventAlarm = userEntity.getUserDetailEntity().getEventAlarmUseYn();
+        this.serviceAlarm = userEntity.getUserDetailEntity().getServiceAlarmUseYn();
+        this.profileImagePath = userEntity.getProfileImagePath();
+    }
 
 //    @Builder(builderClassName = "signUpOneStepInfo", builderMethodName = "signUpOneStepInfoBuilder")
 //    public AccountUser(String userId, String password, String checkPassword, String termsAgree, String privacyAgree, String locationAgree) {
@@ -95,12 +92,13 @@ public class AccountUser {
 //        this.locationAgree = locationAgree;
 //    }
 
-
     @Override
     public String toString() {
         return "AccountUser{" +
                 "userSeq=" + userSeq +
                 ", userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", checkPassword='" + checkPassword + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", gender=" + gender +
                 ", birthday='" + birthday + '\'' +

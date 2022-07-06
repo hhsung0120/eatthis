@@ -18,6 +18,7 @@ public enum ErrorCode {
     , ACCOUNTS_NOT_FOUNT("ACCOUNTS 정보를 찾을 수 없습니다", "")
     , FILE_UPLOAD_ERROR("파일 업로드 중 오류가 발생 하였습니다", "file uploading failed")
     , NOT_A_VALID_REQUEST("유효한 요청이 아닙니다", "not a valid request")
+    , NOT_A_VALID_EMAIL_FORMAT("유효한 이메일 형식이 아닙니다", "not a valid email format")
     , ETC_ERROR("기타 오류 입니다", "other errors")
     , MUST_NOT_BE_NULL("NULL이 아니어야 합니다" ,"must not be null")
     , NOT_A_VALID_PARAMETER("유효한 파라메가 아닙니다", "not a valid parameter")
@@ -25,6 +26,7 @@ public enum ErrorCode {
     , PASSWORD_MISMATCH("패스워드가 일치하지 않습니다", "password mismatch")
     , PASSWORD_SHORT("패스워드는 최소 8자리 이여야 합니다", "password less than 8 digits")
     , PASSWORD_LONG("패스워드는 최소 20자리 입니다.", "password more than 20 digits")
+
     ;
 
     String messageKr = "";

@@ -17,6 +17,9 @@ DROP PRIMARY KEY; -- 회원 기본키
 -- 회원 유니크 인덱스
 DROP INDEX UIX_users ON users;
 
+-- 회원 유니크 인덱스2
+DROP INDEX UIX_users2 ON users;
+
 -- 회원
 DROP TABLE IF EXISTS users RESTRICT;
 
@@ -24,10 +27,10 @@ DROP TABLE IF EXISTS users RESTRICT;
 CREATE TABLE users (
                        seq                BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
                        user_id            VARCHAR(80)  NOT NULL COMMENT '유저 아이디', -- 유저아이디
-                       password           VARCHAR(300) NOT NULL COMMENT '비밀번호', -- 비밀번호
-                       nick_name          VARCHAR(50)  NULL     COMMENT '닉네임', -- 닉네임
-                       gender             VARCHAR(5)   NULL     COMMENT 'MALE : 남자, FEMALE : 여자', -- 성별
-                       birthday           DATE         NULL     COMMENT '생일', -- 생일
+                       password           VARCHAR(300) NULL     COMMENT '비밀번호', -- 비밀번호
+                       nick_name          VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
+                       gender             VARCHAR(5)   NOT NULL COMMENT 'MALE : 남자, FEMALE : 여자', -- 성별
+                       birthday           DATE         NOT NULL COMMENT '생일', -- 생일
                        profile_image_path VARCHAR(200) NULL     COMMENT '이미지 경로', -- 프로필 이미지 경로
                        sign_up_type       VARCHAR(10)  NOT NULL COMMENT 'DEFAULT : 일반, FACEBOOK : 페이스북, GOOGLE : 구글, KAKAO : 카카오, NAVER : 네이버', -- 회원가입 구분
                        created_id         VARCHAR(80)  NOT NULL COMMENT '생성자', -- 생성자
@@ -50,12 +53,20 @@ CREATE UNIQUE INDEX UIX_users
               user_id ASC -- 유저아이디
         );
 
+-- 회원 유니크 인덱스2
+CREATE UNIQUE INDEX UIX_users2
+    ON users ( -- 회원
+              nick_name ASC -- 닉네임
+        );
+
 ALTER TABLE users
     MODIFY COLUMN seq BIGINT NOT NULL AUTO_INCREMENT COMMENT '시퀀스';
 
 ALTER TABLE users
     AUTO_INCREMENT = 1;
 
+
+-- ----------------------------------------------------------------------------------------------------------------
 -- 카테고리
 ALTER TABLE categories
 DROP PRIMARY KEY; -- 카테고리 기본키
@@ -88,6 +99,8 @@ ALTER TABLE categories
 
 ALTER TABLE categories
     AUTO_INCREMENT = 1;
+
+-- ----------------------------------------------------------------------------------------------------------------
 
 -- 알람 리스트
 ALTER TABLE alarms
@@ -135,6 +148,8 @@ ALTER TABLE alarms
             REFERENCES users ( -- 회원
                               seq -- 시퀀스
                 );
+
+-- ----------------------------------------------------------------------------------------------------------------
 
 -- 회원 탈퇴
 ALTER TABLE user_secession
@@ -197,6 +212,8 @@ ALTER TABLE user_secession
                                          seq -- 시퀀스
                 );
 
+-- ----------------------------------------------------------------------------------------------------------------
+
 -- 즐겨찾는 매장
 ALTER TABLE favorites_store
 DROP FOREIGN KEY FK_users_TO_favorites_store; -- 회원 -> 즐겨찾는 매장
@@ -242,6 +259,8 @@ ALTER TABLE favorites_store
             REFERENCES users ( -- 회원
                               seq -- 시퀀스
                 );
+
+-- ----------------------------------------------------------------------------------------------------------------
 
 -- 회원 상세
 ALTER TABLE user_detail
@@ -297,6 +316,8 @@ ALTER TABLE user_detail
             REFERENCES users ( -- 회원
                               seq -- 시퀀스
                 );
+
+-- ----------------------------------------------------------------------------------------------------------------
 
 -- 묻고 답하기
 ALTER TABLE questions
@@ -361,6 +382,8 @@ ALTER TABLE questions
                               seq -- 시퀀스
                 );
 
+
+-- ----------------------------------------------------------------------------------------------------------------
 -- 자주하는 질문
 ALTER TABLE faqs
 DROP FOREIGN KEY FK_categories_TO_faqs; -- 카테고리 -> 자주하는 질문
@@ -407,6 +430,8 @@ ALTER TABLE faqs
             REFERENCES categories ( -- 카테고리
                                    seq -- 시퀀스
                 );
+
+-- ----------------------------------------------------------------------------------------------------------------
 
 -- 공지사항
 ALTER TABLE notices
