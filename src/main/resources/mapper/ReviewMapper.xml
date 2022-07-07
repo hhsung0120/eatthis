@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.kr.heeseong.eatthis.mapper.ReviewMapper">
+<mapper namespace="co.kr.eatthis.mapper.ReviewMapper">
 
     <select id="selectReviewList" parameterType="Long" resultType="Review">
         SELECT *

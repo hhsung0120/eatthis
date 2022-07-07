@@ -31,5 +31,5 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations:
     - mapper/*.xml
-  type-aliases-package: co.kr.heeseong.eatthis.*.domain.model
+  type-aliases-package: co.kr.eatthis.*.domain.model
 

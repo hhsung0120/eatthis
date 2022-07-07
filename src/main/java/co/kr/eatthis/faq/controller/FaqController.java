@@ -1,0 +1,45 @@
+package co.kr.eatthis.faq.controller;
+
+import co.kr.eatthis.common.Enum.StatusCode;
+import co.kr.eatthis.common.domain.model.ResponseTTTData;
+import co.kr.eatthis.faq.service.FaqService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+/**
+ * 자주묻는 질문
+ */
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/faqs")
+public class FaqController {
+
+    final FaqService faqService;
+
+    @GetMapping("/{page}")
+    public ResponseEntity<ResponseTTTData> faqList(@PathVariable int page) {
+        try {
+            Map<String, Object> data = new HashMap<>();
+            data.put("list", faqService.getFaqList(page));
+
+            ResponseTTTData responseData = new ResponseTTTData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+        }
+    }
+
+}
