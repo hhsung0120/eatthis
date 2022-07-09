@@ -14,7 +14,6 @@ public class LogUtils {
         if (StringUtils.hasText(description)) log.error("description : [{}]", description);
         if (StringUtils.hasText(message1)) log.error(message1 + " : [{}]", requestData1);
         if (StringUtils.hasText(message2)) log.error(message2 + " : [{}]", requestData2);
-        if (StringUtils.hasText(message2)) log.error(message2 + " : [{}]", requestData2);
         if (exception != null) log.error("exception message : [{}]", exception.getMessage());
         log.error("===========================================");
     }

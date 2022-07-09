@@ -4,6 +4,11 @@ import co.kr.eatthis.common.util.StringUtils;
 import co.kr.eatthis.notice.domain.entity.NoticeEntity;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Getter
 @ToString
@@ -39,26 +44,10 @@ public class Notice {
         this.createdDatetime = StringUtils.localDateTimeToString(noticeEntity.getCreatedDatetime());
     }
 
-
-//    @Builder
-//    public Notice(Long noticeIdx, Long userIdx, String title, String contents, LocalDateTime createDate) {
-//        this.noticeIdx = noticeIdx;
-//        this.userIdx = userIdx;
-//        this.title = title;
-//        this.contents = contents;
-//        this.createDate = createDate == null ? "" : createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//    }
-//
-//    public List<Notice> entityToVoList(Page<NoticeEntity> noticeEntityList){
-//        return noticeEntityList.stream()
-//                .map(list -> Notice.builder()
-//                        .noticeIdx(list.getNoticeIdx())
-//                        .userIdx(list.getUserIdx())
-//                        .title(list.getTitle())
-//                        .contents(list.getTitle())
-//                        //.createDate(list.getCreateDate())
-//                        .build())
-//                .collect(toList());
-//    }
+    public static List<Notice> entityToList(Page<NoticeEntity> noticeEntityList){
+        return noticeEntityList.stream()
+                .map(entity -> new Notice(entity))
+                .collect(toList());
+    }
 
 }
