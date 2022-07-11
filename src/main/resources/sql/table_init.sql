@@ -95,6 +95,13 @@ ALTER TABLE categories
                      seq -- 시퀀스
             );
 
+-- 카테고리 유니크 인덱스
+CREATE UNIQUE INDEX UIX_categories
+    ON categories ( -- 카테고리
+                   category_name ASC, -- 카테고리 이름
+                   category_type ASC  -- 카테고리 구분
+        );
+
 ALTER TABLE categories
     MODIFY COLUMN seq TINYINT NOT NULL AUTO_INCREMENT COMMENT '시퀀스';
 

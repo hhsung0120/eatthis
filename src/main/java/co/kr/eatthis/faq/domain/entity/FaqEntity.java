@@ -20,9 +20,9 @@ public class FaqEntity extends TimeAndUserIdEntity {
 
     //외래키를 여기서 가지고 있어서 여기가 주인
     //mappedBy = 연관관계 주인은 FaqEntity.faqCategoryEntity 이기 때문에 faqCategoryEntity 가 mappedBy 이름
-    @JoinColumn(name = "category_idx")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private FaqCategoryEntity faqCategoryEntity;
+//    @JoinColumn(name = "category_idx")
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private FaqCategoryEntity faqCategoryEntity;
 
     @Column
     private String title;

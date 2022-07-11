@@ -1,10 +1,7 @@
 package co.kr.eatthis.faq.service;
 
-import co.kr.eatthis.faq.domain.entity.FaqCategoryEntity;
 import co.kr.eatthis.faq.domain.entity.FaqEntity;
 import co.kr.eatthis.faq.domain.model.Faq;
-import co.kr.eatthis.faq.domain.model.FaqCategory;
-import co.kr.eatthis.faq.domain.repository.FaqCategoryRepository;
 import co.kr.eatthis.faq.domain.repository.FaqRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +19,6 @@ import java.util.List;
 public class FaqService {
 
     private final FaqRepository faqRepository;
-    private final FaqCategoryRepository faqCategoryRepository;
     private static int pageSize = 10;
 
     @Transactional
@@ -31,8 +27,8 @@ public class FaqService {
         return new Faq().entityToVoList(faqEntityList);
     }
 
-    public List<FaqCategory> getFaqCategoryList() {
-        List<FaqCategoryEntity> faqCategoryList = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
-        return new FaqCategory().entityToVoList(faqCategoryList);
-    }
+//    public List<FaqCategory> getFaqCategoryList() {
+//        List<FaqCategory> categories = faqCategoryRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
+//        return Category.entityToVoList(categories);
+//    }
 }

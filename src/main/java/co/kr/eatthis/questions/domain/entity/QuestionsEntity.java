@@ -2,7 +2,6 @@ package co.kr.eatthis.questions.domain.entity;
 
 
 import co.kr.eatthis.common.Enum.QuestionsStatusType;
-import co.kr.eatthis.faq.domain.entity.FaqCategoryEntity;
 import co.kr.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import co.kr.eatthis.questions.domain.model.Questions;
 import co.kr.eatthis.user.domain.entity.UsersEntity;

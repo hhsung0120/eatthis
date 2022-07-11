@@ -26,22 +26,21 @@ public class QuestionsController {
     private final UserService userService;
     private final FaqService faqService;
 
-//    @GetMapping("/form")
-//    public ResponseEntity<ResponseData> form() {
-//        try {
-//            Map<String, Object> data = new HashMap<>();
-//            data.put("categoryList", faqService.getFaqCategoryList());
-//            //data.put("userIdx", userService.getAccountUserIdx());
-//
-//            ResponseTTTData responseData = new ResponseTTTData(
-//                    StatusCode.OK.getValue()
-//                    , StatusCode.OK.toString()
-//                    , data);
-//            return ResponseEntity.ok(responseData);
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-//        }
-//    }
+    @GetMapping("/form")
+    public ResponseEntity<ResponseData> form() {
+        try {
+            Map<String, Object> data = new HashMap<>();
+            data.put("categoryList", faqService.getFaqCategoryList());
+
+            ResponseTTTData responseData = new ResponseTTTData(
+                    StatusCode.OK.getValue()
+                    , StatusCode.OK.toString()
+                    , data);
+            return ResponseEntity.ok(responseData);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+        }
+    }
 
 //    @GetMapping("/form")
 //    public ResponseEntity<ResponseTTTData> form() {
