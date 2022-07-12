@@ -326,19 +326,6 @@ ALTER TABLE user_detail
                 );
 
 -- ----------------------------------------------------------------------------------------------------------------
-
--- 묻고 답하기
-ALTER TABLE questions
-DROP FOREIGN KEY FK_categories_TO_questions; -- 카테고리 -> 묻고 답하기
-
--- 묻고 답하기
-ALTER TABLE questions
-DROP FOREIGN KEY FK_users_TO_questions; -- 회원 -> 묻고 답하기
-
--- 묻고 답하기
-ALTER TABLE questions
-DROP PRIMARY KEY; -- 묻고 답하기 기본키
-
 -- 묻고 답하기
 DROP TABLE IF EXISTS questions RESTRICT;
 
@@ -346,13 +333,16 @@ DROP TABLE IF EXISTS questions RESTRICT;
 CREATE TABLE questions (
                            seq               BIGINT        NOT NULL COMMENT '시퀀스', -- 시퀀스
                            category_seq      TINYINT       NOT NULL COMMENT '카테고리 시퀀스', -- 카테고리 시퀀스
-                           user_seq          BIGINT        NOT NULL COMMENT '유저 시퀀스', -- 유저 시퀀스
+                           user_seq          BIGINT        NOT NULL COMMENT '유저 시퀀스, 누가 썼는지는 식별 하기 위함', -- 유저 시퀀스
+                           user_name         VARCHAR(100)  NOT NULL COMMENT '이름', -- 유저 이름
+                           phone             VARCHAR(100)  NOT NULL COMMENT '휴대폰번호', -- 휴대폰번호
+                           email             VARCHAR(255)  NOT NULL COMMENT '이메일', -- 이메일
                            questions         VARCHAR(1000) NOT NULL COMMENT '질문', -- 질문
                            answer            VARCHAR(1000) NULL     COMMENT '답변', -- 답변
                            answer_status     VARCHAR(10)   NOT NULL COMMENT 'WAITING : 대기, COMPLETE : 완료', -- 답변 상태
-                           created_id        VARCHAR(50)   NOT NULL COMMENT '생성자', -- 생성자
+                           created_id        VARCHAR(80)   NOT NULL COMMENT '생성자', -- 생성자
                            created_datetime  DATETIME      NOT NULL DEFAULT NOW() COMMENT '생성일시', -- 생성일시
-                           modified_id       VARCHAR(50)   NULL     COMMENT '수정자', -- 수정자
+                           modified_id       VARCHAR(80)   NULL     COMMENT '수정자', -- 수정자
                            modified_datetime DATETIME      NULL     COMMENT '수정일시' -- 수정일시
 )
     COMMENT '묻고 답하기';

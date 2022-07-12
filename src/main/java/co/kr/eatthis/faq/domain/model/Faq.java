@@ -42,7 +42,7 @@ public class Faq {
                 .map(list -> Faq.builder()
                         .idx(list.getIdx())
                         .title(list.getTitle())
-                        .categoryName(list.getFaqCategoryEntity().getCategoryName())
+                       // .categoryName(list.getFaqCategoryEntity().getCategoryName())
                         .contents(list.getContents())
                         .build())
                 .collect(toList());

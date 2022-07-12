@@ -17,66 +17,54 @@ public class QuestionsEntity extends TimeAndUserIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private Long seq;
 
-    @Column(name = "user_idx")
-    private Long userIdx;
+    private Long categorySeq;
 
-    @Column(name = "category_idx")
-    private Long categoryIdx;
+    private Long userSeq;
 
-    @Column
+    private String userName;
+
+    private String phone;
+
+    private String email;
+
     private String questions;
 
-    @Column
     private String answer;
 
     @Enumerated(EnumType.STRING)
-    private QuestionsStatusType status;
-
-    @Column
-    private String phone;
-
-    @Column
-    private String email;
-
-    @JoinColumn(name = "category_idx", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.ALL)
-    private FaqCategoryEntity faqCategoryEntity;
-
-    @JoinColumn(name = "user_idx", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.ALL)
-    private UsersEntity user;
+    private QuestionsStatusType answerStatus;
 
     public QuestionsEntity() {
     }
 
-    @Builder
-    public QuestionsEntity(Long idx, Long userIdx, String questions, String phone, String email, Long categoryIdx) {
-        this.idx = idx;
-        this.userIdx = userIdx;
-        this.questions = questions;
-        this.answer = "";
-        this.status = QuestionsStatusType.WAITING;
+    @Builder(builderClassName = "insertForQuestionsEntity", builderMethodName = "insertForQuestionsEntity")
+    public QuestionsEntity(Long categorySeq, Long userSeq, String userName, String phone, String email, String questions) {
+        super("system");
+        this.categorySeq = categorySeq;
+        this.userSeq = userSeq;
+        this.userName = userName;
         this.phone = phone;
         this.email = email;
-        this.categoryIdx = categoryIdx;
+        this.questions = questions;
+        this.answerStatus = QuestionsStatusType.WAITING;
     }
 
-    public Questions toValueObject(String userName) {
-        return Questions.builder()
-                //.createDate(this.getCreateDate())
-                .status(this.getStatus().getValue())
-                .categoryName(this.getFaqCategoryEntity().getCategoryName())
-                .userName(userName)
-                .phone(this.getPhone())
-                .email(this.getEmail())
-                .questions(this.getQuestions())
-                .answer(this.getAnswer())
-              //  .lastModifiedDate(getLastModifiedDate())
-                .idx(this.getIdx())
-                .userIdx(this.getUserIdx())
-                .categoryIdx(this.getCategoryIdx())
-                .build();
-    }
+//    public Questions toValueObject(String userName) {
+//        return Questions.builder()
+//                //.createDate(this.getCreateDate())
+//                .status(this.getStatus().getValue())
+//                //.categoryName(this.getFaqCategoryEntity().getCategoryName())
+//                .userName(userName)
+//                .phone(this.getPhone())
+//                .email(this.getEmail())
+//                .questions(this.getQuestions())
+//                .answer(this.getAnswer())
+//              //  .lastModifiedDate(getLastModifiedDate())
+//                .idx(this.getIdx())
+//                .userIdx(this.getUserIdx())
+//                .categoryIdx(this.getCategoryIdx())
+//                .build();
+//    }
 }
