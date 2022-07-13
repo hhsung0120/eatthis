@@ -80,10 +80,10 @@ public class QuestionsService {
 
     public Map<String, Object> getQuestionList(int page, int pageSize) {
         log.info("getNoticeList page : {}, pageSize : {}", page, pageSize);
-        page = (page -1);
 
-        AccountUser accountUser = userService.getAccountUser();
+        page = (page -1);
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.Direction.DESC, "createdDatetime");
+        AccountUser accountUser = userService.getAccountUser();
 
         try{
             Map<String, Object> result = new LinkedHashMap<>();
