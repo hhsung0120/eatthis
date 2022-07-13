@@ -14,7 +14,8 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("token");
+        //헤더에서 넘어오는 토큰 값이 Bearer 토큰값 이런형식으로 넘어옴
+        String token = request.getHeader("authorization").replace("Bearer", "").trim();
         log.info("user token : {}", token);
 
         Enumeration headers = request.getHeaderNames();

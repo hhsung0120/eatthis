@@ -66,6 +66,13 @@ public class PageNavigator {
      **/
     private int nextPage;
 
+    public PageNavigator() {
+    }
+
+    public PageNavigator(int totalCount) {
+        setTotalCount(totalCount);
+    }
+
     /**
      * 페이징 처리
      **/

@@ -35,9 +35,9 @@ public class NoticeService {
     public Map<String, Object> getNoticeList(int page, int pageSize) {
         log.info("getNoticeList page : {}, pageSize : {}", page, pageSize);
         page = (page -1);
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.Direction.DESC, "createdDatetime");
 
         try{
-            PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.Direction.DESC, "createdDatetime");
             Page<NoticeEntity> noticeEntityList = noticeRepository.findAll(pageRequest);
 
             Map<String, Object> result = new LinkedHashMap<>();

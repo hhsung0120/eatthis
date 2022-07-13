@@ -119,7 +119,19 @@ public class UserService {
     }
 
     public AccountUser getAccountUser() {
-        return (AccountUser) request.getAttribute("accountUser");
+
+        AccountUser accountUser = null;
+        try{
+            accountUser = (AccountUser) request.getAttribute("accountUser");
+            if(accountUser == null){
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            LogUtils.errorLog("getAccountUser() Null Pointer Exception", e);
+            throw new NullPointerException("getAccountUser() Null Pointer Exception");
+        }
+
+        return accountUser;
     }
 
     public boolean checkNickName(AccountUser accountUser) {

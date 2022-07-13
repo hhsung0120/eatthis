@@ -48,6 +48,19 @@ public class QuestionsController {
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
+
+    @GetMapping("")
+    public ResponseEntity<ResponseData> list(
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+
+        try {
+            List<Questions> questionList = questionsService.getQuestionList(page, pageSize);
+            return ResponseEntity.ok(new ResponseData("questionList", questionList));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
+    }
+
 //
 //    @GetMapping("/detail/{questionsIdx}")
 //    public ResponseEntity<ResponseTTTData> detail(@PathVariable Long questionsIdx) {

@@ -1,7 +1,6 @@
 package co.kr.eatthis.notice.controller;
 
 import co.kr.eatthis.common.domain.model.ResponseData;
-import co.kr.eatthis.notice.domain.model.Notice;
 import co.kr.eatthis.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +34,7 @@ public class NoticeController {
     @GetMapping("")
     public ResponseEntity<ResponseData> getNoticeList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+
         try {
             return ResponseEntity.ok(new ResponseData(noticeService.getNoticeList(page, pageSize)));
         } catch (Exception e) {
