@@ -2,17 +2,19 @@ package co.kr.eatthis.user.domain.model;
 
 import co.kr.eatthis.common.Enum.GenderType;
 import co.kr.eatthis.common.Enum.SignUpType;
+import co.kr.eatthis.common.domain.model.PageNavigator;
 import co.kr.eatthis.common.util.SecretSha;
 import co.kr.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.eatthis.user.domain.entity.UsersEntity;
 import co.kr.eatthis.common.util.StringUtils;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
 @Getter
-public class AccountUser {
+public class AccountUser extends PageNavigator {
 
     private Long userSeq;
     private String userId;
@@ -32,6 +34,13 @@ public class AccountUser {
     private String eventAlarm;
     private String serviceAlarm;
     private Map<String, String> agreeMap;
+
+    //검색
+    @Setter
+    private int searchSeq;
+
+    @Setter
+    private String searchKeyword;
 
     public AccountUser() {
     }
@@ -82,16 +91,6 @@ public class AccountUser {
         this.profileImagePath = userEntity.getProfileImagePath();
     }
 
-//    @Builder(builderClassName = "signUpOneStepInfo", builderMethodName = "signUpOneStepInfoBuilder")
-//    public AccountUser(String userId, String password, String checkPassword, String termsAgree, String privacyAgree, String locationAgree) {
-//        this.userId = userId;
-//        this.password = password;
-//        this.checkPassword = checkPassword;
-//        this.termsAgree = termsAgree;
-//        this.privacyAgree = privacyAgree;
-//        this.locationAgree = locationAgree;
-//    }
-
     @Override
     public String toString() {
         return "AccountUser{" +
@@ -113,6 +112,8 @@ public class AccountUser {
                 ", eventAlarm='" + eventAlarm + '\'' +
                 ", serviceAlarm='" + serviceAlarm + '\'' +
                 ", agreeMap=" + agreeMap +
+                ", searchSeq=" + searchSeq +
+                ", searchKeyword='" + searchKeyword + '\'' +
                 '}';
     }
 }

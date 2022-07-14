@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.eatthis.questions.mapper.QuestionsMapper">
+
+    <select id="selectQuestionListCount" parameterType="AccountUser" resultType="integer">
+        SELECT COUNT(*)
+          FROM questions
+         WHERE user_seq = #{userSeq}
+        <include refid="commonSearch"></include>
+    </select>
+
+    <select id="selectQuestionList" parameterType="AccountUser" resultType="Questions">
+        SELECT *
+          FROM questions
+         WHERE user_seq = #{userSeq}
+         <include refid="commonSearch"></include>
+         ORDER BY created_datetime DESC
+         LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <sql id="commonSearch">
+        <if test="searchSeq != null and searchSeq != 0">
+            AND category_seq = #{searchSeq}
+        </if>
+    </sql>
+</mapper>

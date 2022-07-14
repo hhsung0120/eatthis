@@ -1,10 +1,15 @@
 package co.kr.eatthis.questions.service;
 
+import co.kr.eatthis.common.Enum.CategoryType;
+import co.kr.eatthis.common.domain.entity.CategoryEntity;
+import co.kr.eatthis.common.domain.entity.CategoryRepository;
+import co.kr.eatthis.common.domain.model.Category;
 import co.kr.eatthis.common.domain.model.PageNavigator;
 import co.kr.eatthis.common.util.LogUtils;
 import co.kr.eatthis.questions.domain.entity.QuestionsEntity;
 import co.kr.eatthis.questions.domain.model.Questions;
 import co.kr.eatthis.questions.domain.repository.QuestionsRepository;
+import co.kr.eatthis.questions.mapper.QuestionsMapper;
 import co.kr.eatthis.user.domain.model.AccountUser;
 import co.kr.eatthis.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,40 +28,15 @@ import java.util.*;
 public class QuestionsService {
 
     private final QuestionsRepository questionsRepository;
+    private final CategoryRepository categoryRepository;
+
     private final UserService userService;
 
-//    public Map<String, Object> getQuestionsList() {
-//        Map<String, Object> result = new LinkedHashMap<>();
-////        Long userIdx = userService.getAccountUserIdx();
-//        Long userIdx = 0L;
-//        int count = questionsRepository.findAllCount(userIdx);
-//        if (count > 0) {
-//            List<QuestionsEntity> questionsEntityList = questionsRepository.findByUserIdx(userIdx);
-//            List<Questions> questionsDtoList = questionsEntityList.stream()
-//                    .map(list -> Questions.builder()
-//                            .idx(list.getIdx())
-//                            .userIdx(list.getUserIdx())
-//                            .userName("")
-//                            .questions(list.getQuestions())
-//                            .answer(list.getAnswer())
-//                            .status(list.getStatus().getValue())
-//                            //.createDate(list.getCreateDate())
-////                            .categoryName(list.getFaqCategoryEntity().getCategoryName())
-////                            .categoryIdx(list.getFaqCategoryEntity().getIdx())
-//                           // .lastModifiedDate(list.getLastModifiedDate())
-//                            .phone(list.getPhone())
-//                            .email(list.getEmail())
-//                            .build())
-//                    .collect(toList());
-//            result.put("count", count);
-//            result.put("list", questionsDtoList);
-//        }
-//
-//        return result;
-//    }
+    private final QuestionsMapper questionsMapper;
 
     @Transactional
     public void saveQuestions(Questions questions) {
+        log.info("saveQuestions {} ", questions.toString());
 
         AccountUser accountUser = userService.getAccountUser();
 
@@ -67,7 +47,6 @@ public class QuestionsService {
             LogUtils.errorLog("saveQuestions exception", "saveQuestions : ", questions, e);
             throw new IllegalArgumentException("saveQuestions exception");
         }
-
     }
 
     public Questions getQuestionsDetail(Long questionsIdx) {
@@ -78,20 +57,24 @@ public class QuestionsService {
         return new Questions();
     }
 
-    public Map<String, Object> getQuestionList(int page, int pageSize) {
-        log.info("getNoticeList page : {}, pageSize : {}", page, pageSize);
+    public Map<String, Object> getQuestionList(int page, int pageSize, int categorySeq) {
+        log.info("getNoticeList page : {}, pageSize : {}, categorySeq : {}", page, pageSize, categorySeq);
 
-        page = (page -1);
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.Direction.DESC, "createdDatetime");
+        Map<String, Object> result = new LinkedHashMap<>();
+
         AccountUser accountUser = userService.getAccountUser();
+        accountUser.setSearchSeq(categorySeq);
 
         try{
-            Map<String, Object> result = new LinkedHashMap<>();
+            int count = questionsMapper.selectQuestionListCount(accountUser);
+            accountUser.setTotalCount(count);
 
-            int count = questionsRepository.findAllCount(accountUser.getUserSeq());
-            if(count > 0){
-                PageNavigator pageNavigator = new PageNavigator(count);
-                questionsRepository.findByUserSeq(accountUser.getUserSeq(), pageNavigator.getStartIndex(), pageNavigator.getPageSize());
+            if(accountUser.getTotalCount() > 0){
+                List<Questions> questionsList = questionsMapper.selectQuestionList(accountUser);
+                result.put("questionsList", questionsList);
+                result.put("totalCount", accountUser.getTotalCount());
+                result.put("totalPageSize", accountUser.getTotalPageCount());
+                result.put("categoryList", Category.entityToVoList(categoryRepository.findByCategoryType(CategoryType.QUESTIONS)));
             }
 
             return result;

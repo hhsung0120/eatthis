@@ -51,11 +51,11 @@ public class QuestionsController {
 
     @GetMapping("")
     public ResponseEntity<ResponseData> list(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize, @RequestParam int categorySeq) {
 
         try {
-            Map<String, Object> questionList = questionsService.getQuestionList(page, pageSize);
-            return ResponseEntity.ok(new ResponseData("questionList", questionList));
+            Map<String, Object> questionList = questionsService.getQuestionList(page, pageSize, categorySeq);
+            return ResponseEntity.ok(new ResponseData(questionList));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));
         }

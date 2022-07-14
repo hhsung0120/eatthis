@@ -2,7 +2,7 @@ package co.kr.eatthis.common.Enum;
 
 public enum QuestionsStatusType {
 
-    WAITING("답변대기"), COMPLETE("답변완료");
+    WAITING("답변 전"), COMPLETE("답변 완료");
 
     String value = "";
 
