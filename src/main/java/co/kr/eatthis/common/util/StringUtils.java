@@ -33,14 +33,14 @@ public class StringUtils {
 
     public static void isEmail(String userId) throws Exception {
         if (!isNotBlank(userId)) {
-            LogUtils.errorLog("userId " + ErrorCode.MUST_NOT_BE_NULL.getMessageEn());
-            throw new IllegalAccessException("userId " + ErrorCode.MUST_NOT_BE_NULL.getMessageEn());
+            LogUtils.errorLog("userId " + ErrorCode.MUST_NOT_BE_NULL.getMessageKr());
+            throw new IllegalAccessException("userId " + ErrorCode.MUST_NOT_BE_NULL.getMessageKr());
         }
 
         Matcher matcher = PATTERN.matcher(userId);
         if (!matcher.matches()) {
-            LogUtils.errorLog(ErrorCode.NOT_A_VALID.getMessageEn() + " email format");
-            throw new IllegalAccessException(ErrorCode.NOT_A_VALID.getMessageEn() + " email format");
+            LogUtils.errorLog(ErrorCode.NOT_A_VALID.getMessageKr() + " email format");
+            throw new IllegalAccessException(ErrorCode.NOT_A_VALID.getMessageKr() + " email format");
         }
     }
 

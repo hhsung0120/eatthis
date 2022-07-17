@@ -61,18 +61,13 @@ public class QuestionsController {
         }
     }
 
-//
-//    @GetMapping("/detail/{questionsIdx}")
-//    public ResponseEntity<ResponseTTTData> detail(@PathVariable Long questionsIdx) {
-//        try {
-//            ResponseTTTData responseData = new ResponseTTTData(
-//                    StatusCode.OK.getValue()
-//                    , StatusCode.OK.toString()
-//                    , questionsService.getQuestionsDetail(questionsIdx));
-//            return ResponseEntity.ok(responseData);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-//        }
-//    }
+
+    @GetMapping("/{questionsSeq}")
+    public ResponseEntity<ResponseData> detail(@PathVariable Long questionsSeq) {
+        try {
+            return ResponseEntity.ok(new ResponseData(questionsService.getQuestionsDetail(questionsSeq)));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
+    }
 }

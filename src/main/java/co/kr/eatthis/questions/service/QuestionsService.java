@@ -1,6 +1,7 @@
 package co.kr.eatthis.questions.service;
 
 import co.kr.eatthis.common.Enum.CategoryType;
+import co.kr.eatthis.common.Enum.ErrorCode;
 import co.kr.eatthis.common.domain.entity.CategoryEntity;
 import co.kr.eatthis.common.domain.entity.CategoryRepository;
 import co.kr.eatthis.common.domain.model.Category;
@@ -49,14 +50,6 @@ public class QuestionsService {
         }
     }
 
-    public Questions getQuestionsDetail(Long questionsIdx) {
-//        QuestionsEntity questionsEntity = questionsRepository.findById(questionsIdx)
-//                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getValue()));
-
-//        return questionsEntity.toValueObject("");
-        return new Questions();
-    }
-
     public Map<String, Object> getQuestionList(int page, int pageSize, int categorySeq) {
         log.info("getNoticeList page : {}, pageSize : {}, categorySeq : {}", page, pageSize, categorySeq);
 
@@ -82,5 +75,29 @@ public class QuestionsService {
             LogUtils.errorLog("getQuestionList exception", "accountUser", accountUser.toString(), e);
             throw new IllegalArgumentException("getQuestionList exception : " + e.getMessage());
         }
+    }
+
+    public Questions getQuestionsDetail(Long questionsIdx) {
+
+        QuestionsEntity questionsEntity = null;
+        try{
+            questionsEntity =
+                    Optional.ofNullable(questionsRepository.findById(questionsIdx))
+                            .get()
+                            .orElseGet(() -> null);
+
+        }catch (Exception e){
+            LogUtils.errorLog("questionsEntity findById exception", "questionsIdx", questionsIdx, e);
+            throw new IllegalArgumentException("getQuestionsDetail exception");
+        }
+
+        if(questionsEntity == null){
+            LogUtils.errorLog("questionsEntity == null", "questionsIdx", questionsIdx);
+            throw new IllegalArgumentException(ErrorCode.POST_NOT_FOUND.getMessageKr());
+        }
+
+        userService.checkLoginUser(questionsEntity.getUserSeq());
+
+        return new Questions(questionsEntity);
     }
 }

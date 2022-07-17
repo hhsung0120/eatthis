@@ -128,7 +128,7 @@ public class UserService {
             }
         }catch (Exception e){
             LogUtils.errorLog("getAccountUser() Null Pointer Exception", e);
-            throw new NullPointerException("getAccountUser() Null Pointer Exception");
+            throw new NullPointerException("Login user does not exist.");
         }
 
         return accountUser;
@@ -150,17 +150,24 @@ public class UserService {
         try {
             StringUtils.isEmail(accountUser.getUserId());
         } catch (Exception e) {
-            log.error(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageEn() + " {}", accountUser.getUserId());
-            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageEn());
+            log.error(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageKr() + " {}", accountUser.getUserId());
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_EMAIL_FORMAT.getMessageKr());
         }
 
         UsersEntity userEntity =
                 Optional.ofNullable(userRepository.findByUserIdAndSignUpType(accountUser.getUserId(), accountUser.getSignUpType()))
-                        .orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageEn()));
+                        .orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageKr()));
 
         return new AccountUser(userEntity);
     }
 
+    public void checkLoginUser(Long seq){
+        if(getAccountUser().getUserSeq() != seq){
+            LogUtils.errorLog("checkLoginUser - parameter seq != session req", "session seq", getAccountUser().getUserSeq()
+            , "parameter seq", seq);
+            throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_REQUEST.getMessageKr());
+        }
+    }
 
 //    /**
 //     * 사용자 정보 호출

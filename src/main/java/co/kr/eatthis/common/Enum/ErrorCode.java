@@ -1,5 +1,8 @@
 package co.kr.eatthis.common.Enum;
 
+import lombok.Getter;
+
+@Getter
 public enum ErrorCode {
 
     //계정
@@ -36,9 +39,5 @@ public enum ErrorCode {
     ErrorCode(String messageKr, String messageEn) {
         this.messageKr = messageKr;
         this.messageEn = messageEn;
-    }
-
-    public String getMessageEn() {
-        return this.messageEn;
     }
 }

@@ -61,8 +61,8 @@ public class StoreService {
     }
 
     private long insertReview(Review review) {
-        userDetailRepository.findById(0L).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessageEn() + " -> " + review.getIdx()));
-        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCode.STORE_NOT_FOUND.getMessageEn() + " -> " + review.getStoreIdx()));
+        userDetailRepository.findById(0L).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessageKr() + " -> " + review.getIdx()));
+        storeRepository.findById(review.getStoreIdx()).orElseThrow(() -> new RuntimeException(ErrorCode.STORE_NOT_FOUND.getMessageKr() + " -> " + review.getStoreIdx()));
 
         System.out.println(review.toString());
         //없는 메뉴도 검사할것
@@ -82,7 +82,7 @@ public class StoreService {
                         fileRepository.save(commonFile.toEntity());
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException(ErrorCode.FILE_UPLOAD_ERROR.getMessageEn());
+                    throw new RuntimeException(ErrorCode.FILE_UPLOAD_ERROR.getMessageKr());
                 }
             });
         }
@@ -100,7 +100,7 @@ public class StoreService {
      * @return
      */
     public List<Review> getReviewList(long userIdx) {
-        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageEn() + " -> " + userIdx));
+        userDetailRepository.findById(userIdx).orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getMessageKr() + " -> " + userIdx));
         return reviewMapper.selectReviewList(userIdx);
     }
 }

@@ -170,9 +170,9 @@ public class AccountUserController {
             return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.INVALID_ARGUMENT.getMessageEn() + "-> " + e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.INVALID_ARGUMENT.getMessageKr() + "-> " + e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.ETC_ERROR.getMessageEn() + "-> " + e.getMessage()));
+            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.ETC_ERROR.getMessageKr() + "-> " + e.getMessage()));
         }
     }
 
@@ -180,7 +180,7 @@ public class AccountUserController {
     public ResponseEntity<ResponseTTTData> invalidToken() {
         ResponseTTTData responseData = new ResponseTTTData(
                 StatusCode.SERVER_ERROR.getValue()
-                , ErrorCode.INVALID_TOKEN.getMessageEn()
+                , ErrorCode.INVALID_TOKEN.getMessageKr()
         );
 
         return ResponseEntity.ok(responseData);
