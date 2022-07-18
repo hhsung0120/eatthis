@@ -134,8 +134,8 @@ public class UserService {
         return accountUser;
     }
 
-    public boolean checkNickName(AccountUser accountUser) {
-        String nickName = accountUser.getNickName();
+    public boolean checkNickName( String nickName) {
+        //String nickName = accountUser.getNickName();
 
         //TODO : 나중에 닉네임 벨리데이션 만들어야함
         if (nickName == null || "".equals(nickName) || nickName.length() > 10) {

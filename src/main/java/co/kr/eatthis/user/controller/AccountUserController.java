@@ -9,8 +9,10 @@ import co.kr.eatthis.common.util.Jwt;
 import co.kr.eatthis.user.domain.model.AccountUser;
 import co.kr.eatthis.user.domain.model.Secession;
 import co.kr.eatthis.user.service.UserService;
+import jdk.jfr.ContentType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,11 @@ public class AccountUserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<ResponseData> signUp(@RequestBody Map<String, Object> requestData) {
-        log.info("/sign-up request parameter : {}", requestData.toString());
+    public ResponseEntity<ResponseData> signUp(@ModelAttribute AccountUser accountUser) {
+        log.info("/sign-up request parameter : {}", accountUser.toString());
 
         try {
-            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
+            //AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
             Long userSeq = userService.insertUser(accountUser);
             return ResponseEntity.ok(new ResponseData("userSeq", userSeq, accountUser));
         } catch (Exception e) {
@@ -39,26 +41,24 @@ public class AccountUserController {
         }
     }
 
-    @GetMapping("/nick-name/check")
-    public ResponseEntity<ResponseData> nickNameCheck(@RequestBody Map<String, Object> requestData) {
-        log.info("/nick-name/check request parameter : {}", requestData.toString());
+    @PostMapping(value = "/nick-name/check")
+    public ResponseEntity<ResponseData> nickNameCheck(@ModelAttribute AccountUser accountUser) {
+        log.info("/nick-name/check request parameter : {}", accountUser.getNickName());
 
         try {
-            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
-            boolean result = userService.checkNickName(accountUser);
+            //AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
+            boolean result = userService.checkNickName(accountUser.getNickName());
             return ResponseEntity.ok(new ResponseData("result", result));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<ResponseData> login(@RequestBody Map<String, Object> requestData) {
-        log.info("/login request parameter : {}", requestData.toString());
+    @PostMapping(value = "/login")
+    public ResponseEntity<ResponseData> login(@ModelAttribute AccountUser accountUser) {
+        log.info("/login request parameter : {}", accountUser.toString());
 
         try {
-            AccountUser accountUser = validationService.validation(requestData, AccountUser.class);
-
             Map<String, Object> data = new HashMap<>();
             data.put("user", userService.loginProcess(accountUser));
             data.put("token", Jwt.createToken((AccountUser) data.get("user")));

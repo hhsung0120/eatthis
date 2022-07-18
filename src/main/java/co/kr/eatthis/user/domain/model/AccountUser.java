@@ -4,22 +4,26 @@ import co.kr.eatthis.common.Enum.GenderType;
 import co.kr.eatthis.common.Enum.SignUpType;
 import co.kr.eatthis.common.domain.model.PageNavigator;
 import co.kr.eatthis.common.util.SecretSha;
+import co.kr.eatthis.common.util.StringUtils;
 import co.kr.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.eatthis.user.domain.entity.UsersEntity;
-import co.kr.eatthis.common.util.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 public class AccountUser extends PageNavigator {
 
     private Long userSeq;
+
     private String userId;
     private String password;
     private String checkPassword;
+
+    @Setter
     private String nickName;
     private GenderType gender;
     private String birthday;
@@ -33,7 +37,9 @@ public class AccountUser extends PageNavigator {
     private String dinnerAlarmMinute;
     private String eventAlarm;
     private String serviceAlarm;
-    private Map<String, String> agreeMap;
+    private String terms;
+    private String privacy;
+    private String location;
 
     //검색
     @Setter
@@ -64,7 +70,7 @@ public class AccountUser extends PageNavigator {
     public UserDetailEntity toUserDetailEntity(Long userSeq) {
         return UserDetailEntity.insertForUserDetailEntity()
                 .userSeq(userSeq)
-                .agreeMap(agreeMap)
+                .agreeMap(getAgreeMap())
                 .build();
     }
 //    public UserDetailEntity toDetailEntity(long idx) {
@@ -91,6 +97,14 @@ public class AccountUser extends PageNavigator {
         this.profileImagePath = userEntity.getProfileImagePath();
     }
 
+    public Map<String, String> getAgreeMap() {
+        Map<String, String> agreeMap = new HashMap<>();
+        agreeMap.put("terms", terms);
+        agreeMap.put("privacy", privacy);
+        agreeMap.put("location", location);
+        return agreeMap;
+    }
+
     @Override
     public String toString() {
         return "AccountUser{" +
@@ -111,7 +125,6 @@ public class AccountUser extends PageNavigator {
                 ", dinnerAlarmMinute='" + dinnerAlarmMinute + '\'' +
                 ", eventAlarm='" + eventAlarm + '\'' +
                 ", serviceAlarm='" + serviceAlarm + '\'' +
-                ", agreeMap=" + agreeMap +
                 ", searchSeq=" + searchSeq +
                 ", searchKeyword='" + searchKeyword + '\'' +
                 '}';
