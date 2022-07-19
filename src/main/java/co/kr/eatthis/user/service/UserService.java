@@ -1,22 +1,26 @@
 package co.kr.eatthis.user.service;
 
+import co.kr.eatthis.common.Enum.ErrorCode;
 import co.kr.eatthis.common.Enum.UserStatusType;
 import co.kr.eatthis.common.util.LogUtils;
+import co.kr.eatthis.common.util.StringUtils;
+import co.kr.eatthis.user.domain.entity.SecessionReasonEntity;
 import co.kr.eatthis.user.domain.entity.UserDetailEntity;
 import co.kr.eatthis.user.domain.entity.UsersEntity;
 import co.kr.eatthis.user.domain.model.AccountUser;
-import co.kr.eatthis.user.domain.repository.SecessionRepository;
+import co.kr.eatthis.user.domain.model.SecessionReason;
+import co.kr.eatthis.user.domain.model.UserSecession;
+import co.kr.eatthis.user.domain.repository.SecessionReasonRepository;
 import co.kr.eatthis.user.domain.repository.UserDetailRepository;
 import co.kr.eatthis.user.domain.repository.UserRepository;
 import co.kr.eatthis.user.domain.repository.UserSecessionRepository;
-import co.kr.eatthis.common.Enum.ErrorCode;
-import co.kr.eatthis.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -27,7 +31,7 @@ public class UserService {
     final UserRepository userRepository;
     final UserDetailRepository userDetailRepository;
 
-    final SecessionRepository secessionRepository;
+    final SecessionReasonRepository secessionReasonRepository;
     final UserSecessionRepository userScessionRepository;
 
     final HttpServletRequest request;
@@ -121,12 +125,12 @@ public class UserService {
     public AccountUser getAccountUser() {
 
         AccountUser accountUser = null;
-        try{
+        try {
             accountUser = (AccountUser) request.getAttribute("accountUser");
-            if(accountUser == null){
+            if (accountUser == null) {
                 throw new NullPointerException();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtils.errorLog("getAccountUser() Null Pointer Exception", e);
             throw new NullPointerException("Login user does not exist.");
         }
@@ -134,7 +138,7 @@ public class UserService {
         return accountUser;
     }
 
-    public boolean checkNickName( String nickName) {
+    public boolean checkNickName(String nickName) {
         //String nickName = accountUser.getNickName();
 
         //TODO : 나중에 닉네임 벨리데이션 만들어야함
@@ -161,10 +165,10 @@ public class UserService {
         return new AccountUser(userEntity);
     }
 
-    public void checkLoginUser(Long seq){
-        if(getAccountUser().getUserSeq() != seq){
+    public void checkLoginUser(Long seq) {
+        if (getAccountUser().getUserSeq() != seq) {
             LogUtils.errorLog("checkLoginUser - parameter seq != session req", "session seq", getAccountUser().getUserSeq()
-            , "parameter seq", seq);
+                    , "parameter seq", seq);
             throw new IllegalArgumentException(ErrorCode.NOT_A_VALID_REQUEST.getMessageKr());
         }
     }
@@ -320,6 +324,32 @@ public class UserService {
         if (userRepository.findByUserId(userId) != null) {
             LogUtils.errorLog("existing user id", "userId", userId);
             throw new IllegalArgumentException("existing user id : " + userId);
+        }
+    }
+
+    public List<SecessionReason> getSecessionList() {
+
+        List<SecessionReasonEntity> list;
+        try {
+            list = secessionReasonRepository.findAllForOrderNumberAsc();
+            return SecessionReason.entityToList(list);
+        } catch (Exception e) {
+            LogUtils.errorLog("secession form request exception");
+            throw new IllegalArgumentException("secession form request exception");
+        }
+    }
+
+    public boolean insertUserSecession(UserSecession userSecession) {
+
+        AccountUser accountUser = getAccountUser();
+        userSecession.setUserSeq(accountUser.getUserSeq());
+
+        try {
+            userScessionRepository.save(userSecession.toEntity());
+            return true;
+        } catch (Exception e){
+            LogUtils.errorLog("insertUserSecession exception", "data", userSecession, e);
+            throw new IllegalArgumentException("insertUserSecession exception");
         }
     }
 

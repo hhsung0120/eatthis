@@ -21,11 +21,11 @@ public class Notice {
     private String createdDatetime;
 
     public Notice() {
-        this.seq = 0L;
-        this.title = "";
-        this.contents = "";
-        this.createdId = "";
-        this.createdDatetime = "";
+        this.seq = null;
+        this.title = null;
+        this.contents = null;
+        this.createdId = null;
+        this.createdDatetime = null;
     }
 
     public NoticeEntity toEntity() {
@@ -45,7 +45,7 @@ public class Notice {
     }
 
     public static List<Notice> entityToList(Page<NoticeEntity> noticeEntityList){
-        return noticeEntityList.stream()
+        return noticeEntityList.getContent().stream()
                 .map(entity -> new Notice(entity))
                 .collect(toList());
     }

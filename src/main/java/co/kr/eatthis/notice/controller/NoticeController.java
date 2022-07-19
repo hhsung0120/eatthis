@@ -1,5 +1,6 @@
 package co.kr.eatthis.notice.controller;
 
+import co.kr.eatthis.common.domain.model.PageNavigator;
 import co.kr.eatthis.common.domain.model.ResponseData;
 import co.kr.eatthis.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,11 @@ public class NoticeController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseData> getNoticeList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+    @PostMapping("")
+    public ResponseEntity<ResponseData> getNoticeList(@ModelAttribute PageNavigator pageNavigator) {
 
         try {
-            return ResponseEntity.ok(new ResponseData(noticeService.getNoticeList(page, pageSize)));
+            return ResponseEntity.ok(new ResponseData(noticeService.getNoticeList(pageNavigator)));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));
         }

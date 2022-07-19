@@ -73,11 +73,6 @@ public class AccountUser extends PageNavigator {
                 .agreeMap(getAgreeMap())
                 .build();
     }
-//    public UserDetailEntity toDetailEntity(long idx) {
-//        return UserDetailEntity.builder()
-//                .idx(idx)
-//                .build();
-//    }
 
     public AccountUser(UsersEntity userEntity) {
         this.userSeq = userEntity.getSeq();

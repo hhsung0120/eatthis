@@ -159,6 +159,41 @@ ALTER TABLE alarms
 
 -- ----------------------------------------------------------------------------------------------------------------
 
+-- 탈퇴 사유
+ALTER TABLE secession_reason
+DROP PRIMARY KEY; -- 탈퇴 사유 기본키
+
+-- 탈퇴 사유
+DROP TABLE IF EXISTS secession_reason RESTRICT;
+
+-- 탈퇴 사유
+CREATE TABLE secession_reason (
+                                  seq               BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
+                                  reason            VARCHAR(255) NOT NULL COMMENT '사유', -- 사유
+                                  use_yn            VARCHAR(1)   NOT NULL COMMENT '사용여부', -- 사용여부
+                                  order_number      TINYINT      NOT NULL COMMENT '질문', -- 순서 번호
+                                  created_id        VARCHAR(80)  NOT NULL COMMENT '생성자', -- 생성자
+                                  created_datetime  DATETIME     NOT NULL DEFAULT NOW() COMMENT '생성일시', -- 생성일시
+                                  modified_id       VARCHAR(80)  NULL     COMMENT '수정자', -- 수정자
+                                  modified_datetime DATETIME     NULL     COMMENT '수정일시' -- 수정일시
+)
+    COMMENT '탈퇴 사유';
+
+-- 탈퇴 사유
+ALTER TABLE secession_reason
+    ADD CONSTRAINT PK_secession_reason -- 탈퇴 사유 기본키
+        PRIMARY KEY (
+                     seq -- 시퀀스
+            );
+
+ALTER TABLE secession_reason
+    MODIFY COLUMN seq BIGINT NOT NULL AUTO_INCREMENT COMMENT '시퀀스';
+
+ALTER TABLE secession_reason
+    AUTO_INCREMENT = 1;
+
+
+-- ----------------------------------------------------------------------------------------------------------------
 -- 회원 탈퇴
 ALTER TABLE user_secession
 DROP FOREIGN KEY FK_users_TO_user_secession; -- 회원 -> 회원 탈퇴
@@ -171,19 +206,22 @@ DROP FOREIGN KEY FK_secession_reason_TO_user_secession; -- 탈퇴 사유 -> 회�
 ALTER TABLE user_secession
 DROP PRIMARY KEY; -- 회원 탈퇴 기본키
 
+-- 회원 탈퇴 유니크 인덱스
+DROP INDEX UIX_user_secession ON user_secession;
+
 -- 회원 탈퇴
 DROP TABLE IF EXISTS user_secession RESTRICT;
 
 -- 회원 탈퇴
 CREATE TABLE user_secession (
-                                seq               BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
-                                reason_seq        BIGINT       NOT NULL COMMENT '사유 시퀀스', -- 사유 시퀀스
-                                user_seq          BIGINT       NOT NULL COMMENT '유저 시퀀스', -- 유저 시퀀스
-                                memo              VARCHAR(255) NOT NULL COMMENT '상세 메모', -- 메모
-                                created_id        VARCHAR(50)  NOT NULL COMMENT '생성자', -- 생성자
-                                created_datetime  DATETIME     NOT NULL DEFAULT NOW() COMMENT '생성일시', -- 생성일시
-                                modified_id       VARCHAR(50)  NULL     COMMENT '수정자', -- 수정자
-                                modified_datetime DATETIME     NULL     COMMENT '수정일시' -- 수정일시
+                                seq                  BIGINT       NOT NULL COMMENT '시퀀스', -- 시퀀스
+                                secession_reason_seq BIGINT       NOT NULL COMMENT '사유 시퀀스', -- 탈퇴 사유 시퀀스
+                                user_seq             BIGINT       NOT NULL COMMENT '유저 시퀀스', -- 유저 시퀀스
+                                memo                 VARCHAR(255) NOT NULL COMMENT '상세 메모', -- 메모
+                                created_id           VARCHAR(80)  NOT NULL COMMENT '생성자', -- 생성자
+                                created_datetime     DATETIME     NOT NULL DEFAULT NOW() COMMENT '생성일시', -- 생성일시
+                                modified_id          VARCHAR(80)  NULL     COMMENT '수정자', -- 수정자
+                                modified_datetime    DATETIME     NULL     COMMENT '수정일시' -- 수정일시
 )
     COMMENT '회원 탈퇴';
 
@@ -193,6 +231,12 @@ ALTER TABLE user_secession
         PRIMARY KEY (
                      seq -- 시퀀스
             );
+
+-- 회원 탈퇴 유니크 인덱스
+CREATE UNIQUE INDEX UIX_user_secession
+    ON user_secession ( -- 회원 탈퇴
+                       user_seq ASC -- 유저 시퀀스
+        );
 
 ALTER TABLE user_secession
     MODIFY COLUMN seq BIGINT NOT NULL AUTO_INCREMENT COMMENT '시퀀스';
@@ -214,12 +258,11 @@ ALTER TABLE user_secession
 ALTER TABLE user_secession
     ADD CONSTRAINT FK_secession_reason_TO_user_secession -- 탈퇴 사유 -> 회원 탈퇴
         FOREIGN KEY (
-                     reason_seq -- 사유 시퀀스
+                     secession_reason_seq -- 탈퇴 사유 시퀀스
             )
             REFERENCES secession_reason ( -- 탈퇴 사유
                                          seq -- 시퀀스
                 );
-
 -- ----------------------------------------------------------------------------------------------------------------
 
 -- 즐겨찾는 매장

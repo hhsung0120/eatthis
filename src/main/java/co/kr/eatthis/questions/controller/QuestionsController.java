@@ -1,20 +1,16 @@
 package co.kr.eatthis.questions.controller;
 
 import co.kr.eatthis.common.Enum.CategoryType;
-import co.kr.eatthis.common.Enum.StatusCode;
 import co.kr.eatthis.common.domain.model.Category;
+import co.kr.eatthis.common.domain.model.PageNavigator;
 import co.kr.eatthis.common.domain.model.ResponseData;
-import co.kr.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.eatthis.common.service.CategoryService;
-import co.kr.eatthis.questions.service.QuestionsService;
-import co.kr.eatthis.faq.service.FaqService;
 import co.kr.eatthis.questions.domain.model.Questions;
-import co.kr.eatthis.user.service.UserService;
+import co.kr.eatthis.questions.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +45,12 @@ public class QuestionsController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseData> list(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize, @RequestParam int categorySeq) {
+    @PostMapping("")
+    public ResponseEntity<ResponseData> list(@ModelAttribute PageNavigator pageNavigator
+                                           , @RequestParam("categorySeq") int categorySeq) {
 
         try {
-            Map<String, Object> questionList = questionsService.getQuestionList(page, pageSize, categorySeq);
+            Map<String, Object> questionList = questionsService.getQuestionList(pageNavigator, categorySeq);
             return ResponseEntity.ok(new ResponseData(questionList));
         } catch (Exception e) {
             return ResponseEntity.ok(new ResponseData(e));

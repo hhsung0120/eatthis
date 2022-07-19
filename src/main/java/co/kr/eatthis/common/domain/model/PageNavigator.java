@@ -3,7 +3,6 @@ package co.kr.eatthis.common.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
 public class PageNavigator {
     /**
@@ -19,7 +18,7 @@ public class PageNavigator {
     /**
      * 현재 페이지
      **/
-    private int currentPage = 1;
+    private int page = 1;
 
     /**
      * 현재 블럭(range)
@@ -69,16 +68,14 @@ public class PageNavigator {
     public PageNavigator() {
     }
 
-    public PageNavigator(int totalCount) {
-        setTotalCount(totalCount);
-    }
-
     /**
      * 페이징 처리
      **/
-    public void setTotalCount(int totalCount) {
+    public void setTotalCount(int totalCount, int page, int pageSize){
         /** 총 게시물 수 **/
         this.totalCount = totalCount;
+        this.page = page;
+        this.pageSize = pageSize;
 
         /** 총 페이지 수 **/
         setTotalPageCount(totalCount);
@@ -87,21 +84,25 @@ public class PageNavigator {
         setBlockCount(totalPageCount);
 
         /** 블럭 설정 **/
-        blockSetting(currentPage);
+        blockSetting(this.page);
 
         /** DB 질의를 위한 startIndex 설정 **/
-        setStartIndex(currentPage);
+        setStartIndex(this.page);
     }
 
-    public void setTotalPageCount(int listCount) {
+    public void setTotalCount(int totalCount) {
+        setTotalCount(totalCount, 1, 10);
+    }
+
+    private void setTotalPageCount(int listCount) {
         this.totalPageCount = (int) Math.ceil(listCount * 1.0 / pageSize);
     }
 
-    public void setBlockCount(int pageCount) {
+    private void setBlockCount(int pageCount) {
         this.totalBlockCount = (int) Math.ceil(pageCount * 1.0 / blockSize);
     }
 
-    public void blockSetting(int currentPage) {
+    private void blockSetting(int currentPage) {
         setCurrentBlock(currentPage);
         this.startPage = (currentBlock - 1) * blockSize + 1;
         this.endPage = startPage + blockSize - 1;
@@ -112,11 +113,29 @@ public class PageNavigator {
         this.nextPage = currentPage + 1;
     }
 
-    public void setCurrentBlock(int currentPage) {
+    private void setCurrentBlock(int currentPage) {
         this.currentBlock = (int) ((currentPage - 1) / blockSize) + 1;
     }
 
-    public void setStartIndex(int currentPage) {
+    private void setStartIndex(int currentPage) {
         this.startIndex = (currentPage - 1) * pageSize;
+    }
+
+    @Override
+    public String toString() {
+        return "PageNavigator{" +
+                "pageSize=" + pageSize +
+                ", blockSize=" + blockSize +
+                ", page=" + page +
+                ", currentBlock=" + currentBlock +
+                ", totalCount=" + totalCount +
+                ", totalPageCount=" + totalPageCount +
+                ", totalBlockCount=" + totalBlockCount +
+                ", startPage=" + startPage +
+                ", endPage=" + endPage +
+                ", startIndex=" + startIndex +
+                ", previousPage=" + previousPage +
+                ", nextPage=" + nextPage +
+                '}';
     }
 }

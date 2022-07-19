@@ -14,20 +14,20 @@ import javax.persistence.Table;
 @Getter
 @ToString
 @Table(name = "secession_reason")
-public class SecessionEntity extends TimeAndUserIdEntity {
+public class SecessionReasonEntity extends TimeAndUserIdEntity {
 
     @Id
-    private Long idx;
+    private Long seq;
 
     @Column
     private String reason;
 
     @Column
-    private String status;
+    private String useYn;
 
     @Column
-    private int order;
+    private int orderNumber;
 
-    public SecessionEntity() {
+    public SecessionReasonEntity() {
     }
 }

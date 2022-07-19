@@ -1,23 +1,24 @@
 package co.kr.eatthis.user.domain.entity;
 
 
+import co.kr.eatthis.common.domain.entity.TimeAndUserIdEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "user_secession")
-public class UserSecessionEntity {
+public class UserSecessionEntity extends TimeAndUserIdEntity {
 
     @Id
-    private long userIdx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long seq;
+
+    private Long userSeq;
 
     @Column
-    private long secessionReasonIdx;
+    private Long secessionReasonSeq;
 
     @Column
     private String memo;
@@ -25,10 +26,11 @@ public class UserSecessionEntity {
     public UserSecessionEntity() {
     }
 
-    @Builder
-    public UserSecessionEntity(long userIdx, long secessionReasonIdx, String memo) {
-        this.userIdx = userIdx;
-        this.secessionReasonIdx = secessionReasonIdx;
+    @Builder(builderClassName = "insertForUserSecessionEntity", builderMethodName = "insertForUserSecessionEntity")
+    public UserSecessionEntity(Long userSeq, Long secessionReasonSeq, String memo) {
+        super("system");
+        this.userSeq = userSeq;
+        this.secessionReasonSeq = secessionReasonSeq;
         this.memo = memo;
     }
 }

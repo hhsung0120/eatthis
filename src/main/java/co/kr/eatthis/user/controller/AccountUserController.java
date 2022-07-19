@@ -7,12 +7,10 @@ import co.kr.eatthis.common.domain.model.ResponseTTTData;
 import co.kr.eatthis.common.service.ValidationService;
 import co.kr.eatthis.common.util.Jwt;
 import co.kr.eatthis.user.domain.model.AccountUser;
-import co.kr.eatthis.user.domain.model.Secession;
+import co.kr.eatthis.user.domain.model.UserSecession;
 import co.kr.eatthis.user.service.UserService;
-import jdk.jfr.ContentType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,6 +65,49 @@ public class AccountUserController {
             return ResponseEntity.ok(new ResponseData(e));
         }
     }
+
+    @GetMapping(value = "/secession")
+    public ResponseEntity<ResponseData> userSecessionForm() {
+        try {
+            return ResponseEntity.ok(new ResponseData("list", userService.getSecessionList()));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
+    }
+
+    @PostMapping(value = "/secession")
+    public ResponseEntity<ResponseData> userSecessionSave(@ModelAttribute UserSecession userSecession) {
+        try {
+            boolean result = userService.insertUserSecession(userSecession);
+            return ResponseEntity.ok(new ResponseData("result", result));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseData(e));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("")
     public ResponseEntity<ResponseTTTData> users() {
@@ -140,41 +181,41 @@ public class AccountUserController {
         }
     }
 
-    @GetMapping("/secession")
-    public ResponseEntity<ResponseTTTData> secession() {
-        try {
-            Map<String, Object> data = new HashMap<>();
-            // data.put("list", userService.getSecessionReasonList());
-            //data.put("userIdx", userService.getAccountUserIdx());
+//    @GetMapping("/secession")
+//    public ResponseEntity<ResponseTTTData> secession() {
+//        try {
+//            Map<String, Object> data = new HashMap<>();
+//            // data.put("list", userService.getSecessionReasonList());
+//            //data.put("userIdx", userService.getAccountUserIdx());
+//
+//            ResponseTTTData responseData = new ResponseTTTData(
+//                    StatusCode.OK.getValue()
+//                    , StatusCode.OK.toString()
+//                    , data);
+//            return ResponseEntity.ok(responseData);
+//        } catch (Exception e) {
+//            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+//        }
+//    }
 
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , data);
-            return ResponseEntity.ok(responseData);
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-        }
-    }
-
-    @PostMapping("/secession")
-    public ResponseEntity<ResponseTTTData> secession(@RequestBody Secession secession) {
-        try {
-            //   userService.updateUserStatus(new Secession(secession.getIdx(), secession.getMemo(), ""));
-
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString());
-            return ResponseEntity.ok(responseData);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.INVALID_ARGUMENT.getMessageKr() + "-> " + e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.ETC_ERROR.getMessageKr() + "-> " + e.getMessage()));
-        }
-    }
+//    @PostMapping("/secession")
+//    public ResponseEntity<ResponseTTTData> secession(@RequestBody UserSecession userSecession) {
+//        try {
+//            //   userService.updateUserStatus(new Secession(secession.getIdx(), secession.getMemo(), ""));
+//
+//            ResponseTTTData responseData = new ResponseTTTData(
+//                    StatusCode.OK.getValue()
+//                    , StatusCode.OK.toString());
+//            return ResponseEntity.ok(responseData);
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+//        } catch (RuntimeException e) {
+//            e.printStackTrace();
+//            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.INVALID_ARGUMENT.getMessageKr() + "-> " + e.getMessage()));
+//        } catch (Exception e) {
+//            return ResponseEntity.ok(new ResponseTTTData(ErrorCode.ETC_ERROR.getMessageKr() + "-> " + e.getMessage()));
+//        }
+//    }
 
     @GetMapping("/invalid-token")
     public ResponseEntity<ResponseTTTData> invalidToken() {
