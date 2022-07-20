@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.eatthis.faq.mapper.FaqsMapper">
+
+    <select id="updateLunchAlarmYn" parameterType="Long" resultType="String">
+        UPDATE user_detail
+           SET lunch_alarm_use_yn = IF(lunch_alarm_use_yn = 'y', 'n', 'y')
+         WHERE user_seq = #{userSeq}
+    </select>
+
+</mapper>

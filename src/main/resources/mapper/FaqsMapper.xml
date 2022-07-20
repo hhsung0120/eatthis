@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.eatthis.faq.mapper.FaqsMapper">
+
+    <select id="selectFaqsListCount" parameterType="AccountUser" resultType="integer">
+        SELECT COUNT(*)
+          FROM faqs
+        <where>
+            <include refid="faqsCommonSearch"></include>
+        </where>
+    </select>
+
+    <select id="selectFaqsList" parameterType="AccountUser" resultType="Faq">
+        SELECT *
+          FROM faqs
+        <where>
+            <include refid="faqsCommonSearch"></include>
+        </where>
+         LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <sql id="faqsCommonSearch">
+        <if test="searchSeq != null and searchSeq != 0">
+            AND category_seq = #{searchSeq}
+        </if>
+
+        <if test='searchText != null and searchText != ""'>
+            AND contents LIKE CONCAT('%', #{searchText}, '%')
+        </if>
+    </sql>
+</mapper>

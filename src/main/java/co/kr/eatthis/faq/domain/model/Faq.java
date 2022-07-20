@@ -1,6 +1,8 @@
 package co.kr.eatthis.faq.domain.model;
 
 import co.kr.eatthis.faq.domain.entity.FaqEntity;
+import co.kr.eatthis.notice.domain.entity.NoticeEntity;
+import co.kr.eatthis.notice.domain.model.Notice;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,40 +13,26 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Getter
-@ToString
 public class Faq {
-    private long idx;
-    private String categoryName;
+
+    private Long seq;
+    private Long categorySeq;
     private String title;
     private String contents;
 
     public Faq() {
     }
 
-    public FaqEntity toEntity() {
-        return FaqEntity.builder()
-                .idx(idx)
-                .title(title)
-                .contents(contents)
-                .build();
+    public Faq(FaqEntity faqEntity) {
+        this.seq = faqEntity.getSeq();
+        this.categorySeq = faqEntity.getCategorySeq();
+        this.title = faqEntity.getTitle();
+        this.contents = faqEntity.getContents();
     }
 
-    @Builder
-    public Faq(Long idx, String categoryName, String title, String contents) {
-        this.idx = idx;
-        this.categoryName = categoryName;
-        this.title = title;
-        this.contents = contents;
-    }
-
-    public List<Faq> entityToVoList(Page<FaqEntity> faqEntityList) {
-        return faqEntityList.stream()
-                .map(list -> Faq.builder()
-                        .idx(list.getIdx())
-                        .title(list.getTitle())
-                       // .categoryName(list.getFaqCategoryEntity().getCategoryName())
-                        .contents(list.getContents())
-                        .build())
+    public static List<Faq> entityToList(Page<FaqEntity> faqEntityList){
+        return faqEntityList.getContent().stream()
+                .map(entity -> new Faq(entity))
                 .collect(toList());
     }
 }

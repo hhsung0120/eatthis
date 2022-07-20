@@ -14,6 +14,7 @@ import co.kr.eatthis.user.domain.repository.SecessionReasonRepository;
 import co.kr.eatthis.user.domain.repository.UserDetailRepository;
 import co.kr.eatthis.user.domain.repository.UserRepository;
 import co.kr.eatthis.user.domain.repository.UserSecessionRepository;
+import co.kr.eatthis.user.mapper.UserDetailMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UserService {
 
     final UserRepository userRepository;
     final UserDetailRepository userDetailRepository;
+    final UserDetailMapper userDetailMapper;
 
     final SecessionReasonRepository secessionReasonRepository;
     final UserSecessionRepository userScessionRepository;
@@ -350,6 +352,18 @@ public class UserService {
         } catch (Exception e){
             LogUtils.errorLog("insertUserSecession exception", "data", userSecession, e);
             throw new IllegalArgumentException("insertUserSecession exception");
+        }
+    }
+
+    public boolean updateLunchAlarmYn(Long userSeq) {
+        this.checkLoginUser(userSeq);
+
+        try {
+            userDetailMapper.updateLunchAlarmYn(userSeq);
+            return true;
+        } catch (Exception e){
+            LogUtils.errorLog("updateLunchAlarmYn exception", "userSeq", userSeq, e);
+            throw new IllegalArgumentException("updateLunchAlarmYn exception");
         }
     }
 

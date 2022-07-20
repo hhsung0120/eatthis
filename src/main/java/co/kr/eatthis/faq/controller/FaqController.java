@@ -1,17 +1,19 @@
 package co.kr.eatthis.faq.controller;
 
+import co.kr.eatthis.common.Enum.CategoryType;
 import co.kr.eatthis.common.Enum.StatusCode;
+import co.kr.eatthis.common.domain.model.PageNavigator;
+import co.kr.eatthis.common.domain.model.ResponseData;
 import co.kr.eatthis.common.domain.model.ResponseTTTData;
+import co.kr.eatthis.common.service.CategoryService;
 import co.kr.eatthis.faq.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -24,22 +26,19 @@ import java.util.Map;
 @RequestMapping("/faqs")
 public class FaqController {
 
-    final FaqService faqService;
+    private final FaqService faqService;
+    private final CategoryService categoryService;
 
-    @GetMapping("/{page}")
-    public ResponseEntity<ResponseTTTData> faqList(@PathVariable int page) {
+    @PostMapping("")
+    public ResponseEntity<ResponseData> getFaqList(
+            @ModelAttribute PageNavigator pageNavigator
+            , @RequestParam(value = "categorySeq", defaultValue = "0") int categorySeq
+            , @RequestParam(value = "searchText", defaultValue = "") String searchText) {
+
         try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("list", faqService.getFaqList(page));
-
-            ResponseTTTData responseData = new ResponseTTTData(
-                    StatusCode.OK.getValue()
-                    , StatusCode.OK.toString()
-                    , data);
-            return ResponseEntity.ok(responseData);
+            return ResponseEntity.ok(new ResponseData(faqService.getFaqList(pageNavigator, categorySeq, searchText)));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ResponseTTTData(e.getMessage()));
+            return ResponseEntity.ok(new ResponseData(e));
         }
     }
-
 }

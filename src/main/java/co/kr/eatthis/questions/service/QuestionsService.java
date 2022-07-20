@@ -56,7 +56,6 @@ public class QuestionsService {
         AccountUser accountUser = userService.getAccountUser();
         accountUser.setSearchSeq(categorySeq);
 
-
         try {
             int count = questionsMapper.selectQuestionListCount(accountUser);
             accountUser.setTotalCount(count, pageNavigator.getPage(), pageNavigator.getPageSize());

@@ -5,7 +5,7 @@ import co.kr.eatthis.common.Enum.TableCodeType;
 import co.kr.eatthis.common.domain.model.CommonFile;
 import co.kr.eatthis.common.domain.repository.FileRepository;
 import co.kr.eatthis.common.util.FileUtil;
-import co.kr.eatthis.mapper.ReviewMapper;
+import co.kr.eatthis.common.mapper.ReviewMapper;
 import co.kr.eatthis.questions.domain.model.Review;
 import co.kr.eatthis.store.domain.entity.StoreEntity;
 import co.kr.eatthis.store.domain.model.Store;

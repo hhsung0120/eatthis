@@ -44,9 +44,8 @@ public class AccountUser extends PageNavigator {
     //검색
     @Setter
     private int searchSeq;
-
     @Setter
-    private String searchKeyword;
+    private String searchText;
 
     public AccountUser() {
     }
@@ -121,7 +120,7 @@ public class AccountUser extends PageNavigator {
                 ", eventAlarm='" + eventAlarm + '\'' +
                 ", serviceAlarm='" + serviceAlarm + '\'' +
                 ", searchSeq=" + searchSeq +
-                ", searchKeyword='" + searchKeyword + '\'' +
+                ", searchText='" + searchText + '\'' +
                 '}';
     }
 }

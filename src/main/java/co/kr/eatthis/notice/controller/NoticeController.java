@@ -34,7 +34,6 @@ public class NoticeController {
 
     @PostMapping("")
     public ResponseEntity<ResponseData> getNoticeList(@ModelAttribute PageNavigator pageNavigator) {
-
         try {
             return ResponseEntity.ok(new ResponseData(noticeService.getNoticeList(pageNavigator)));
         } catch (Exception e) {

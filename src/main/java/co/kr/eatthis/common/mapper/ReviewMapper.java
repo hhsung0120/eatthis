@@ -1,4 +1,4 @@
-package co.kr.eatthis.mapper;
+package co.kr.eatthis.common.mapper;
 
 import co.kr.eatthis.questions.domain.model.Review;
 import org.apache.ibatis.annotations.Mapper;

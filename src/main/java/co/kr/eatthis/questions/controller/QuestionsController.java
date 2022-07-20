@@ -57,7 +57,6 @@ public class QuestionsController {
         }
     }
 
-
     @GetMapping("/{questionsSeq}")
     public ResponseEntity<ResponseData> detail(@PathVariable Long questionsSeq) {
         try {
